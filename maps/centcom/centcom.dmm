@@ -7575,7 +7575,7 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/shoes/magboots,
-/obj/item/weapon/shield_belt,
+/obj/item/weapon/storage/belt/shield_belt,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -7638,7 +7638,7 @@
 /obj/item/weapon/storage/backpack/ert/medical,
 /obj/item/weapon/storage/backpack/ert/medical,
 /obj/item/weapon/storage/backpack/ert/medical,
-/obj/item/weapon/shield_belt,
+/obj/item/weapon/storage/belt/shield_belt,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -7828,7 +7828,7 @@
 /obj/item/clothing/head/helmet/space/rig/ert/commander,
 /obj/item/clothing/suit/space/rig/ert/commander,
 /obj/item/clothing/shoes/magboots,
-/obj/item/weapon/shield_belt,
+/obj/item/weapon/storage/belt/shield_belt,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -8931,7 +8931,7 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/shoes/magboots,
-/obj/item/weapon/shield_belt,
+/obj/item/weapon/storage/belt/shield_belt,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -8957,7 +8957,7 @@
 	dir = 1
 	},
 /obj/item/clothing/shoes/magboots,
-/obj/item/weapon/shield_belt,
+/obj/item/weapon/storage/belt/shield_belt,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"

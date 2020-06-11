@@ -83,6 +83,9 @@
 	/// Whether shield only appears on hit.
 	var/appear_on_hit = FALSE
 
+	var/datum/callback/on_reactivation
+	var/datum/callback/on_deactivation
+
 	/// An overlay of the shield.
 	var/atom/shield_overlay
 	var/matrix/default_transform
@@ -104,7 +107,7 @@
 	var/static/destroy_sound = 'sound/effects/forcefield_destroy.ogg'
 	var/static/hit_sounds = list('sound/effects/forcefield_hit1.ogg', 'sound/effects/forcefield_hit2.ogg')
 
-/datum/component/forcefield/Initialize(name, max_health, reactivation_time, recharge_time, atom/shield_overlay, appear_on_hit = FALSE, permit_interaction = FALSE)
+/datum/component/forcefield/Initialize(name, max_health, reactivation_time, recharge_time, atom/shield_overlay, appear_on_hit = FALSE, permit_interaction = FALSE, /datum/callback/on_reactivation, /datum/callback/on_deactivation)
 	src.name = name
 
 	src.max_health = max_health
@@ -116,6 +119,9 @@
 	src.appear_on_hit = appear_on_hit
 
 	src.permit_interaction = permit_interaction
+
+	src.on_reactivation = on_reactivation
+	src.on_deactivation = on_deactivation
 
 	if(shield_overlay)
 		src.shield_overlay = shield_overlay
@@ -155,7 +161,7 @@
  * Charge the shield up. Is not used a lot, called each 2 processor ticks.
  */
 /datum/component/forcefield/process()
-	add_charge(charge_per_tick)
+	try_regen(charge_per_tick)
 
 /datum/component/forcefield/proc/get_sound_atom()
 	if(isatom(parent))
@@ -173,6 +179,9 @@
 	if(play_at)
 		playsound(play_at, reactivate_sound, VOL_EFFECTS_MASTER)
 
+	if(on_reactivation)
+		on_reactivation.Invoke(src)
+
 	shield_up()
 
 /datum/component/forcefield/proc/destroy()
@@ -183,6 +192,9 @@
 	if(play_at)
 		playsound(play_at, destroy_sound, VOL_EFFECTS_MASTER)
 
+	if(on_deactivation)
+		on_deactivation.Invoke(src)
+
 	shield_down()
 	addtimer(CALLBACK(src, .proc/reactivate), reactivation_time)
 
@@ -192,12 +204,15 @@
 		shield_overlay.alpha = health * 200 / max_health
 
 /// Add charge, stopping the recharge on max_health logic included.
-/datum/component/forcefield/proc/add_charge(amount)
+/datum/component/forcefield/proc/add_health(amount)
 	health += amount
 	update_visuals()
 	if(health >= max_health)
 		health = max_health
 		STOP_PROCESSING(SSfastprocess, src)
+
+/datum/component/forcefield/proc/try_regen(amount)
+  	add_health(amount)
 
 /// React to damage, destroying on health = 0 logic included. Return TRUE if an attack is blocked.
 /datum/component/forcefield/proc/react_to_damage(atom/victim, damage, attack_text)
@@ -386,3 +401,34 @@
 
 	UnregisterSignal(A, list(COMSIG_PARENT_QDELETED))
 	LAZYREMOVE(protected, A)
+
+/datum/component/forcefield/techno
+  /// Charge that this forcefield has.
+  var/charge = 0
+  /// Max charge that this forcefiled can have.
+  var/max_charge = 0
+  /// How much charge is required per one health unit to be restored.
+  var/charge_per_hp = 1
+
+/datum/component/forcefield/techno/try_regen(amount)
+	amount = max(amount, charge)
+	adjustCharge(-amount)
+
+	if(charge == 0)
+		STOP_PROCESSING(SSfastprocess, src)
+
+	add_health(amount)
+
+/datum/component/forcefield/techno/add_protected(datum/source, atom/A)
+  RegisterSignal(A, list(COSMIG_ATOM_EMP_ACT), .proc/on_emp)
+  ..()
+
+/datum/component/forcefield/techno/remove_protected(Datum/source, atom/A)
+  ..()
+  UnregisterSignal(A, list(COSMIG_ATOM_EMP_ACT))
+
+/datum/component/forcefield/techno/proc/adjustCharge(amount)
+	charge = CLAMP(charge + amount, 0, max_charge)
+
+/datum/component/forcefield/techno/proc/on_emp(severity)
+  	adjustCharge(-severity * 10)
