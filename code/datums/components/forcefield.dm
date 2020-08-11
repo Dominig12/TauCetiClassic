@@ -54,15 +54,15 @@
 	icon_state = "emppulse"
 
 /*
- * A forcefield component.
- *
- * Provides protection for max_health amount of damage. If damage is higher than the health of shield - shield will absorb all it can,
- * get destroyed, but not pass excess damage.
- * After destroying shield waits for reactivate_time before beggining to rechage.
- * Shields require recharge_time amount of ticks to get fully charged from 0 health to max_health.
- *
- * Currently only /mob-s utilize the check_shields() mechanic, but forcefields can be applied to any /atom.
- */
+* A forcefield component.
+*
+* Provides protection for max_health amount of damage. If damage is higher than the health of shield - shield will absorb all it can,
+* get destroyed, but not pass excess damage.
+* After destroying shield waits for reactivate_time before beggining to rechage.
+* Shields require recharge_time amount of ticks to get fully charged from 0 health to max_health.
+*
+* Currently only /mob-s utilize the check_shields() mechanic, but forcefields can be applied to any /atom.
+*/
 /datum/component/forcefield
 	/// The name of the shield.
 	var/name
@@ -158,8 +158,8 @@
 	return ..()
 
 /*
- * Charge the shield up. Is not used a lot, called each 2 processor ticks.
- */
+* Charge the shield up. Is not used a lot, called each 2 processor ticks.
+*/
 /datum/component/forcefield/process()
 	try_regen(charge_per_tick)
 
@@ -179,9 +179,6 @@
 	if(play_at)
 		playsound(play_at, reactivate_sound, VOL_EFFECTS_MASTER)
 
-	if(on_reactivation)
-		on_reactivation.Invoke(src)
-
 	shield_up()
 
 /datum/component/forcefield/proc/destroy()
@@ -191,9 +188,6 @@
 	var/atom/play_at = get_sound_atom()
 	if(play_at)
 		playsound(play_at, destroy_sound, VOL_EFFECTS_MASTER)
-
-	if(on_deactivation)
-		on_deactivation.Invoke(src)
 
 	shield_down()
 	addtimer(CALLBACK(src, .proc/reactivate), reactivation_time)
@@ -212,7 +206,7 @@
 		STOP_PROCESSING(SSfastprocess, src)
 
 /datum/component/forcefield/proc/try_regen(amount)
-  	add_health(amount)
+	add_health(amount)
 
 /// React to damage, destroying on health = 0 logic included. Return TRUE if an attack is blocked.
 /datum/component/forcefield/proc/react_to_damage(atom/victim, damage, attack_text)
@@ -231,6 +225,9 @@
 /datum/component/forcefield/proc/shield_up()
 	active = TRUE
 
+	if(on_reactivation)
+		on_reactivation.Invoke(src)
+
 	for(var/prot_atom in protected)
 		start_protecting(prot_atom)
 
@@ -239,6 +236,9 @@
 /// Call this proc to put the shield down, allowing clicking.
 /datum/component/forcefield/proc/shield_down()
 	active = FALSE
+
+	if(on_deactivation)
+		on_deactivation.Invoke(src)
 
 	for(var/prot_atom in protected)
 		stop_protecting(prot_atom)
@@ -403,12 +403,12 @@
 	LAZYREMOVE(protected, A)
 
 /datum/component/forcefield/techno
-  /// Charge that this forcefield has.
-  var/charge = 0
-  /// Max charge that this forcefiled can have.
-  var/max_charge = 0
-  /// How much charge is required per one health unit to be restored.
-  var/charge_per_hp = 1
+/// Charge that this forcefield has.
+var/charge = 0
+/// Max charge that this forcefiled can have.
+var/max_charge = 0
+/// How much charge is required per one health unit to be restored.
+var/charge_per_hp = 1
 
 /datum/component/forcefield/techno/try_regen(amount)
 	amount = max(amount, charge)
@@ -419,16 +419,52 @@
 
 	add_health(amount)
 
-/datum/component/forcefield/techno/add_protected(datum/source, atom/A)
-  RegisterSignal(A, list(COSMIG_ATOM_EMP_ACT), .proc/on_emp)
-  ..()
+/datum/component/forcefield/techno/proc/get_max_charge()
+	return max_charge
 
-/datum/component/forcefield/techno/remove_protected(Datum/source, atom/A)
-  ..()
-  UnregisterSignal(A, list(COSMIG_ATOM_EMP_ACT))
+/datum/component/forcefield/techno/proc/get_charge()
+	return charge
+
+/datum/component/forcefield/techno/add_protected(datum/source, atom/A)
+	RegisterSignal(A, list(COMSIG_ATOM_EMP_ACT), .proc/on_emp)
+	..()
+
+/datum/component/forcefield/techno/remove_protected(datum/sourse, atom/A)
+	..()
+	UnregisterSignal(A, list(COMSIG_ATOM_EMP_ACT))
 
 /datum/component/forcefield/techno/proc/adjustCharge(amount)
 	charge = CLAMP(charge + amount, 0, max_charge)
 
 /datum/component/forcefield/techno/proc/on_emp(severity)
-  	adjustCharge(-severity * 10)
+	adjustCharge(-severity * 10)
+	
+
+/datum/component/forcefield/techno/cell
+	var/obj/item/weapon/stock_parts/cell/cell
+
+/datum/component/forcefield/techno/cell/Initialize(... , obj/item/weapon/stock_parts/cell/C)
+	..()
+	cell = C
+	RegisterSignal(cell, list(COMSIG_MOVABLE_MOVED), .proc/check_exit)
+	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED), .proc/check_cell)
+
+/datum/component/forcefield/techno/cell/Destroy()
+	UnregisterSignal(cell, list(COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(parent, list(COMSIG_ATOM_ENTERED), .proc/check_cell)
+	cell = null
+	return ..()
+
+/datum/component/forcefield/techno/cell/proc/check_exit()
+	if(cell.loc != parent)
+		cell = null
+
+/datum/component/forcefield/techno/cell/proc/check_cell(datum/source, atom/enteree)
+	if(istype(enteree, cell))
+		cell = enteree
+	
+/datum/component/forcefield/techno/cell/get_charge()
+	return cell.charge
+
+/datum/component/forcefield/techno/cell/get_max_charge()
+	return cell.maxcharge
