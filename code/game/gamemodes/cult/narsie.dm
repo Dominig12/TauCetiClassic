@@ -120,7 +120,7 @@
 					direction = pick(alldirs)
 			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
 				sleep(10)
-				step(smoke,direction)
+				pre_step(smoke,direction)
 			spawn(150+rand(10,30))
 				if(smoke)
 					fadeOut2(smoke)

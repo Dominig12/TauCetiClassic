@@ -204,10 +204,10 @@
 		INVOKE_ASYNC(src, .proc/find_target_path)
 		return
 	if(path.len > 0 && target)
-		step_to(src, path[1])
+		pre_step_to(src, path[1])
 		path -= path[1]
 	else if(path.len == 1)
-		step_to(src, target)
+		pre_step_to(src, target)
 
 	if(target)
 		patrol_path = null

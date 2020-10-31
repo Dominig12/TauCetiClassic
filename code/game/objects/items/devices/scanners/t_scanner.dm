@@ -25,7 +25,7 @@
 
 		var/mutable_appearance/MA = new(pipe)
 		MA.alpha = 128
-		MA.dir = pipe.dir
+		MA.set_dir(pipe.dir)
 
 		I.appearance = MA
 		if(M.client)

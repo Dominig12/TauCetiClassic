@@ -117,9 +117,9 @@
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
-			step(mob.control_object,direct)
+			pre_step(mob.control_object,direct)
 			if(!mob.control_object)	return
-			mob.control_object.dir = direct
+			mob.control_object.set_dir(direct)
 		else
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
@@ -259,7 +259,7 @@
 								else
 									diag = null
 								if ((get_dist(mob, M) > 1 || diag))
-									step(M, get_dir(M.loc, T))
+									pre_step(M, get_dir(M.loc, T))
 				else
 					for(var/mob/M in L)
 						M.other_mobs = 1
@@ -267,7 +267,7 @@
 							M.animate_movement = 3
 					for(var/mob/M in L)
 						spawn( 0 )
-							step(M, direct)
+							pre_step(M, direct)
 							return
 						spawn( 1 )
 							M.other_mobs = null
@@ -282,7 +282,7 @@
 				newdir = angle2dir(dir2angle(direct) + 180)
 			else if(prob(mob.confused * 3))
 				newdir = angle2dir(dir2angle(direct) + pick(90, -90))
-			step(mob, newdir)
+			pre_step(mob, newdir)
 		else
 			. = mob.SelfMove(n, direct)
 
@@ -328,7 +328,7 @@
 	switch(L.incorporeal_move)
 		if(1)
 			L.loc = get_step(L, direct)
-			L.dir = direct
+			L.set_dir(direct)
 		if(2)
 			if(prob(50))
 				var/locx
@@ -368,7 +368,7 @@
 				spawn(0)
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
-			L.dir = direct
+			L.set_dir(direct)
 	return 1
 
 
@@ -466,10 +466,10 @@
 		var/mob/M = pulling
 		var/atom/movable/t = M.pulling
 		M.stop_pulling()
-		step(pulling, get_dir(pulling.loc, A))
+		pre_step(pulling, get_dir(pulling.loc, A))
 		if(M && t)
 			M.start_pulling(t)
 	else
-		step(pulling, get_dir(pulling.loc, A))
+		pre_step(pulling, get_dir(pulling.loc, A))
 	pulling.set_dir(pulling.dir)
 	return

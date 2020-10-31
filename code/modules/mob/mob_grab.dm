@@ -344,7 +344,7 @@
 			assailant.visible_message("<span class='warning'>[assailant] pins [affecting] down to the ground (now hands)!</span>")
 			force_down = 1
 			affecting.Weaken(3)
-			step_to(assailant, affecting)
+			pre_step_to(assailant, affecting)
 			assailant.set_dir(EAST) //face the victim
 			affecting.set_dir(SOUTH) //face up
 		set_state(GRAB_AGGRESSIVE)
@@ -544,7 +544,7 @@
 						force_down = 1
 						affecting.Weaken(3)
 						affecting.lying = 1
-						step_to(assailant, affecting)
+						pre_step_to(assailant, affecting)
 						assailant.set_dir(EAST) //face the victim
 						affecting.set_dir(SOUTH) //face up
 						affecting.layer = 3.9

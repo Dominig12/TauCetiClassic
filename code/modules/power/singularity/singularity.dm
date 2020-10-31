@@ -248,7 +248,7 @@
 	if(target && prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 
-	step(src, movement_dir)
+	pre_step(src, movement_dir)
 
 /obj/singularity/proc/check_turfs_in(direction = 0, step = 0)
 	if(!direction)

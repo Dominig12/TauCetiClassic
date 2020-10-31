@@ -44,17 +44,15 @@
     icon = 'code/modules/projectiles/gun_modular/modular.dmi'
     desc = ""
     w_class = ITEM_SIZE_SMALL
-    var/list/points_of_entry = list()
-    var/list/exit_point = list()
-    var/list/image/icon_overlay = list()
     var/icon_overlay_name
-    var/prefix
     var/caliber
     var/lessdamage = 0
     var/lessdispersion = 0
     var/size_gun = 1
     var/gun_type
+    var/prefix = "Module"
     var/obj/item/weapon/gun_modular/module/frame/frame_parent = null
+    var/datum/component/point_to_point/point = null
 
 /obj/item/weapon/gun_modular/module/examine(mob/user)
     . = ..()
@@ -66,116 +64,108 @@
     return ..()
 
 /obj/item/weapon/gun_modular/module/update_icon()
-    for(var/key in icon_overlay)
-        if(icon_overlay[key])
-            icon_overlay[key].color = color
+    for(var/key in point.complex_image)
+        if(point.complex_image[key])
+            point.complex_image[key].color = color
     return
+
+/obj/item/weapon/gun_modular/module/proc/update_image()
+    var/image/IS = point.get_image()
+    var/image/image_change = image(null)
+    image_change.plane = plane
+    image_change.layer = layer
+    appearance = IS.appearance
+    plane = image_change.plane
+    layer = image_change.layer
+    update_icon()
 
 /obj/item/weapon/gun_modular/module/atom_init()
     . = ..()
-    icon_overlay["ICON"] = image(icon, icon_overlay_name)
-    icon_overlay["ICON"].appearance_flags |= KEEP_TOGETHER
-    icon_overlay["[SPRITE_SHEET_HELD]_l"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_l")
-    icon_overlay["[SPRITE_SHEET_HELD]_r"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_r")
-    icon_overlay["[SPRITE_SHEET_BELT]"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_belt")
-    icon_overlay["[SPRITE_SHEET_BACK]"] = image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_back")
+    AddComponent(/datum/component/point_to_point, src, prefix, CALLBACK(src, .proc/update_image))
+    point = GetComponent(/datum/component/point_to_point)
+    var/image/overlay_icon = image(icon, icon_overlay_name)
+    overlay_icon.appearance_flags |= KEEP_TOGETHER
+    point.set_image_to_slot(overlay_icon, "ICON")
+    point.set_image_to_slot(image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_l"), "[SPRITE_SHEET_HELD]_l")
+    point.set_image_to_slot(image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_r"), "[SPRITE_SHEET_HELD]_r")
+    point.set_image_to_slot(image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_belt"), "[SPRITE_SHEET_BELT]")
+    point.set_image_to_slot(image(icon = 'code/modules/projectiles/gun_modular/modular_overlays.dmi', icon_state = "[icon_overlay_name]_back"), "[SPRITE_SHEET_BACK]")
     build_points_list()
 
+//Point and point system that creates the ability to connect objects to specific points of parent objects
 /obj/item/weapon/gun_modular/module/proc/build_points_list()
-    change_list_exit("ICON", "[SOUTH]", list(0, 0))
+    var/image/l_arm = image('icons/mob/human_races/masks/dam_mask_gen.dmi', BP_L_ARM)
+    var/image/r_arm = image('icons/mob/human_races/masks/dam_mask_gen.dmi', BP_R_ARM)
+    var/image/chest = image('icons/mob/human_races/masks/dam_mask_gen.dmi', BP_CHEST)
+    var/image/l_leg = image('icons/mob/human_races/masks/dam_mask_gen.dmi', BP_L_LEG)
+    var/image/r_leg = image('icons/mob/human_races/masks/dam_mask_gen.dmi', BP_R_LEG)
+    var/image/groin = image('icons/mob/human_races/masks/dam_mask_gen.dmi', BP_GROIN)
+    var/image/head = image('icons/mob/human_races/masks/dam_mask_gen.dmi', BP_HEAD)
 
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(0, 0))
+    point.change_list_mask("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list("BODY" = list(l_arm)))
+    point.change_list_mask("[SPRITE_SHEET_HELD]_l", "[NORTH]", list("BODY" = list(chest, groin, l_leg, r_leg, r_arm, head)))
+    point.change_list_mask("[SPRITE_SHEET_HELD]_l", "[EAST]", list("BODY" = list(l_arm)))
+    point.change_list_mask("[SPRITE_SHEET_HELD]_l", "[WEST]", list("BODY" = list(l_arm)))
 
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(0, 0))
+    point.change_list_mask("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list("BODY" = list(r_arm)))
+    point.change_list_mask("[SPRITE_SHEET_HELD]_r", "[NORTH]", list("BODY" = list(chest, groin, l_leg, r_leg, l_arm, head)))
+    point.change_list_mask("[SPRITE_SHEET_HELD]_r", "[EAST]", list("BODY" = list(r_arm)))
+    point.change_list_mask("[SPRITE_SHEET_HELD]_r", "[WEST]", list("BODY" = list(r_arm)))
 
-    change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(0, 0))
+    point.change_list_mask("[SPRITE_SHEET_BELT]", "[SOUTH]", list("BODY" = list(l_arm)))
+    point.change_list_mask("[SPRITE_SHEET_BELT]", "[NORTH]", list("BODY" = null))
+    point.change_list_mask("[SPRITE_SHEET_BELT]", "[EAST]", list("BODY" = list(chest, groin, l_leg, r_leg, r_arm, head)))
+    point.change_list_mask("[SPRITE_SHEET_BELT]", "[WEST]", list("BODY" = list(l_arm)))
 
-    change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(0, 0))
+    point.change_list_mask("[SPRITE_SHEET_BACK]", "[SOUTH]", list("BODY" = list(chest, groin, l_leg, r_leg, r_arm, head, l_arm)))
+    point.change_list_mask("[SPRITE_SHEET_BACK]", "[NORTH]", list("BODY" = null))
+    point.change_list_mask("[SPRITE_SHEET_BACK]", "[EAST]", list("BODY" = list(r_arm, chest, head, groin, r_leg)))
+    point.change_list_mask("[SPRITE_SHEET_BACK]", "[WEST]", list("BODY" = list(l_arm, chest, head, groin, l_leg)))
 
-    change_list_entry("ICON", "[SOUTH]", null)
+    point.change_list_exit("ICON", "[SOUTH]", list(0, 0))
 
-    change_list_entry("[SPRITE_SHEET_HELD]_l", "[SOUTH]", null)
-    change_list_entry("[SPRITE_SHEET_HELD]_l", "[NORTH]", null)
-    change_list_entry("[SPRITE_SHEET_HELD]_l", "[EAST]", null)
-    change_list_entry("[SPRITE_SHEET_HELD]_l", "[WEST]", null)
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(0, 0))
 
-    change_list_entry("[SPRITE_SHEET_HELD]_r", "[SOUTH]", null)
-    change_list_entry("[SPRITE_SHEET_HELD]_r", "[NORTH]", null)
-    change_list_entry("[SPRITE_SHEET_HELD]_r", "[EAST]", null)
-    change_list_entry("[SPRITE_SHEET_HELD]_r", "[WEST]", null)
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(0, 0))
 
-    change_list_entry("[SPRITE_SHEET_BELT]", "[SOUTH]", null)
-    change_list_entry("[SPRITE_SHEET_BELT]", "[NORTH]", null)
-    change_list_entry("[SPRITE_SHEET_BELT]", "[EAST]", null)
-    change_list_entry("[SPRITE_SHEET_BELT]", "[WEST]", null)
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(0, 0))
 
-    change_list_entry("[SPRITE_SHEET_BACK]", "[SOUTH]", null)
-    change_list_entry("[SPRITE_SHEET_BACK]", "[NORTH]", null)
-    change_list_entry("[SPRITE_SHEET_BACK]", "[EAST]", null)
-    change_list_entry("[SPRITE_SHEET_BACK]", "[WEST]", null)
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(0, 0))
+
+    point.change_list_entry("ICON", "[SOUTH]", null)
+
+    point.change_list_entry("[SPRITE_SHEET_HELD]_l", "[SOUTH]", null)
+    point.change_list_entry("[SPRITE_SHEET_HELD]_l", "[NORTH]", null)
+    point.change_list_entry("[SPRITE_SHEET_HELD]_l", "[EAST]", null)
+    point.change_list_entry("[SPRITE_SHEET_HELD]_l", "[WEST]", null)
+
+    point.change_list_entry("[SPRITE_SHEET_HELD]_r", "[SOUTH]", null)
+    point.change_list_entry("[SPRITE_SHEET_HELD]_r", "[NORTH]", null)
+    point.change_list_entry("[SPRITE_SHEET_HELD]_r", "[EAST]", null)
+    point.change_list_entry("[SPRITE_SHEET_HELD]_r", "[WEST]", null)
+
+    point.change_list_entry("[SPRITE_SHEET_BELT]", "[SOUTH]", null)
+    point.change_list_entry("[SPRITE_SHEET_BELT]", "[NORTH]", null)
+    point.change_list_entry("[SPRITE_SHEET_BELT]", "[EAST]", null)
+    point.change_list_entry("[SPRITE_SHEET_BELT]", "[WEST]", null)
+
+    point.change_list_entry("[SPRITE_SHEET_BACK]", "[SOUTH]", null)
+    point.change_list_entry("[SPRITE_SHEET_BACK]", "[NORTH]", null)
+    point.change_list_entry("[SPRITE_SHEET_BACK]", "[EAST]", null)
+    point.change_list_entry("[SPRITE_SHEET_BACK]", "[WEST]", null)
     return TRUE
-
-/obj/item/weapon/gun_modular/module/proc/change_list_entry(var/type, var/direct, var/list/points, var/key = null)
-    LAZYINITLIST(points_of_entry)
-    LAZYINITLIST(points_of_entry[type])
-    LAZYINITLIST(points_of_entry[type][direct])
-    if(key)
-        points_of_entry[type][direct][key] = points
-        return TRUE
-    for(var/key_tmp in points)
-        points_of_entry[type][direct][key_tmp] = points[key_tmp]
-    return TRUE
-
-/obj/item/weapon/gun_modular/module/proc/change_list_exit(var/type, var/direct, var/list/points)
-    LAZYINITLIST(exit_point)
-    LAZYINITLIST(exit_point[type])
-    LAZYINITLIST(exit_point[type][direct])
-    exit_point[type][direct] = points
-    return TRUE
-
-/obj/item/weapon/gun_modular/module/proc/check_list_point(var/list/changed_list, var/type, var/direct, var/point = null)
-    if(!changed_list)
-        return FALSE
-    if(!changed_list[type])
-        return FALSE
-    if(!changed_list[type][direct])
-        return FALSE
-    if(point)
-        if(!changed_list[type][direct][point])
-            return FALSE
-    return TRUE
-
-/obj/item/weapon/gun_modular/module/proc/get_delta_offset(var/type = "ICON", var/direct = "[SOUTH]", var/point = prefix)
-    var/list/points_modify = list(0, 0, -3)
-    if(frame_parent.check_list_point(frame_parent.points_of_entry, type, direct, point))
-        points_modify = frame_parent.points_of_entry[type][direct][point]
-
-    var/delta_x = 0
-    var/delta_y = 0
-    var/layer_overlay = points_modify[3]
-
-    delta_x = points_modify[1] - exit_point[type][direct][1]
-    delta_y = points_modify[2] - exit_point[type][direct][2]
-    
-    if(check_list_point(points_of_entry, type, direct))
-        for(var/key in points_of_entry[type][direct])
-            if(frame_parent.check_list_point(frame_parent.points_of_entry, type, direct, key))
-                continue
-            frame_parent.change_list_entry(type, direct, list(points_of_entry[type][direct][key][1] + delta_x, points_of_entry[type][direct][key][2] + delta_y, points_of_entry[type][direct][key][3]), key)
-
-    return list(delta_x, delta_y, layer_overlay)
 
 // This gives information in the tooltip, here you can talk about additional weapon stats
 
@@ -250,8 +240,6 @@
         return FALSE
     if(gun_type != frame.gun_type && gun_type != ALL_GUN_TYPE)
         return FALSE
-    if(!frame.check_list_point(frame.points_of_entry, "ICON", "[SOUTH]", prefix))
-        return FALSE
     return TRUE
 
 // Module attachment procedure
@@ -275,13 +263,8 @@
         to_chat(user, "Module '[name]' was attached")
     src.loc = frame
     frame_parent = frame
+    point.connect_to_point(frame.point)
     LAZYINITLIST(frame.modules)
-    
-    var/list/delta_offset = get_delta_offset()
-
-    icon_overlay["ICON"].pixel_x = delta_offset[1]
-    icon_overlay["ICON"].pixel_y = delta_offset[2]
-
     frame.modules[prefix] = src
     frame.change_state(src, TRUE)
     return TRUE
@@ -289,10 +272,7 @@
 // Module removal procedure
 
 /obj/item/weapon/gun_modular/module/proc/remove(mob/user = null)
-    for(var/key_type in points_of_entry)
-        for(var/key_dir in points_of_entry[key_type])
-            for(var/key in points_of_entry[key_type][key_dir])
-                frame_parent.change_list_entry(key_type, key_dir, null, key)
+    point.disconnect_to_point()
     frame_parent.modules[prefix] = null
     src.loc = get_turf(frame_parent)
     if(frame_parent)

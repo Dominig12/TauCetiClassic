@@ -366,7 +366,7 @@
 		carrier.layer = pos["layer"]
 		LAZYREMOVE(carrier_default_pos, carrier)
 
-		step(carrier, pick(alldirs))
+		pre_step(carrier, pick(alldirs))
 
 		unregister_carrier(carrier)
 		carrier.stop_pulling()
@@ -436,7 +436,7 @@
 		var/mob/M = carry_obj.buckled_mob
 		if(M && M.can_waddle())
 			M.waddle(pick(-waddle_strength, 0, waddle_strength), pz_raise)
-			M.dir = pick(WEST, EAST)
+			M.set_dir(pick(WEST, EAST))
 
 /datum/component/multi_carry/proc/check_proximity(datum/source)
 	var/mob/carrier = source

@@ -64,7 +64,7 @@
 		chassis.set_dir(direction)
 		move_result = 1
 	else
-		move_result	= step(chassis,direction)
+		move_result	= pre_step(chassis,direction)
 		if(chassis.occupant)
 			for(var/obj/effect/speech_bubble/B in range(1, chassis))
 				if(B.parent == chassis.occupant)

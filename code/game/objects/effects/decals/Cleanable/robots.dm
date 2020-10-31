@@ -23,7 +23,7 @@
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 					s.set_up(3, 1, src)
 					s.start()
-			if (step_to(src, get_step(src, direction), 0))
+			if (pre_step_to(src, get_step(src, direction), 0))
 				break
 
 /obj/effect/decal/cleanable/blood/gibs/robot/limb

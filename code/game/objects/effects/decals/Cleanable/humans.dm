@@ -232,7 +232,7 @@ var/global/list/image/splatter_cache=list()
 					b.viruses += ND
 					ND.holder = b
 
-				if (step_to(src, get_step(src, direction), 0))
+				if (pre_step_to(src, get_step(src, direction), 0))
 					break
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(atom/movable/AM)

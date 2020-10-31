@@ -11,7 +11,7 @@ Must right click on a mob to activate.*/
 	var/C = 50
 	if(!ninjacost(C,0)&&iscarbon(M))
 		var/mob/living/carbon/human/U = affecting
-		if(M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
+		if(M.client)//Monkeys without a client can still pre_step_to() and bypass the net. Also, netting inactive people is lame.
 		//if(M)//DEBUG
 			if(!locate(/obj/effect/energy_net) in M.loc)//Check if they are already being affected by an energy net.
 				for(var/turf/T in getline(U.loc, M.loc))

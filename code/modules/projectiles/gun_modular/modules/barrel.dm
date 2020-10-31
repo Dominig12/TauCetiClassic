@@ -38,8 +38,8 @@
 
 /obj/item/weapon/gun_modular/module/barrel/small/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(1, 3))
-    change_list_entry("ICON", "[SOUTH]", list("Silenser" = list(4, 3, -3)))
+    point.change_list_exit("ICON", "[SOUTH]", list(1, 3))
+    point.change_list_entry("ICON", "[SOUTH]", list("Silenser" = list(4, 3, -3)))
 
 /obj/item/weapon/gun_modular/module/barrel/medium
     name = "gun barrel medium"
@@ -53,9 +53,29 @@
 
 /obj/item/weapon/gun_modular/module/barrel/medium/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(1, 4))
-    change_list_entry("ICON", "[SOUTH]", list("Bayonet" = list(7, 1, -3),
+    point.change_list_exit("ICON", "[SOUTH]", list(1, 4))
+    point.change_list_entry("ICON", "[SOUTH]", list("Bayonet" = list(7, 1, -3),
                                                 "Silenser" = list(9, 4, -3)))
+    
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(5, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(1, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(7, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(5, 3))
+
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(1, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(5, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(2, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(2, 3))
+
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(5, 5))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(1, 5))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(3, 5))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(3, 5))
+
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(3, 5))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(3, 5))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(1, 5))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(5, 5))
 
 /obj/item/weapon/gun_modular/module/barrel/large
     name = "gun barrel large"
@@ -69,29 +89,29 @@
 
 /obj/item/weapon/gun_modular/module/barrel/large/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(1, 4))
-    change_list_entry("ICON", "[SOUTH]", list("Bayonet" = list(11, 1, -3),
+    point.change_list_exit("ICON", "[SOUTH]", list(1, 4))
+    point.change_list_entry("ICON", "[SOUTH]", list("Bayonet" = list(11, 1, -3),
                                                 "Silenser" = list(13, 4, -3)))
-    
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(7, 3))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(1, 3))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(7, 3))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(9, 3))
 
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(1, 3))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(7, 3))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(2, 3))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(1, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(7, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(1, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(7, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(9, 3))
 
-    change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(6, 6))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(1, 6))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(3, 6))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(3, 6))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(1, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(7, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(2, 3))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(1, 3))
 
-    change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(3, 6))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(3, 6))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(1, 6))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(6, 6))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(6, 6))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(1, 6))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(3, 6))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(3, 6))
+
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(3, 6))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(3, 6))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(1, 6))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(6, 6))
 
 /obj/item/weapon/gun_modular/module/barrel/rifle_bullet
     name = "gun barrel large bullet"
@@ -105,8 +125,8 @@
 
 /obj/item/weapon/gun_modular/module/barrel/rifle_bullet/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(1, 7))
-    change_list_entry("ICON", "[SOUTH]", list("Bayonet" = list(16, 3, -3),
+    point.change_list_exit("ICON", "[SOUTH]", list(1, 7))
+    point.change_list_entry("ICON", "[SOUTH]", list("Bayonet" = list(16, 3, -3),
                                             "Silenser" = list(16, 7, -3)))                          
 
 /obj/item/weapon/gun_modular/module/barrel/rifle_laser
@@ -121,5 +141,5 @@
 
 /obj/item/weapon/gun_modular/module/barrel/rifle_laser/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(1, 11))
-    change_list_entry("ICON", "[SOUTH]", list("Bayonet" = list(13, 5, -3)))
+    point.change_list_exit("ICON", "[SOUTH]", list(1, 11))
+    point.change_list_entry("ICON", "[SOUTH]", list("Bayonet" = list(13, 5, -3)))

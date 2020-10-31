@@ -25,8 +25,8 @@
 	var/direction_list = list(\
 	"North" = NORTH,\
 	"South" = SOUTH,\
-	EAST_DIR = EAST,\
-	WEST_DIR = WEST,\
+	"East" = EAST,\
+	"West" = WEST,\
 	#ifdef MULTIZAS
 	"Up" = UP,\
 	"Down" = DOWN,\

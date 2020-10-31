@@ -36,7 +36,7 @@
 			QDEL_NULL(CATCH)
 		if(B && prob(80))
 			for(var/j in 1 to rand(1, 3))
-				step(B, pick(NORTH, SOUTH, EAST, WEST))
+				pre_step(B, pick(NORTH, SOUTH, EAST, WEST))
 
 /datum/religion_rites/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()

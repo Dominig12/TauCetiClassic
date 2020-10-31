@@ -59,7 +59,7 @@
 					qdel(V)
 					continue
 			if(!target && prob(65))
-				step(src, pick(cardinal))
+				pre_step(src, pick(cardinal))
 
 /obj/item/clothing/mask/facehugger/proc/chase()
 	while(target)
@@ -92,7 +92,7 @@
 			target = null
 			return
 		else if(target in view(7,src))
-			step_to(src,target)
+			pre_step_to(src,target)
 		else if(chase_time > 0)
 			chase_time--
 			step_towards(src,target)
@@ -109,7 +109,7 @@
 	for(var/i in 1 to 8)
 		if(!src || !target)
 			return FALSE
-		step_to(src, target)
+		pre_step_to(src, target)
 		if(get_dist(src, target) == 0)
 			return TRUE
 	return FALSE

@@ -211,7 +211,7 @@
 	else
 		..()
 		if(health < maxhealth && !isscrewdriver(W) && W.force)
-			step_to(src, (get_step_away(src,user)))
+			pre_step_to(src, (get_step_away(src,user)))
 
 /obj/machinery/bot/medbot/emag_act(mob/user)
 	..()
@@ -318,11 +318,11 @@
 		return
 
 	if(path.len > 0 && patient)
-		step_to(src, path[1])
+		pre_step_to(src, path[1])
 		path -= path[1]
 		spawn(3)
 			if(path.len)
-				step_to(src, path[1])
+				pre_step_to(src, path[1])
 				path -= path[1]
 
 	if(path.len > 8 && patient)

@@ -680,7 +680,7 @@ var/list/airlock_overlays = list()
 			var/turf/simulated/floor/tile = target
 			tile.break_tile()
 		for(var/i in 1 to 2)
-			if(!step(user,cur_dir))
+			if(!pre_step(user,cur_dir))
 				for(var/mob/living/L in get_step(user,cur_dir))
 					L.adjustBruteLoss(rand(20,60))
 				break

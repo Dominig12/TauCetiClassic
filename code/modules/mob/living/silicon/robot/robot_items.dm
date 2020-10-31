@@ -73,7 +73,7 @@
 				spawn()
 					for(var/i = 1, i <= rand(1,2), i++)
 						if(I)
-							step(I, pick(NORTH,SOUTH,EAST,WEST))
+							pre_step(I, pick(NORTH,SOUTH,EAST,WEST))
 							sleep(rand(2,4))
 		if ( droppedSomething )
 			if ( foundtable )

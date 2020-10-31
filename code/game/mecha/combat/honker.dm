@@ -135,7 +135,7 @@
 
 
 /obj/mecha/combat/honker/mechstep(direction)
-	var/result = step(src,direction)
+	var/result = pre_step(src,direction)
 	if(result)
 		if(!squeak)
 			playsound(src, pick(SOUNDIN_CLOWNSTEP), VOL_EFFECTS_MASTER)

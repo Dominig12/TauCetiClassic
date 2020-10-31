@@ -158,7 +158,7 @@
     
 /obj/item/weapon/gun_modular/module/accessory/optical/small/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(1, 1))
+    point.change_list_exit("ICON", "[SOUTH]", list(1, 1))
 
 /obj/item/weapon/gun_modular/module/accessory/optical/medium
     name = "gun optical medium accessory"
@@ -174,7 +174,7 @@
 
 /obj/item/weapon/gun_modular/module/accessory/optical/medium/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(6, 1))
+    point.change_list_exit("ICON", "[SOUTH]", list(6, 1))
 
 /obj/item/weapon/gun_modular/module/accessory/optical/large
     name = "gun optical large accessory"
@@ -190,7 +190,7 @@
 
 /obj/item/weapon/gun_modular/module/accessory/optical/large/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(9, 1))
+    point.change_list_exit("ICON", "[SOUTH]", list(9, 1))
 
 /obj/item/weapon/gun_modular/module/accessory/core_charger
     name = "gun core charger accessory"
@@ -209,7 +209,7 @@
 
 /obj/item/weapon/gun_modular/module/accessory/core_charger/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(3, 1))
+    point.change_list_exit("ICON", "[SOUTH]", list(3, 1))
 
 /obj/item/weapon/gun_modular/module/accessory/core_charger/Destroy()
     if(core)
@@ -275,9 +275,9 @@
 
 /obj/item/weapon/gun_modular/module/accessory/silenser/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(1, 4))
+    point.change_list_exit("ICON", "[SOUTH]", list(1, 4))
 
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(6, 2))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(6, 2))
 
 /obj/item/weapon/gun_modular/module/accessory/silenser/attach(obj/item/weapon/gun_modular/module/frame/I, mob/user)
     if(!..())
@@ -317,9 +317,9 @@
 
 /obj/item/weapon/gun_modular/module/accessory/bayonet/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(4, 5))
+    point.change_list_exit("ICON", "[SOUTH]", list(4, 5))
 
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(7, 2))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(7, 2))
 
 /obj/item/weapon/gun_modular/module/accessory/bayonet/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
     if(!..())
@@ -361,7 +361,7 @@
 
 /obj/item/weapon/gun_modular/module/accessory/additional_battery/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(15, 13))
+    point.change_list_exit("ICON", "[SOUTH]", list(15, 13))
 
 /obj/item/weapon/gun_modular/module/accessory/additional_battery/Destroy()
     if(additional_battery)
@@ -436,7 +436,7 @@
 
 /obj/item/weapon/gun_modular/module/accessory/dna_crypter/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(9, 5))
+    point.change_list_exit("ICON", "[SOUTH]", list(9, 5))
 
 /obj/item/weapon/gun_modular/module/accessory/dna_crypter/activate(mob/user, argument)
     if(!Owner)
@@ -490,27 +490,27 @@
 
 /obj/item/weapon/gun_modular/module/accessory/butt/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(12, 9))
+    point.change_list_exit("ICON", "[SOUTH]", list(12, 9))
 
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(1, 6))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(10, 6))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(1, 6))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(1, 6))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(1, 6))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(10, 6))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(1, 6))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(1, 6))
 
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(10, 6))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(1, 6))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(6, 6))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(6, 6))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(10, 6))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(1, 6))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(6, 6))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(6, 6))
 
-    change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(1, 2))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(9, 2))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(2, 1))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(2, 1))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(1, 2))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(9, 2))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(2, 1))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(2, 1))
 
-    change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(2, 1))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(2, 1))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(9, 2))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(1, 2))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(2, 1))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(2, 1))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(9, 2))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(1, 2))
 
 /obj/item/weapon/gun_modular/module/accessory/butt/checking_to_attach(var/obj/item/weapon/gun_modular/module/frame/I)
     if(!..())

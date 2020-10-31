@@ -460,7 +460,7 @@
 		var/turf/T = loc
 		var/turf/newT = get_step(T,dirn)
 		if(load.CanPass(load,newT)) //Can't get off onto anything that wouldn't let you pass normally
-			step(load, dirn)
+			pre_step(load, dirn)
 
 	load = null
 

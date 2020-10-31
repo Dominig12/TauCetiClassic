@@ -363,11 +363,11 @@
 		return
 
 	if(src.path.len > 0 && src.target)
-		step_to(src, src.path[1])
+		pre_step_to(src, src.path[1])
 		src.path -= src.path[1]
 		spawn(3)
 			if(src.path.len)
-				step_to(src, src.path[1])
+				pre_step_to(src, src.path[1])
 				src.path -= src.path[1]
 
 	if(src.path.len > 8 && src.target)

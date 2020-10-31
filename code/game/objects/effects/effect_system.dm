@@ -109,7 +109,7 @@ steam.start() -- spawns the effect
 				direction = pick(alldirs)
 			for(i=0, i<pick(1,2,3), i++)
 				sleep(5)
-				step(steam,direction)
+				pre_step(steam,direction)
 			QDEL_IN(steam, 20)
 
 /////////////////////////////////////////////
@@ -182,7 +182,7 @@ steam.start() -- spawns the effect
 				direction = pick(alldirs)
 			for(i=0, i<pick(1,2,3), i++)
 				sleep(5)
-				step(sparks,direction)
+				pre_step(sparks,direction)
 
 /datum/effect/effect/system/spark_spread/proc/delete_sparks(obj/effect/effect/sparks/sparks)
 	if(sparks)
@@ -350,7 +350,7 @@ steam.start() -- spawns the effect
 					direction = pick(alldirs)
 			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
 				sleep(10)
-				step(smoke,direction)
+				pre_step(smoke,direction)
 			spawn(smoke.time_to_live*0.75+rand(10,30))
 				if (smoke) qdel(smoke)
 				src.total_smoke--

@@ -730,7 +730,7 @@
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
 		if(M.canmove && !M.incapacitated())
 			if(prob(10))
-				step(M, pick(cardinal))
+				pre_step(M, pick(cardinal))
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
 

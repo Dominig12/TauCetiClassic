@@ -20,7 +20,7 @@
 			x.loc = T
 			if(prob(50))
 				for(var/j in 1 to rand(1, 3))
-					step(x, pick(NORTH,SOUTH,EAST,WEST))
+					pre_step(x, pick(NORTH,SOUTH,EAST,WEST))
 	qdel(src)
 	return
 

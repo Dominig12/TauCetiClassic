@@ -28,7 +28,7 @@
 	return ..()
 
 /obj/singularity/scrap_ball/process()
-	step(src, pick(alldirs - last_failed_movement))
+	pre_step(src, pick(alldirs - last_failed_movement))
 	for(var/datum/orbit/shot in orbiters)
 		if(istype(shot.orbiter, /mob/living))
 			var/mob/living/getbrute = shot.orbiter

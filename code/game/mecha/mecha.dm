@@ -306,7 +306,7 @@
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
-	var/result = step(src,direction)
+	var/result = pre_step(src,direction)
 	if(result)
 		playsound(src, 'sound/mecha/Mech_Step.ogg', VOL_EFFECTS_MASTER, 40)
 		use_power(step_energy_drain)
@@ -331,9 +331,9 @@
 		if(istype(obstacle, /obj))
 			var/obj/O = obstacle
 			if(!O.anchored)
-				step(obstacle, dir)
+				pre_step(obstacle, dir)
 		else if(istype(obstacle, /mob))
-			step(obstacle, dir)
+			pre_step(obstacle, dir)
 
 ///////////////////////////////////
 ////////  Internal damage  ////////

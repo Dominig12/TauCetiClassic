@@ -11,7 +11,7 @@
 	return 1
 
 /obj/mecha/medical/mechstep(direction)
-	var/result = step(src,direction)
+	var/result = pre_step(src,direction)
 	if(result)
 		playsound(src, 'sound/mecha/mechstep.ogg', VOL_EFFECTS_MASTER, 25)
 	return result

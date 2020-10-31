@@ -5,18 +5,24 @@
 	icon_state = "lens"
 	caliber = "energy"
 	projectile_type = /obj/item/projectile/energy
-	var/e_cost = 100 //The amount of energy a cell needs to expend to create this shot.
-	var/select_name = "energy"
-	var/mod_name = null
 	fire_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
+	var/e_cost = 100 //The amount of energy a cell needs to expend to create this shot.
+	var/select_name = "laser"
+	var/mod_name = null
+
+/obj/item/ammo_casing/energy/atom_init()
+	. = ..()
+	AddComponent(/datum/component/point_to_point, src, "Lens")
+	var/datum/component/point_to_point/point = GetComponent(/datum/component/point_to_point)
+	point.add_image_to_slot(image(icon, select_name))
 
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/item/projectile/beam
-	select_name = "kill"
+	select_name = "laser"
 
 /obj/item/ammo_casing/energy/laser_pulse
 	projectile_type = /obj/item/projectile/energy/laser
-	select_name = "kill"
+	select_name = "laser"
 	e_cost = 50
 	fire_sound = 'sound/weapons/guns/gunpulse_laser3.ogg'
 
@@ -69,6 +75,7 @@
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray
 	e_cost = 50
+	select_name = "xray"
 	fire_sound = 'sound/weapons/guns/gunpulse_laser3.ogg'
 
 /obj/item/ammo_casing/energy/electrode

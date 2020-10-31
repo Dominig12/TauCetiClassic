@@ -122,7 +122,7 @@
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
 		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
 		connected = new /obj/structure/m_tray( loc )
-		step(connected, dir)
+		pre_step(connected, dir)
 		connected.layer = BELOW_CONTAINERS_LAYER
 		var/turf/T = get_step(src, dir)
 		if (T.contents.Find(connected))
@@ -173,7 +173,7 @@
 	if (user.incapacitated())
 		return
 	connected = new /obj/structure/m_tray( loc )
-	step(connected, dir)
+	pre_step(connected, dir)
 	connected.layer = BELOW_CONTAINERS_LAYER
 	var/turf/T = get_step(src, dir)
 	if (T.contents.Find(connected))
@@ -319,7 +319,7 @@
 	else if (src.locked == 0)
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		src.connected = new /obj/structure/c_tray( src.loc )
-		step(src.connected, SOUTH)
+		pre_step(src.connected, SOUTH)
 		src.connected.layer = BELOW_CONTAINERS_LAYER
 		var/turf/T = get_step(src, SOUTH)
 		if (T.contents.Find(src.connected))
@@ -353,7 +353,7 @@
 	if (user.incapacitated() || locked)
 		return
 	src.connected = new /obj/structure/c_tray( src.loc )
-	step(src.connected, SOUTH)
+	pre_step(src.connected, SOUTH)
 	src.connected.layer = BELOW_CONTAINERS_LAYER
 	var/turf/T = get_step(src, SOUTH)
 	if (T.contents.Find(src.connected))

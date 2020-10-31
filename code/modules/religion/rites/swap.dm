@@ -12,7 +12,7 @@
 			var/swapping = swap_list[O.type]
 			new swapping(O.loc)
 			if(prob(20))
-				step(swapping, pick(alldirs))
+				pre_step(swapping, pick(alldirs))
 			qdel(O)
 	return TRUE
 
@@ -21,7 +21,7 @@
 		if(!swap_list[O.type])
 			continue
 		if(prob(20))
-			step(O, pick(alldirs))
+			pre_step(O, pick(alldirs))
 			break
 
 /*

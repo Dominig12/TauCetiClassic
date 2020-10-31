@@ -46,7 +46,7 @@
 			o++
 			if(o == 4)
 				o = 0
-				step(usr, cur_dir)
+				pre_step(usr, cur_dir)
 			if(i < 7) usr.pixel_y += 8
 			else usr.pixel_y -= 8
 			sleep(1)
@@ -243,19 +243,19 @@
 				speed++
 				if(speed > 3)
 					speed = 0
-					step(usr, cur_dir)
+					pre_step(usr, cur_dir)
 			else if(i < 14)
 				speed++
 				if(speed > 2)
 					speed = 0
-					step(usr, cur_dir)
+					pre_step(usr, cur_dir)
 			else if(i < 21)
 				speed++
 				if(speed > 1)
 					speed = 0
-					step(usr, cur_dir)
+					pre_step(usr, cur_dir)
 			else if(i < 30)
-				step(usr, cur_dir)
+				pre_step(usr, cur_dir)
 			sleep(1)
 
 		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
@@ -439,13 +439,13 @@
 
 	for(var/i in 1 to 45)
 		if(usr.dir == 1)
-			usr.dir = 2
+			usr.set_dir(2)
 		else if(usr.dir == 2)
-			usr.dir = 4
+			usr.set_dir(4)
 		else if(usr.dir == 4)
-			usr.dir = 8
+			usr.set_dir(8)
 		else if(usr.dir == 8)
-			usr.dir = 1
+			usr.set_dir(1)
 
 		for(var/mob/living/M in view(2, usr) - usr - usr.contents)
 			if(istype(M, /mob/living/carbon/human))

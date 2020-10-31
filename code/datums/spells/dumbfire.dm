@@ -43,7 +43,7 @@
 				projectile:linked_spells += proj_type
 			projectile.icon = proj_icon
 			projectile.icon_state = proj_icon_state
-			projectile.dir = get_dir(projectile, target)
+			projectile.set_dir(get_dir(projectile, target))
 			projectile.name = proj_name
 
 			var/current_loc = usr.loc
@@ -57,7 +57,7 @@
 				if(proj_insubstantial)
 					projectile.loc = get_step(projectile, projectile.dir)
 				else
-					step(projectile, projectile.dir)
+					pre_step(projectile, projectile.dir)
 
 				if(projectile.loc == current_loc || i == proj_lifespan)
 					projectile.cast(current_loc)

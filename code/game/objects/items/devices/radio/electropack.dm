@@ -87,7 +87,7 @@
 		if(istype(T, /turf))
 			if(!M.moved_recently && M.last_move)
 				M.moved_recently = 1
-				step(M, M.last_move)
+				pre_step(M, M.last_move)
 				sleep(50)
 				if(M)
 					M.moved_recently = 0

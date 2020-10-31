@@ -185,5 +185,5 @@
 				spawn(20) can_move = TRUE
 			else
 				spawn(25) can_move = TRUE
-		step(src, direction)
+		pre_step(src, direction)
 	return

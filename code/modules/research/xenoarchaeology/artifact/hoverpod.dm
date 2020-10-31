@@ -15,7 +15,7 @@
 	return 1
 
 /obj/mecha/working/hoverpod/mechstep(direction)
-	var/result = step(src,direction)
+	var/result = pre_step(src,direction)
 	if(result)
 		playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER)
 	return result

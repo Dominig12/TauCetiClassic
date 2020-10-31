@@ -24,11 +24,11 @@
 						break
 			if(movement_target)
 				stop_automated_movement = TRUE
-				step_to(src,movement_target,1)
+				pre_step_to(src,movement_target,1)
 				sleep(3)
-				step_to(src,movement_target,1)
+				pre_step_to(src,movement_target,1)
 				sleep(3)
-				step_to(src,movement_target,1)
+				pre_step_to(src,movement_target,1)
 
 				if(movement_target) // Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					if (movement_target.loc.x < src.x)

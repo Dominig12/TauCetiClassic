@@ -398,7 +398,7 @@ SUBSYSTEM_DEF(shuttle)
 								break
 					if(hit)
 						break
-					step(L, fall_direction)
+					pre_step(L, fall_direction)
 		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/proc/dock_act(area_type, door_tag)
@@ -675,7 +675,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	while(src)
 		sleep(speed)
-		step(src, direction)
+		pre_step(src, direction)
 		for(var/obj/effect/starender/E in loc)
 			qdel(src)
 

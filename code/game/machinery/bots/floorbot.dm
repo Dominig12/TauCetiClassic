@@ -206,7 +206,7 @@
 	if(!path || path.len == 0)
 		path = get_path_to(src, get_turf(atom), /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
 	else if(path.len > 0)
-		step_to(src, path[1])
+		pre_step_to(src, path[1])
 		path -= path[1]
 
 	return FALSE
@@ -429,7 +429,7 @@
 			targetdirection = null
 			return
 
-		step_to(src, T)
+		pre_step_to(src, T)
 
 
 /obj/machinery/bot/floorbot/proc/updateicon()

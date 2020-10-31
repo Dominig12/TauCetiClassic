@@ -196,14 +196,14 @@
 	return
 
 /*
- *	atom/proc/search_contents_for(path,list/filter_path=null)
- * Recursevly searches all atom contens (including contents contents and so on).
- *
- * ARGS: path - search atom contents for atoms of this type
- *	   list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
- *
- * RETURNS: list of found atoms
- */
+*	atom/proc/search_contents_for(path,list/filter_path=null)
+* Recursevly searches all atom contens (including contents contents and so on).
+*
+* ARGS: path - search atom contents for atoms of this type
+*	   list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
+*
+* RETURNS: list of found atoms
+*/
 
 /atom/proc/search_contents_for(path,list/filter_path=null)
 	var/list/found = list()
@@ -222,11 +222,11 @@
 
 
 /**
-  * Get the name of this object for examine
-  *
-  * You can override what is returned from this proc by registering to listen for the
-  * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
-  */
+* Get the name of this object for examine
+*
+* You can override what is returned from this proc by registering to listen for the
+* [COMSIG_ATOM_GET_EXAMINE_NAME] signal
+*/
 /atom/proc/get_examine_name(mob/user)
 	var/list/override
 	if(!dirt_overlay)
@@ -274,6 +274,14 @@
 	. = new_dir != dir
 	dir = new_dir
 	SEND_SIGNAL(src, COSMIG_ATOM_SETDIR, src)
+
+/proc/pre_step(atom/Ref, var/Dir, var/Speed = 0)
+	step(Ref, Dir, Speed)
+	SEND_SIGNAL(Ref, COSMIG_ATOM_SETDIR, Ref)
+
+/proc/pre_step_to(atom/Ref, atom/Trg, var/Min = 0, var/Speed = 0)
+	step_to(Ref, Trg, Min, Speed)
+	SEND_SIGNAL(Ref, COSMIG_ATOM_SETDIR, Ref)
 
 /atom/proc/relaymove()
 	return
@@ -564,7 +572,7 @@
 			lube |= SLIDE_ICE
 
 		if(lube & SLIDE)
-			step(C, olddir)
+			pre_step(C, olddir)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 1)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 2)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 3)
@@ -577,7 +585,7 @@
 				if((istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
 					has_NOSLIP = TRUE
 			if (C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
-				step(C, olddir)
+				pre_step(C, olddir)
 			else
 				C.inertia_dir = 0
 		return TRUE

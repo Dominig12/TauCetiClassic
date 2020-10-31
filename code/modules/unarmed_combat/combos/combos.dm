@@ -232,7 +232,7 @@
 	apply_effect(3, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
 	victim.visible_message("<span class='danger'>[attacker] presses [victim] to the ground!</span>")
 
-	step_to(attacker, victim)
+	pre_step_to(attacker, victim)
 	attacker.set_dir(EAST) //face the victim
 	victim.set_dir(SOUTH) //face up
 
@@ -318,7 +318,7 @@
 
 	var/atom/move_attacker_to = victim.loc
 	var/atom/move_victim_dir = get_dir(victim, get_step_away(victim, attacker))
-	step(victim, move_victim_dir)
+	pre_step(victim, move_victim_dir)
 
 	attacker.pixel_x = prev_pix_x
 	attacker.pixel_y = prev_pix_y + 16
@@ -634,7 +634,7 @@
 
 			var/atom/old_V_loc = victim.loc
 			var/turf/target_turf = get_step(get_turf(victim), dropkick_dir)
-			step(victim, dropkick_dir)
+			pre_step(victim, dropkick_dir)
 
 			if(old_V_loc == victim.loc)
 				var/list/candidates = target_turf.contents - list(victim)

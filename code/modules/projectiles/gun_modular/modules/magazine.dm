@@ -15,27 +15,27 @@
 
 /obj/item/weapon/gun_modular/module/magazine/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(1, 1))
+    point.change_list_exit("ICON", "[SOUTH]", list(1, 1))
 
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(1, 1))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(1, 1))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(1, 1))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(1, 1))
 
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(1, 1))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(1, 1))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(1, 1))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(1, 1))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(0, 0))
 
-    change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(1, 3))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(1, 3))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(0, 0))
 
-    change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(0, 0))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(1, 3))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(0, 0))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(1, 3))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(0, 0))
 
 /obj/item/weapon/gun_modular/module/magazine/get_info_module(mob/user = null)
     var/info_module = ..()
@@ -180,10 +180,11 @@
     empty_chamber = FALSE
     no_casing = FALSE
     var/obj/item/weapon/stock_parts/cell/magazine = null
+    var/image/charge_image
 
 /obj/item/weapon/gun_modular/module/magazine/energy/build_points_list()
     ..()
-    change_list_entry("ICON", "[SOUTH]", list("Additional Battery" = list(2, 2, -3),
+    point.change_list_entry("ICON", "[SOUTH]", list("Additional Battery" = list(2, 2, -3),
                                             "Core Charger" = list(2, 2, -3)))
 
 /obj/item/weapon/gun_modular/module/magazine/energy/Destroy()
@@ -209,6 +210,8 @@
     if(!..())
         return FALSE
     frame_parent.magazine = src
+    charge_image = image(icon, "[icon_overlay_name]_in_cell_[0]")
+    point.add_image_to_slot(charge_image, "ICON")
     return TRUE
 
 /obj/item/weapon/gun_modular/module/magazine/energy/Ammo_Count(var/energy_use)
@@ -216,11 +219,21 @@
         return magazine.charge >= energy_use
     return FALSE
 
+/obj/item/weapon/gun_modular/module/magazine/energy/update_icon()
+    . = ..()
+    point.remove_image_to_slot(charge_image, "ICON")
+    if(magazine)
+        var/ratio = magazine.charge / magazine.maxcharge
+        ratio = CEIL(ratio * 4) * 25
+        charge_image.icon_state = "[icon_overlay_name]_in_cell_[ratio]"
+        point.add_image_to_slot(charge_image, "ICON")
+
 /obj/item/weapon/gun_modular/module/magazine/energy/Get_Ammo(var/lens_type)
     if(!magazine)
         return null
     var/obj/item/ammo_casing/energy/ammo = new lens_type(src)
     magazine.use(ammo.e_cost * frame_parent.chamber.pellets * 10)
+    update_icon()
     return ammo
 
 /obj/item/weapon/gun_modular/module/magazine/energy/Give_Round(obj/item/ammo_casing/ammo, mob/user, var/charge = 0)
@@ -268,14 +281,12 @@
         return FALSE
     open = FALSE
     hole_magaine = image(icon, "magazine_open")
-    hole_magaine.pixel_x = icon_overlay["ICON"].pixel_x
-    hole_magaine.pixel_y = icon_overlay["ICON"].pixel_y
-    icon_overlay["ICON_OVERLAY"] = null
     return TRUE
+    
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/remove()
     if(open)
         frame_parent.cut_overlay(hole_magaine)
-    icon_overlay["ICON_OVERLAY"] = null
+        point.remove_image_to_slot(hole_magaine, "ICON")
     hole_magaine = null
     open = FALSE
     ..()
@@ -297,19 +308,17 @@
     if(open)
         playsound(src, 'sound/weapons/guns/heavybolt_out.ogg', VOL_EFFECTS_MASTER)
         to_chat(user, "<span class='notice'>You work the bolt open.</span>")
-        frame_parent.add_overlay(hole_magaine)
-        icon_overlay["ICON_OVERLAY"] = hole_magaine
+        point.add_image_to_slot(hole_magaine, "ICON")
         if(frame_parent.chamber)
             frame_parent.chamber.process_chamber(TRUE)
         return ..()
     else
         playsound(src, 'sound/weapons/guns/heavybolt_reload.ogg', VOL_EFFECTS_MASTER)
         to_chat(user, "<span class='notice'>You work the bolt closed.</span>")
-        frame_parent.cut_overlay(hole_magaine)
-        icon_overlay["ICON_OVERLAY"] = null
+        point.remove_image_to_slot(hole_magaine, "ICON")
         if(frame_parent.chamber)
             frame_parent.chamber.chamber_round()
-    frame_parent.update_icon()
+    frame_parent.point.update()
 
 /obj/item/weapon/gun_modular/module/magazine/bullet/heavyrifle/deactivate(mob/user, argument)
     if(open)

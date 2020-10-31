@@ -935,6 +935,38 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	unlocks_designs = list("recharger")
 
+/datum/technology/energy_modules_gun
+	name = "Energy modules"
+	desc = "Energy modules"
+	id = "energy_modules"
+	tech_type = RESEARCH_COMBAT
+
+	x = 0.5
+	y = 0.7
+	icon = "rignuclearreactor"
+
+	required_technologies = list("weapon_recharging")
+	required_tech_levels = list()
+	cost = 1200
+
+	unlocks_designs = list("core_charger", "additional_battery", "energy_mag", "large_laser_barrel")
+
+/datum/technology/lens
+	name = "Energy lens"
+	desc = "Energy lens"
+	id = "energy_lens"
+	tech_type = RESEARCH_COMBAT
+
+	x = 0.3
+	y = 0.7
+	icon = "diamond"
+
+	required_technologies = list("energy_modules")
+	required_tech_levels = list()
+	cost = 1500
+
+	unlocks_designs = list("laser_lens", "electrode_lens", "stun_lens", "ion_lens")
+
 /datum/technology/sec_computers
 	name = "Security Computers"
 	desc = "Security Computers"

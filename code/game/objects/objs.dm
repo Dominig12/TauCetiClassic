@@ -266,5 +266,5 @@
 		dist += rand(0, 1)
 		for(var/i in 1 to dist)
 			if(src)
-				step(src, pick(cardinal))
+				pre_step(src, pick(cardinal))
 				sleep(rand(2, 4))

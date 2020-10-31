@@ -14,27 +14,27 @@
 
 /obj/item/weapon/gun_modular/module/handle/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(6, 7))
+    point.change_list_exit("ICON", "[SOUTH]", list(6, 7))
 
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(3, 5))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(4, 5))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(2, 4))
-    change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(2, 4))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[SOUTH]", list(3, 5))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[NORTH]", list(4, 5))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[EAST]", list(2, 4))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_l", "[WEST]", list(2, 4))
 
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(4, 5))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(3, 5))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(2, 4))
-    change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(2, 4))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[SOUTH]", list(4, 5))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[NORTH]", list(3, 5))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[EAST]", list(2, 4))
+    point.change_list_exit("[SPRITE_SHEET_HELD]_r", "[WEST]", list(2, 4))
 
-    change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(1, 2))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(3, 2))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(2, 1))
-    change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(2, 2))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[SOUTH]", list(1, 2))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[NORTH]", list(3, 2))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[EAST]", list(2, 1))
+    point.change_list_exit("[SPRITE_SHEET_BACK]", "[WEST]", list(2, 2))
     
-    change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(2, 2))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(2, 1))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(3, 2))
-    change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(1, 2))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[SOUTH]", list(2, 2))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[NORTH]", list(2, 1))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[EAST]", list(3, 2))
+    point.change_list_exit("[SPRITE_SHEET_BELT]", "[WEST]", list(1, 2))
 
 /obj/item/weapon/gun_modular/module/handle/get_info_module(mob/user = null)
     var/info_module = ..()
@@ -108,8 +108,8 @@
 
 /obj/item/weapon/gun_modular/module/handle/weighted/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(9, 11))
-    change_list_entry("ICON", "[SOUTH]", null)
+    point.change_list_exit("ICON", "[SOUTH]", list(9, 11))
+    point.change_list_entry("ICON", "[SOUTH]", null)
 
 /obj/item/weapon/gun_modular/module/handle/resilient
     name = "gun handle resilient"
@@ -124,8 +124,8 @@
 
 /obj/item/weapon/gun_modular/module/handle/resilient/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(19, 9))
-    change_list_entry("ICON", "[SOUTH]", null)
+    point.change_list_exit("ICON", "[SOUTH]", list(19, 9))
+    point.change_list_entry("ICON", "[SOUTH]", null)
 
 /obj/item/weapon/gun_modular/module/handle/resilient/Special_Check(mob/user)
     if(!..())
@@ -148,8 +148,8 @@
 
 /obj/item/weapon/gun_modular/module/handle/rifle/build_points_list()
     ..()
-    change_list_exit("ICON", "[SOUTH]", list(22, 10))
-    change_list_entry("ICON", "[SOUTH]", null)
+    point.change_list_exit("ICON", "[SOUTH]", list(22, 10))
+    point.change_list_entry("ICON", "[SOUTH]", null)
 
 /obj/item/weapon/gun_modular/module/handle/rifle/Special_Check(mob/user)
     if(!..())

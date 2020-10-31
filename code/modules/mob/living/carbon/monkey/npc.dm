@@ -20,9 +20,9 @@
 					if(!hid_behind)
 						emote("me", 1, "hides behind [hiding_behind]!")
 						hid_behind = 1
-					step_to(src, get_step(hiding_behind, get_dir(npc_fleeing, hiding_behind)))
+					pre_step_to(src, get_step(hiding_behind, get_dir(npc_fleeing, hiding_behind)))
 				else
-					if(!step_to(src, hiding_behind, 1))
+					if(!pre_step_to(src, hiding_behind, 1))
 						hiding_behind = null
 			else
 				step_away(src, npc_fleeing, 7)
@@ -54,7 +54,7 @@
 			if(loc == prevloc) dir = get_dir(src, npc_fleeing)
 		else
 			if(prob(33) && canmove && isturf(loc))
-				step(src, pick(cardinal))
+				pre_step(src, pick(cardinal))
 			if(prob(1))
 				if(health < 70)
 					switch(rand(1,3))

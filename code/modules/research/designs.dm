@@ -1973,6 +1973,81 @@ other types of metals and chemistry for reagents).
 	category = list("Weapons")
 
 /////////////////////////////////////////
+////////////Weapon modules///////////////
+/////////////////////////////////////////
+/datum/design/core_charger
+	name = "Core charger"
+	desc = "Converting core energy to battery energy."
+	id = "core_charger"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/weapon/gun_modular/module/accessory/core_charger
+	category = list("Weapons modules")
+
+/datum/design/additional_battery
+	name = "Additional battery"
+	desc = "Additional recharge due to its own charge."
+	id = "additional_battery"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 6000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/weapon/gun_modular/module/accessory/additional_battery
+	category = list("Weapons modules")
+
+/datum/design/energy_magazine
+	name = "Energy magazine"
+	desc = "Battery power repeater, in a suitable format for energy weapons."
+	id = "energy_mag"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
+	build_path = /obj/item/weapon/gun_modular/module/magazine/energy
+	category = list("Weapons modules")
+
+/datum/design/laser_barrel
+	name = "Large laser barrel"
+	desc = "Multi Focusing Barrel for Laser Weapons."
+	id = "large_laser_barrel"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 6000)
+	build_path = /obj/item/weapon/gun_modular/module/barrel/rifle_laser
+	category = list("Weapons modules")
+
+/datum/design/laser_lens
+	name = "Laser Lens"
+	desc = "Focusing lens."
+	id = "laser_lens"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/ammo_casing/energy/laser
+	category = list("Weapons modules")
+
+/datum/design/electrode_lens
+	name = "Electrode Lens"
+	desc = "Focusing lens."
+	id = "electrode_lens"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000)
+	build_path = /obj/item/ammo_casing/energy/electrode
+	category = list("Weapons modules")
+
+/datum/design/stun_lens
+	name = "Stun Lens"
+	desc = "Focusing lens."
+	id = "stun_lens"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000)
+	build_path = /obj/item/ammo_casing/energy/stun
+	category = list("Weapons modules")
+
+/datum/design/ion_lens
+	name = "Ion Lens"
+	desc = "Focusing lens."
+	id = "ion_lens"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_PHORON = 1000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/ammo_casing/energy/ion
+	category = list("Weapons modules")
+
+/////////////////////////////////////////
 /////////////////Mining//////////////////
 /////////////////////////////////////////
 

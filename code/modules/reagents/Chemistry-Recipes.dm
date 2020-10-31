@@ -944,7 +944,7 @@
 		C.loc = get_turf_loc(holder.my_atom)
 		if(prob(50))
 			for(var/j = 1, j <= rand(1, 3), j++)
-				step(C, pick(NORTH,SOUTH,EAST,WEST))
+				pre_step(C, pick(NORTH,SOUTH,EAST,WEST))
 
 /datum/chemical_reaction/slimebork
 	name = "Slime Bork"
@@ -972,7 +972,7 @@
 			B.loc = get_turf_loc(holder.my_atom)
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
-					step(B, pick(NORTH,SOUTH,EAST,WEST))
+					pre_step(B, pick(NORTH,SOUTH,EAST,WEST))
 
 
 
@@ -1127,7 +1127,7 @@
 		C.loc = get_turf_loc(holder.my_atom)
 		if(prob(50))
 			for(var/j = 1, j <= rand(1, 3), j++)
-				step(C, pick(NORTH,SOUTH,EAST,WEST))*/
+				pre_step(C, pick(NORTH,SOUTH,EAST,WEST))*/
 	holder.my_atom.visible_message("<span class='warning'>The slime core fizzles disappointingly,</span>")
 
 //Silver

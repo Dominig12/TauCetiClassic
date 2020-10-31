@@ -61,7 +61,7 @@
 			o++
 			if(o == 4)
 				o = 0
-				step(usr, cur_dir)
+				pre_step(usr, cur_dir)
 			if(i < 7) usr.pixel_y += 8
 			else usr.pixel_y -= 8
 			sleep(1)
@@ -264,19 +264,19 @@
 				speed++
 				if(speed > 3)
 					speed = 0
-					step(usr, cur_dir)
+					pre_step(usr, cur_dir)
 			else if(i < 14)
 				speed++
 				if(speed > 2)
 					speed = 0
-					step(usr, cur_dir)
+					pre_step(usr, cur_dir)
 			else if(i < 21)
 				speed++
 				if(speed > 1)
 					speed = 0
-					step(usr, cur_dir)
+					pre_step(usr, cur_dir)
 			else if(i < 30)
-				step(usr, cur_dir)
+				pre_step(usr, cur_dir)
 			sleep(1)
 
 		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))

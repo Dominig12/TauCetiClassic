@@ -72,9 +72,9 @@
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(T)
 		I.master = src
 		I.density = 1
-		I.dir = dir
+		I.set_dir(dir)
 		first = I
-		step(I, I.dir)
+		pre_step(I, I.dir)
 		if(first)
 			I.density = 0
 			I.vis_spread(visible)
@@ -217,10 +217,10 @@
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(loc)
 		I.master = master
 		I.density = 1
-		I.dir = dir
+		I.set_dir(dir)
 		I.previous = src
 		next = I
-		step(I, I.dir)
+		pre_step(I, I.dir)
 		if(next)
 			I.density = 0
 			I.vis_spread(visible)

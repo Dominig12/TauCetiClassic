@@ -303,7 +303,7 @@
 /datum/reagent/mercury/on_general_digest(mob/living/M)
 	..()
 	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
-		step(M, pick(cardinal))
+		pre_step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	M.adjustBrainLoss(2)
@@ -402,7 +402,7 @@
 /datum/reagent/lithium/on_general_digest(mob/living/M)
 	..()
 	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
-		step(M, pick(cardinal))
+		pre_step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 

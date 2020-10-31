@@ -229,31 +229,31 @@
 /datum/component/swiping/proc/push_on_chair(obj/structure/stool/bed/chair/C, mob/user, movementdirection)
 	if(C)
 		C.propelled = 4
-	step(C, movementdirection)
+	pre_step(C, movementdirection)
 	sleep(1)
-	step(C, movementdirection)
+	pre_step(C, movementdirection)
 	if(C)
 		C.propelled = 3
 	sleep(1)
-	step(C, movementdirection)
+	pre_step(C, movementdirection)
 	sleep(1)
-	step(C, movementdirection)
+	pre_step(C, movementdirection)
 	if(C)
 		C.propelled = 2
 	sleep(2)
-	step(C, movementdirection)
+	pre_step(C, movementdirection)
 	if(C)
 		C.propelled = 1
 	sleep(2)
-	step(C, movementdirection)
+	pre_step(C, movementdirection)
 	if(C)
 		C.propelled = 0
 	sleep(3)
-	step(C, movementdirection)
+	pre_step(C, movementdirection)
 	sleep(3)
-	step(C, movementdirection)
+	pre_step(C, movementdirection)
 	sleep(3)
-	step(C, movementdirection)
+	pre_step(C, movementdirection)
 
 /datum/component/swiping/proc/sweep_push(atom/target, turf/T, mob/user)
 	if(on_sweep_push)
@@ -299,7 +299,7 @@
 	WS.invisibility = 101
 	WS.pass_flags = W.pass_flags
 
-	step(WS, get_dir(W_turf, T_target))
+	pre_step(WS, get_dir(W_turf, T_target))
 
 	var/turf/T = get_turf(WS)
 
@@ -365,11 +365,11 @@
 			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
 
 	if(!has_gravity(parent) && !istype(target, /turf/space))
-		step_to(user, T_target)
+		pre_step_to(user, T_target)
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target
 		if(!AM.anchored)
-			step_to(target, get_turf(parent))
+			pre_step_to(target, get_turf(parent))
 
 /datum/component/swiping/proc/try_sweep_pull(datum/source, atom/target, mob/user)
 	if(!isturf(target) && !isturf(target.loc))
@@ -391,7 +391,7 @@
 	WS.invisibility = 101
 	WS.pass_flags = W.pass_flags
 
-	step(WS, get_dir(W_turf, T_target))
+	pre_step(WS, get_dir(W_turf, T_target))
 
 	var/turf/T = get_turf(WS)
 

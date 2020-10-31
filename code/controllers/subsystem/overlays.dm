@@ -165,7 +165,7 @@ SUBSYSTEM_DEF(overlays)
 /image/proc/cut_overlay(x)
 	overlays -= x
 
-/image/proc/cut_overlays(x)
+/image/proc/cut_overlays()
 	overlays.Cut()
 
 /image/proc/copy_overlays(atom/other, cut_old)

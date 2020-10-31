@@ -148,7 +148,7 @@
 	if(health - tforce <= 7 && !reinf)
 		anchored = 0
 		update_nearby_icons()
-		step(src, get_dir(AM, src))
+		pre_step(src, get_dir(AM, src))
 	take_damage(tforce)
 
 /obj/structure/window/attack_tk(mob/user)
@@ -289,7 +289,7 @@
 				anchored = 0
 				update_nearby_icons()
 				fastened_change()
-				step(src, get_dir(user, src))
+				pre_step(src, get_dir(user, src))
 		else
 			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		return ..()

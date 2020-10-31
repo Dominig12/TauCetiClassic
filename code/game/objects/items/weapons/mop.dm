@@ -70,7 +70,7 @@
 			if(istype(TR) && TR.can_be_inserted(I))
 				TR.handle_item_insertion(I, prevent_warning = TRUE)
 			else if(next_turf)
-				step(I, get_dir(current_turf, next_turf))
+				pre_step(I, get_dir(current_turf, next_turf))
 
 /obj/item/weapon/mop/proc/on_sweep_push(atom/target, turf/T, mob/user)
 	var/turf/T_target = get_turf(target)
@@ -85,7 +85,7 @@
 			if(istype(TR) && TR.can_be_inserted(I))
 				TR.handle_item_insertion(I, prevent_warning = TRUE)
 			else
-				step_to(I, T_target)
+				pre_step_to(I, T_target)
 
 /obj/item/weapon/mop/proc/on_sweep_pull(atom/target, turf/T, mob/user)
 	var/turf/src_turf = get_turf(src)
@@ -100,7 +100,7 @@
 			if(istype(TR) && TR.can_be_inserted(I))
 				TR.handle_item_insertion(I, prevent_warning = TRUE)
 			else
-				step_to(I, src_turf)
+				pre_step_to(I, src_turf)
 
 /obj/item/weapon/mop/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)

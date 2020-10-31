@@ -123,7 +123,7 @@
 			if(health <= 7)
 				anchored = 0
 				update_nearby_icons()
-				step(src, get_dir(user, src))
+				pre_step(src, get_dir(user, src))
 		else
 			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		return ..()

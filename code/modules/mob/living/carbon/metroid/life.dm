@@ -67,7 +67,7 @@
 			ATarget.attack_slime(src)
 	else if(ATarget in view(7, src))
 		if(!ATarget.Adjacent(src))
-			step_to(src, ATarget)
+			pre_step_to(src, ATarget)
 	else
 		ATarget = null
 	return
@@ -138,7 +138,7 @@
 			else
 				if(Target in view(7, src))
 					if(!Target.Adjacent(src)) // Bug of the month candidate: slimes were attempting to move to target only if it was directly next to them, which caused them to target things, but not approach them
-						step_to(src, Target)
+						pre_step_to(src, Target)
 
 				else
 					Target = null
@@ -496,19 +496,19 @@
 				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
 				else if(canmove && isturf(loc))
-					step_to(src, Leader)
+					pre_step_to(src, Leader)
 
 			else if(hungry)
 				if (holding_still)
 					holding_still = max(holding_still - hungry, 0)
 				else if(canmove && isturf(loc) && prob(50))
-					step(src, pick(cardinal))
+					pre_step(src, pick(cardinal))
 
 			else
 				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
 				else if(canmove && isturf(loc) && prob(33))
-					step(src, pick(cardinal))
+					pre_step(src, pick(cardinal))
 		else if(!AIproc)
 			spawn()
 				AIprocess()
