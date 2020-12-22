@@ -207,25 +207,31 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/proc/show_laws(who)
 
 	if (src.zeroth)
-		to_chat(who, "0. [src.zeroth]")
+		to_chat(who, "Primary: 0. [src.zeroth]")
 
+	if(src.ion.len > 0)
+		to_chat(who, "%)DEFINITELY NOT A MALFUNCTION@://")
 	for (var/index = 1, index <= src.ion.len, index++)
 		var/law = src.ion[index]
 		var/num = ionnum()
-		to_chat(who, "[num]. [law]")
+		to_chat(who, "----[num]. [law]")
 
 	var/number = 1
+	if(src.inherent.len > 0)
+		to_chat(who, "Core:")
 	for (var/index = 1, index <= src.inherent.len, index++)
 		var/law = src.inherent[index]
 
 		if (length(law) > 0)
-			to_chat(who, "[number]. [law]")
+			to_chat(who, "----[number]. [law]")
 			number++
 
+	if(src.supplied.len > 0)
+		to_chat(who, "Secondary:")
 	for (var/index = 1, index <= src.supplied.len, index++)
 		var/law = src.supplied[index]
 		if (length(law) > 0)
-			to_chat(who, "[number]. [law]")
+			to_chat(who, "----[number]. [law]")
 			number++
 
 /datum/ai_laws/proc/write_laws()
