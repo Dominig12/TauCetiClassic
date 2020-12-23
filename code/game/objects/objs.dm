@@ -187,18 +187,24 @@
 /obj/proc/hides_under_flooring()
 	return level == 1
 
-/atom/movable/proc/get_listeners()
+/atom/movable/proc/get_listeners(var/max_depth = 2, var/depth = 0)
 	. = list()
 	for(var/mob/M in contents)
 		. |= M.get_listeners()
+	if(depth < max_depth)
+		for(var/atom/movable/O in contents)
+			. |= O.get_listeners(max_depth, depth+1)
 
 /mob/get_listeners()
 	. = list(src)
 	for(var/mob/M in contents)
 		. |= M.get_listeners()
 
-/atom/movable/proc/get_listening_objs()
-	return list(src)
+/atom/movable/proc/get_listening_objs(var/max_depth = 2, var/depth = 0)
+	. = list()
+	if(depth < max_depth)
+		for(var/atom/movable/O in contents)
+			. |= O.get_listening_objs(max_depth, depth+1)
 
 /mob/get_listening_objs()
 	. = list()

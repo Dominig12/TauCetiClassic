@@ -42,6 +42,11 @@
 	else
 		return ..()
 
+/obj/item/device/paicard/hear_talk(mob/M, text, verb, datum/language/speaking)
+	to_chat(M, "I hear")
+	if(pai)
+		pai.hear_say(M, text, verb, speaking)
+
 /obj/item/device/paicard/attack_self(mob/user)
 	if (!in_range(src, user))
 		return
