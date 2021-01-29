@@ -241,6 +241,7 @@
 #include "code\datums\components\mechanic_description.dm"
 #include "code\datums\components\multi_carry.dm"
 #include "code\datums\components\slippery.dm"
+#include "code\datums\components\sprite_connector.dm"
 #include "code\datums\components\swiping.dm"
 #include "code\datums\components\tactical.dm"
 #include "code\datums\components\waddle.dm"

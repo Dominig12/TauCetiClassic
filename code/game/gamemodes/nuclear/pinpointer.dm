@@ -11,8 +11,23 @@
 	var/active = FALSE
 	var/atom/target = null
 	var/mode = SEARCH_FOR_DISK  // Need here for GREAT OOP style, 0 - searching disk
+	var/datum/component/sprite_connector/point1
+
+/obj/item/weapon/pinpointer/proc/test(var/datum/component/sprite_connector/point)
+	visible_message("test")
 
 /obj/item/weapon/pinpointer/attack_self(mob/user)
+	point1 = AddComponent(/datum/component/sprite_connector, image(icon = 'icons/obj/cult.dmi', icon_state = "hole"), "Hole", CALLBACK(src, .proc/test, point1))
+	point1.ChangeEndPoint("ICON", "[NORTH]", list(0, 0))
+	point1.ChangeExitPoint("ICON", "[NORTH]", list(0, 0))
+	point1.ChangeEntryPoint("ICON", "[NORTH]", list(
+		"POINT2" = list(32, 32)
+	))
+
+	var/image/img = image(icon = icon, icon_state = icon_state)
+	img.appearance = point1.build_image("ICON", "[NORTH]")
+	add_overlay(img)
+
 	if(!active)
 		START_PROCESSING(SSobj, src)
 		to_chat(user, "<span class='notice'>You activate the pinpointer</span>")
