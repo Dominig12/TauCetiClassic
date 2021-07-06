@@ -7,8 +7,8 @@
 	desc = "Used for a more detailed analysis of the patient."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	light_color = "#00ff00"
 
 /obj/machinery/bodyscanner/power_change()
@@ -69,7 +69,7 @@
 	icon_state = "body_scanner_[occupant ? "1" : "0"]"
 
 /obj/machinery/bodyscanner/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user))
+	if(user.incapacitated())
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
@@ -135,7 +135,7 @@
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
-	anchored = 1
+	anchored = TRUE
 	var/next_print = 0
 	var/storedinfo = null
 
@@ -171,8 +171,7 @@
 			else
 				dat += text("<font color='[]'>\tHealth %: [] ([])</font><BR>", (occupant.health > 50 ? "blue" : "red"), occupant.health, t1)
 
-				//if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
-				if(occupant.mind && occupant.mind.changeling && occupant.fake_death)
+				if(ischangeling(occupant) && occupant.fake_death)
 					dat += text("<font color='red'>Abnormal bio-chemical activity detected!</font><BR>")
 
 				if(occupant.virus2.len)
@@ -237,12 +236,9 @@
 					var/robot = ""
 					var/splint = ""
 					var/arterial_bleeding = ""
-					var/lung_ruptured = ""
 					var/rejecting = ""
 					if(BP.status & ORGAN_ARTERY_CUT)
 						arterial_bleeding = "<br>Arterial bleeding"
-					if(istype(BP, /obj/item/organ/external/chest) && occupant.is_lung_ruptured())
-						lung_ruptured = "Lung ruptured:"
 					if(BP.status & ORGAN_SPLINTED)
 						splint = "Splinted:"
 					if(BP.status & ORGAN_BLEEDING)
@@ -280,11 +276,11 @@
 
 					if(unknown_body || BP.hidden)
 						imp += "Unknown body present:"
-					if(!AN && !open && !infected & !imp)
+					if(!AN && !open && !infected && !imp)
 						AN = "None:"
 					if(!(BP.is_stump))
-						dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured][rejecting]</td>"
-						storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured][rejecting]</td>"
+						dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+						storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
 					else
 						dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
 						storedinfo += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
@@ -312,6 +308,10 @@
 							organ_status = "Heart Failure:"
 						else if(Heart.heart_status == HEART_FIBR)
 							organ_status = "Heart Fibrillation:"
+
+					if(istype(IO, /obj/item/organ/internal/lungs))
+						if(occupant.is_lung_ruptured())
+							organ_status = "Lung ruptured:"
 
 					switch (IO.germ_level)
 						if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)

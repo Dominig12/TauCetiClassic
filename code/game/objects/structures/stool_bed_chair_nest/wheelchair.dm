@@ -2,7 +2,7 @@
 	name = "wheelchair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "wheelchair"
-	anchored = 0
+	anchored = FALSE
 	buckle_movable = 1
 	flags = NODECONSTRUCT
 
@@ -17,7 +17,7 @@
 	var/image/O = image(icon = 'icons/obj/objects.dmi', icon_state = "w_overlay", layer = FLY_LAYER, dir = src.dir)
 	add_overlay(O)
 	if(buckled_mob)
-		buckled_mob.dir = dir
+		buckled_mob.set_dir(dir)
 
 /obj/structure/stool/bed/chair/wheelchair/post_buckle_mob(mob/living/M)
 	. = ..()
@@ -36,7 +36,7 @@
 		var/mob/living/M = usr
 		if(buckled_mob == M)
 			if(brake)
-				M.throw_alert("brake", /obj/screen/alert/brake)
+				M.throw_alert("brake", /atom/movable/screen/alert/brake)
 				alert = 1
 			else
 				M.clear_alert("brake")
@@ -91,7 +91,7 @@
 	step(src, direction)
 	if(buckled_mob) // Make sure it stays beneath the occupant
 		Move(buckled_mob.loc)
-	dir = direction
+	set_dir(direction)
 	handle_rotation()
 	if(pulling) // Driver
 		if(pulling.loc == src.loc) // We moved onto the wheelchair? Revert!
@@ -101,7 +101,7 @@
 			if(get_dist(src, pulling) > 1) // We are too far away? Losing control.
 				pulling = null
 				user.pulledby = null
-			pulling.dir = get_dir(pulling, src) // When everything is right, face the wheelchair
+			pulling.set_dir(get_dir(pulling, src)) // When everything is right, face the wheelchair
 	if(bloodiness)
 		create_track()
 	driving = 0
@@ -143,7 +143,7 @@
 
 /obj/structure/stool/bed/chair/wheelchair/MouseDrop(over_object, src_location, over_location)
 	..()
-	if(over_object == usr && in_range(src, usr))
+	if(over_object == usr && Adjacent(usr))
 		if(!ishuman(usr))	return
 		if(usr == buckled_mob)
 			to_chat(usr, "<span class='red'>You realize you are unable to push the wheelchair you sit in.</span>")
@@ -153,7 +153,7 @@
 			usr.pulledby = src
 			if(usr.pulling)
 				usr.stop_pulling()
-			usr.dir = get_dir(usr, src)
+			usr.set_dir(get_dir(usr, src))
 			to_chat(usr, "You grip \the [name]'s handles.")
 		else
 			if(usr != pulling)
@@ -197,12 +197,12 @@
 	var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
 	var/newdir = get_dir(get_step(loc, dir), loc)
 	if(newdir == dir)
-		B.dir = newdir
+		B.set_dir(newdir)
 	else
 		newdir = newdir | dir
 		if(newdir == 3)
 			newdir = 1
 		else if(newdir == 12)
 			newdir = 4
-		B.dir = newdir
+		B.set_dir(newdir)
 	bloodiness--

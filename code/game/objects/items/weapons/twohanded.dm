@@ -66,8 +66,9 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
-			user.drop_from_inventory(O)
-	return	unwield()
+			O.unwield()
+
+	return unwield()
 
 /obj/item/weapon/twohanded/update_icon()
 	return
@@ -96,7 +97,7 @@
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(istype(O))
-			user.drop_from_inventory(O)
+			O.unwield()
 		return
 
 	else if(ishuman(user))
@@ -113,7 +114,8 @@
 	flags = ABSTRACT
 
 /obj/item/weapon/twohanded/offhand/unwield()
-	qdel(src)
+	if(!QDELING(src))
+		qdel(src)
 
 /obj/item/weapon/twohanded/offhand/wield()
 	qdel(src)
@@ -265,7 +267,7 @@
 	if(wielded && prob(50))
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
-				user.dir = i
+				user.set_dir(i)
 				sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/Get_shield_chance()
@@ -293,13 +295,13 @@
 /obj/item/weapon/twohanded/dualsaber/afterattack(atom/target, mob/user, proximity, params)
 	if(!istype(target,/obj/machinery/door/airlock) || slicing)
 		return
-	if(target.density && wielded && proximity && in_range(user, target))
+	if(target.density && wielded && proximity)
 		user.visible_message("<span class='danger'>[user] start slicing the [target] </span>")
 		playsound(user, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 		slicing = TRUE
 		var/obj/machinery/door/airlock/D = target
 		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
-		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1) && in_range(user, D))
+		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1))
 			sleep(6)
 			var/obj/structure/door_scrap/S = new /obj/structure/door_scrap(D.loc)
 			var/iconpath = D.icon

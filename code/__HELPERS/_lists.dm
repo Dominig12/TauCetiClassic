@@ -9,8 +9,11 @@
  * Misc
  */
 
+/proc/get_russian_list(list/input, nothing_text = "ничего", and_text = " и ", comma_text = ", ", final_comma_text = "")
+	return get_english_list(input, nothing_text, and_text, comma_text, final_comma_text)
+
 //Returns a list in plain english as a string
-/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
+/proc/get_english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
 	if (!total)
 		return "[nothing_text]"
@@ -133,7 +136,7 @@
 
 	total = rand(1, total)
 	for (item in L)
-		total -=L [item]
+		total -= L[item]
 		if (total <= 0)
 			return item
 
@@ -599,7 +602,7 @@
 /obj/machinery/camera/dd_SortValue()
 	return "[c_tag]"
 
-/proc/filter_list(var/list/L, var/type)
+/proc/filter_list(list/L, type)
 	. = list()
 	for(var/entry in L)
 		if(istype(entry, type))
@@ -715,6 +718,15 @@
 					L[T] = TRUE
 		return L
 
+//returns a new list with only atoms that are in typecache L
+/proc/typecache_filter_list(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if (typecache[A.type])
+			. += A
+
 //Copies a list, and all lists inside it recusively
 //Does not copy any other reference type
 /proc/deepCopyList(list/l)
@@ -760,22 +772,27 @@
 
 	return TRUE
 
+/proc/make_associative(list/flat_list)
+	. = list()
+	for(var/thing in flat_list)
+		.[thing] = TRUE
+
 /proc/is_associative_list(list/L)
-    var/index = 0
-    for(var/key in L)
-        index++
+	var/index = 0
+	for(var/key in L)
+		index++
 
-        var/value = null
-        // if key not num we can check L[key] without fear of "out of bound"
-        // else compare to index to prevent runtime error in e.g. list(5, 1)
-        // L[key] will exist and be same as key if we iterating through not associative list e.g. list(1, 2, 3)
-        if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
-            value = L[key]
+		var/value = null
+		// if key not num we can check L[key] without fear of "out of bound"
+		// else compare to index to prevent runtime error in e.g. list(5, 1)
+		// L[key] will exist and be same as key if we iterating through not associative list e.g. list(1, 2, 3)
+		if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
+			value = L[key]
 
-        if(!isnull(value))
-            return TRUE
+		if(!isnull(value))
+			return TRUE
 
-    return FALSE
+	return FALSE
 
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
@@ -787,3 +804,12 @@
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+
+// Helper macros to aid in optimizing lazy instantiation of lists.
+// All of these are null-safe, you can use them without knowing if the list var is initialized yet
+
+//Picks from the list, with some safeties, and returns the "default" arg if it fails
+#define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
+
+// Adds I to L, initalizing L if necessary, if I is not already in L
+#define LAZYDISTINCTADD(L, I) if(!L) { L = list(); } L |= I;

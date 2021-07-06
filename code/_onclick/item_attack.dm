@@ -16,10 +16,10 @@
 /atom/movable/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(.) // Clickplace, no need for attack animation.
-		return
+		return FALSE
 
 	if(user.a_intent != INTENT_HARM)
-		return
+		return FALSE
 
 	var/had_effect = FALSE
 	if(!(W.flags & NOATTACKANIMATION))
@@ -31,7 +31,7 @@
 		had_effect = TRUE
 
 	if(!had_effect)
-		return
+		return FALSE
 
 	user.SetNextMove(CLICK_CD_MELEE)
 	add_fingerprint(user)
@@ -39,6 +39,8 @@
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(W)
 	SSdemo.mark_dirty(user)
+
+	return TRUE
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -112,7 +114,7 @@
 	M.lastattacker = user
 	user.do_attack_animation(M)
 
-	if(slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE))
+	if(slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE) && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='danger'>[user] tries to put [name] on the [M]'s head!</span>")
 		if(user.is_busy(src) || !do_after(user, 0.8 SECONDS, target = M))
 			return
@@ -122,8 +124,9 @@
 		M.log_combat(user, "slammed with [name] on the head (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(BRUTE)])")
 		var/list/data = user.get_unarmed_attack()
 		// if item has no force just assume attacker smashed his fist (no scratches or any modifiers) against victim's head.
-		M.apply_damage(force + data["damage"], BRUTE, BP_HEAD)
-		playsound(M, data["sound"], VOL_EFFECTS_MASTER)
+		if(user.a_intent in list(INTENT_PUSH, INTENT_GRAB))
+			M.apply_damage(force + data["damage"], BRUTE, BP_HEAD)
+			playsound(M, data["sound"], VOL_EFFECTS_MASTER)
 		return TRUE
 
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
@@ -153,7 +156,7 @@
 							if(prob(80) && !slime.client)
 								slime.Discipline++
 						slime.Victim = null
-						slime.anchored = 0
+						slime.anchored = FALSE
 
 						spawn()
 							if(slime)
@@ -190,7 +193,7 @@
 											slime.SStun = 0
 
 							slime.Victim = null
-							slime.anchored = 0
+							slime.anchored = FALSE
 
 
 						spawn(0)

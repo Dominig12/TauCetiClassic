@@ -37,11 +37,11 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 		if(firestarter)
 			if (firestarter.fingerprintslast && istype(firestarter, /obj/item))
-				message_admins("Fire started at ([x],[y],[z]) [ADMIN_JMP(src)] by [firestarter] [ADMIN_JMP(firestarter)] [ADMIN_FLW(firestarter)] Last touched by: <B>[firestarter.fingerprintslast]</B>")
-				log_game("Fire started at ([x],[y],[z]) by [firestarter]. Last touched by: [firestarter.fingerprintslast].")
+				message_admins("Fire started at [COORD(src)] [ADMIN_JMP(src)] by [firestarter] [ADMIN_JMP(firestarter)] [ADMIN_FLW(firestarter)] Last touched by: <B>[firestarter.fingerprintslast]</B>")
+				log_game("Fire started at [COORD(src)] by [firestarter]. Last touched by: [firestarter.fingerprintslast].")
 			else
-				message_admins("Fire started at ([x],[y],[z]) [ADMIN_JMP(src)] by [firestarter] [ADMIN_JMP(firestarter)] [ADMIN_FLW(firestarter)]")
-				log_game("Fire started at ([x],[y],[z]) by [firestarter].")
+				message_admins("Fire started at [COORD(src)] [ADMIN_JMP(src)] by [firestarter] [ADMIN_JMP(firestarter)] [ADMIN_FLW(firestarter)]")
+				log_game("Fire started at [COORD(src)] by [firestarter].")
 
 	return igniting
 
@@ -120,7 +120,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	// Icon for fire on turfs.
 
 	anchored = TRUE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	blend_mode = BLEND_ADD
 
@@ -206,7 +206,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	firelevel = fl
 	SSair.active_hotspots.Add(src)
 
-/obj/fire/proc/fire_color(var/env_temperature)
+/obj/fire/proc/fire_color(env_temperature)
 	var/temperature = max(4000 * sqrt(firelevel / vsc.fire_firelevel_multiplier), env_temperature)
 	return heat2color(temperature)
 

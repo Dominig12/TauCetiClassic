@@ -35,8 +35,7 @@
 	var/list/stored_data = list()
 
 /obj/item/weapon/cartridge/Destroy()
-	if(radio)
-		qdel(radio)
+	QDEL_NULL(radio)
 	return ..()
 
 /obj/item/weapon/cartridge/engineering
@@ -533,7 +532,7 @@
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
-	if (usr.incapacitated() || !in_range(loc, usr))
+	if (usr.incapacitated() || !Adjacent(usr))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return

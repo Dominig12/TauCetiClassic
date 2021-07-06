@@ -1,13 +1,13 @@
 #define INFESTATION_LOCATIONS list( \
-	"the kitchen"           = /area/station/civilian/kitchen, \
-	"atmospherics"          = /area/station/engineering/atmos, \
-	"the incinerator"       = /area/station/maintenance/incinerator, \
-	"the chapel"            = /area/station/civilian/chapel, \
-	"the library"           = /area/station/civilian/library, \
-	"hydroponics"           = /area/station/civilian/hydroponics, \
-	"the vault"             = /area/station/bridge/nuke_storage, \
-	"the construction area" = /area/station/construction, \
-	"technical storage"     = /area/station/storage/tech \
+	"кухне"                 = /area/station/civilian/kitchen, \
+	"атмосферном"           = /area/station/engineering/atmos, \
+	"мусоросжигателье"      = /area/station/maintenance/incinerator, \
+	"церкви"                = /area/station/civilian/chapel, \
+	"библиотеке"            = /area/station/civilian/library, \
+	"гидропонике"           = /area/station/civilian/hydroponics, \
+	"бункере"               = /area/station/bridge/nuke_storage, \
+	"строительной площадке" = /area/station/construction, \
+	"техническом хранилище"	= /area/station/storage/tech \
 	)
 
 #define VERM_MICE 0
@@ -17,13 +17,14 @@
 /datum/event/infestation
 	announceWhen = 10
 	endWhen = 11
+	announcement = new /datum/announcement/centcomm/infestation
 	var/location
 	var/locstring
 	var/vermin
 	var/vermstring
 
 /datum/event/infestation/announce()
-	command_alert("Bioscans indicate that [vermstring] have been breeding in [locstring]. Clear them out, before this starts to affect productivity.", "Vermin infestation")
+	announcement.play(vermstring, locstring)
 
 /datum/event/infestation/start()
 	locstring = pick(INFESTATION_LOCATIONS)
@@ -49,15 +50,15 @@
 		if(VERM_MICE)
 			spawn_types = list(/mob/living/simple_animal/mouse/gray, /mob/living/simple_animal/mouse/brown, /mob/living/simple_animal/mouse/white)
 			max_number = 12
-			vermstring = "mice"
+			vermstring = "мыши"
 		if(VERM_LIZARDS)
 			spawn_types = list(/mob/living/simple_animal/lizard)
 			max_number = 6
-			vermstring = "lizards"
+			vermstring = "ящерицы"
 		if(VERM_SPIDERS)
 			spawn_types = list(/obj/effect/spider/spiderling)
 			max_number = 3
-			vermstring = "spiders"
+			vermstring = "пауки"
 
 	spawn(0)
 		var/num = rand(2,max_number)

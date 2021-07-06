@@ -4,7 +4,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "cameracase"
 	w_class = ITEM_SIZE_SMALL
-	anchored = 0
+	anchored = FALSE
 
 	m_amt = 700
 	g_amt = 300
@@ -38,13 +38,13 @@
 			if(iswelder(I))
 				if(weld(I, user))
 					to_chat(user, "You weld the assembly securely into place.")
-					anchored = 1
+					anchored = TRUE
 					state = 2
 				return
 
 			else if(iswrench(I))
 				to_chat(user, "You unattach the assembly from it's place.")
-				anchored = 0
+				anchored = FALSE
 				update_icon()
 				state = 0
 				return
@@ -97,9 +97,9 @@
 				for(var/i = 5; i >= 0; i -= 1)
 					var/direct = input(user, "Direction?", "Assembling Camera", null) in list("LEAVE IT", "NORTH", "EAST", "SOUTH", "WEST" )
 					if(direct != "LEAVE IT")
-						C.dir = text2dir(direct)
+						C.set_dir(text2dir(direct))
 					if(i != 0)
-						var/confirm = alert(user, "Is this what you want? Chances Remaining: [i]", "Confirmation", "Yes", "No")
+						var/confirm = tgui_alert(user, "Is this what you want? Chances Remaining: [i]", "Confirmation", list("Yes", "No"))
 						if(confirm == "Yes")
 							break
 				return

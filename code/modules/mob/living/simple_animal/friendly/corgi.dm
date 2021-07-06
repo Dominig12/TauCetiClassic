@@ -42,7 +42,7 @@
 			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 	else
 		..()
@@ -101,7 +101,7 @@
 			emote("me",1,pick("dances around","chases her tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 
 /mob/living/simple_animal/corgi/borgi
@@ -114,12 +114,16 @@
 	butcher_results = list()
 	var/emagged = 0
 
+/mob/living/simple_animal/corgi/borgi/atom_init()
+	. = ..()
+	chief_animal_list += src
+
 /mob/living/simple_animal/corgi/borgi/emag_act(mob/user)
 	if(!emagged && emagged < 2)
 		emagged = 1
 		visible_message("<span class='warning'>[user] swipes a card through [src].</span>", "<span class='notice'>You overload [src]s internal reactor.</span>")
 		spawn (1000)
-			src.explode()
+			explode()
 		return TRUE
 	return FALSE
 

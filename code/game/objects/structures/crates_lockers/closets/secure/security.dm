@@ -33,7 +33,7 @@
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/captain(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	#endif
@@ -114,7 +114,6 @@
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security(src)
 	new /obj/item/weapon/storage/belt/security(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/taperoll/police(src)
@@ -134,9 +133,9 @@
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
-	new /obj/item/weapon/gun/projectile/glock(src)
+	new /obj/item/weapon/gun/energy/taser(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
@@ -164,10 +163,8 @@
 	new /obj/item/clothing/suit/storage/flak(src)
 	new /obj/item/clothing/suit/storage/flak/warden(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/ammo_box/magazine/m9mm_2/rubber(src)
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
-	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
@@ -180,9 +177,10 @@
 	new /obj/item/device/hailer(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
-	new /obj/item/weapon/gun/projectile/glock(src)
+	new /obj/item/weapon/gun/energy/taser(src)
+	new /obj/item/weapon/storage/box/mines/shock(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
@@ -197,6 +195,10 @@
 	icon_broken = "secbroken"
 	icon_off = "secoff"
 
+/obj/structure/closet/secure_closet/security/atom_init(mapload)
+	. = ..()
+	sec_closets_list += src
+
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/security(src)
@@ -208,7 +210,6 @@
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/ammo_box/magazine/m9mm_2/rubber(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
@@ -221,9 +222,9 @@
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
-	new /obj/item/weapon/gun/projectile/glock(src)
+	new /obj/item/weapon/gun/energy/taser(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/ushanka(src)
 	#endif
@@ -299,7 +300,7 @@
 /obj/structure/closet/secure_closet/brig
 	name = "Brig Locker"
 	req_access = list(access_brig)
-	anchored = 1
+	anchored = TRUE
 	var/id = null
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
@@ -323,7 +324,7 @@
 	name = "wall locker"
 	req_access = list(access_brig)
 	icon_state = "wall-locker1"
-	density = 1
+	density = TRUE
 	icon_closed = "wall-locker"
 	icon_locked = "wall-locker1"
 	icon_opened = "wall-lockeropen"

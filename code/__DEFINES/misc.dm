@@ -84,9 +84,10 @@
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
-#define EVENT_LEVEL_MUNDANE 1
-#define EVENT_LEVEL_MODERATE 2
-#define EVENT_LEVEL_MAJOR 3
+#define EVENT_LEVEL_ROUNDSTART 1
+#define EVENT_LEVEL_MUNDANE 2
+#define EVENT_LEVEL_MODERATE 3
+#define EVENT_LEVEL_MAJOR 4
 
 //defines
 #define RESIZE_DEFAULT_SIZE 1
@@ -95,15 +96,15 @@
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
 //Material defines
-#define MAT_METAL		"$metal"
-#define MAT_GLASS		"$glass"
-#define MAT_SILVER		"$silver"
-#define MAT_GOLD		"$gold"
-#define MAT_DIAMOND		"$diamond"
-#define MAT_URANIUM		"$uranium"
-#define MAT_PHORON		"$phoron"
-#define MAT_PLASTIC		"$plastic"
-#define MAT_BANANIUM	"$bananium"
+#define MAT_METAL		"metal"
+#define MAT_GLASS		"glass"
+#define MAT_SILVER		"silver"
+#define MAT_GOLD		"gold"
+#define MAT_DIAMOND		"diamond"
+#define MAT_URANIUM		"uranium"
+#define MAT_PHORON		"phoron"
+#define MAT_PLASTIC		"plastic"
+#define MAT_BANANIUM	"bananium"
 
 #define COIN_GOLD "Gold coin"
 #define COIN_SILVER "Silver coin"
@@ -136,6 +137,14 @@
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
 
+//Movement dir masks
+#define NORTH_SOUTH 3 // NORTH | SOUTH
+#define EAST_WEST 12 // EAST | WEST
+
+// Diagonal movement
+#define FIRST_DIAG_STEP 1
+#define SECOND_DIAG_STEP 2
+
 // Bluespace shelter deploy checks
 #define SHELTER_DEPLOY_ALLOWED "allowed"
 #define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
@@ -148,6 +157,10 @@
 #define MANIFEST_ERROR_CONTENTS		2
 #define MANIFEST_ERROR_ITEM			4
 
+//Dummy mob reserve slots
+#define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
+#define DUMMY_HUMAN_SLOT_BARBER "dummy_barbet_preview"
+#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
 
 //teleport checks
 #define TELE_CHECK_NONE 0
@@ -179,6 +192,8 @@
 
 #define COORD(A) "([A.x],[A.y],[A.z])"
 
+#define RUNE_WORDS list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
+
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
 
@@ -208,41 +223,58 @@
 #define BYOND_JOIN_LINK "byond://[BYOND_SERVER_ADDRESS]"
 #define BYOND_SERVER_ADDRESS config.server ? "[config.server]" : "[world.address]:[world.port]"
 
-//Facehugger's control type
-#define FACEHUGGERS_STATIC_AI     0   // don't move by themselves
-#define FACEHUGGERS_DYNAMIC_AI    1   // controlled by simple AI
-#define FACEHUGGERS_PLAYABLE      2   // controlled by players
-
-//Time it takes to impregnate someone with facehugger
-#define MIN_IMPREGNATION_TIME 200
-#define MAX_IMPREGNATION_TIME 250
-
 #define DELAY2GLIDESIZE(delay) (world.icon_size / max(CEIL(delay / world.tick_lag), 1))
 
 #define PLASMAGUN_OVERCHARGE 30100
+
+#define VAR_SWAP(A, B)\
+	var/temp = A;\
+	A = B;\
+	B = temp;\
+
+#define LOC_SWAP(A, B)\
+	var/atom/temp = A.loc;\
+	A.forceMove(B.loc);\
+	B.forceMove(temp);\
 
 //! ## Overlays subsystem
 
 ///Compile all the overlays for an atom from the cache lists
 #define COMPILE_OVERLAYS(A)\
-	if (TRUE) {\
-		var/list/ad = A.add_overlays;\
-		var/list/rm = A.remove_overlays;\
-		if(length(rm)){\
-			A.overlays -= rm;\
-			rm.Cut();\
+	var/list/ad = A.add_overlays;\
+	var/list/rm = A.remove_overlays;\
+	if(length(rm)){\
+		A.overlays -= rm;\
+		rm.Cut();\
+	}\
+	if(length(ad)){\
+		A.overlays |= ad;\
+		ad.Cut();\
+	}\
+	for(var/I in A.alternate_appearances){\
+		var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
+		if(AA.transfer_overlays){\
+			AA.copy_overlays(A, TRUE);\
 		}\
-		if(length(ad)){\
-			A.overlays |= ad;\
-			ad.Cut();\
-		}\
-		for(var/I in A.alternate_appearances){\
-			var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
-			if(AA.transfer_overlays){\
-				AA.copy_overlays(A, TRUE);\
-			}\
-		}\
-		A.flags_2 &= ~OVERLAY_QUEUED_2;\
-		if(isturf(A)){SSdemo.mark_turf(A);}\
-		if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\
-	}
+	}\
+	A.flags_2 &= ~OVERLAY_QUEUED_2;\
+	if(isturf(A)){SSdemo.mark_turf(A);}\
+	if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\
+
+///Access Region Codes///
+#define REGION_ALL			0
+#define REGION_GENERAL		1
+#define REGION_SECURITY		2
+#define REGION_MEDBAY		3
+#define REGION_RESEARCH		4
+#define REGION_ENGINEERING	5
+#define REGION_SUPPLY		6
+#define REGION_COMMAND		7
+#define REGION_CENTCOMM		8
+
+#define ADD_TO_GLOBAL_LIST(type, list) ##type/atom_init(){\
+	. = ..();\
+	global.##list += src;}\
+##type/Destroy(){\
+	global.##list -= src;\
+	return ..()}

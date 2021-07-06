@@ -10,8 +10,6 @@
 
 /obj/item/weapon/evidencebag/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(!in_range(target, user))
-		return
 
 	if(!istype(target, /obj/item))
 		return ..()
@@ -19,6 +17,9 @@
 	var/obj/item/I = target
 	if(I.anchored)
 		return ..()
+
+	if((I.flags & (ABSTRACT|DROPDEL)) || !I.canremove)
+		return
 
 	if(istype(I, /obj/item/weapon/evidencebag))
 		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")

@@ -214,7 +214,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/container_resist()
 	go_out()
 
-/datum/global_iterator/mech_sleeper/process(var/obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
+/datum/global_iterator/mech_sleeper/process(obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
 	if(!S.chassis)
 		S.set_ready_state(1)
 		return stop()
@@ -226,6 +226,10 @@
 	var/mob/living/carbon/M = S.occupant
 	if(!M)
 		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[IS_SYNTHETIC])
+			return
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
 		M.updatehealth()
@@ -286,7 +290,7 @@
 		message = "Reel is full."
 	else
 		message = "[result] meters of cable successfully loaded."
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 	occupant_message(message)
 	return
 
@@ -661,7 +665,7 @@
 /datum/global_iterator/mech_synth
 	delay = 100
 
-/datum/global_iterator/mech_synth/process(var/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/S)
+/datum/global_iterator/mech_synth/process(obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/S)
 	if(!S.chassis)
 		return stop()
 	var/energy_drain = S.energy_drain*10

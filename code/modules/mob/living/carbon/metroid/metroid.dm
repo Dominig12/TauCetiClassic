@@ -17,6 +17,9 @@
 	see_in_dark = 8
 	update_slimes = 0
 
+	attack_push_vis_effect = ATTACK_EFFECT_SLIME
+	attack_disarm_vis_effect = ATTACK_EFFECT_SLIME
+
 	ventcrawler = 2
 
 	moveset_type = /datum/combat_moveset/slime
@@ -268,6 +271,17 @@
 /mob/living/carbon/slime/attack_ui(slot)
 	return
 
+/mob/living/carbon/slime/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[colour]
+	. = ..()
+
+/mob/living/carbon/slime/rainbow/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[pick(global.slime_colors)]
+	. = ..()
+
+/mob/living/carbon/slime/adult/rainbow/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[pick(global.slime_colors)]
+	. = ..()
 
 /mob/living/carbon/slime/hurtReaction(mob/living/attacker, show_message = TRUE)
 	if(Victim)
@@ -663,7 +677,7 @@
 	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
 
 /obj/effect/golemrune
-	anchored = 1
+	anchored = TRUE
 	desc = "A strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
@@ -712,7 +726,7 @@
 	check_spirit()
 
 /obj/effect/golemrune/attack_hand(mob/living/carbon/human/H)
-	if(H.my_golem || !H.get_species() == GOLEM)
+	if(H.my_golem || H.get_species() == GOLEM)
 		return
 	if(!check_spirit())
 		to_chat(H, "The rune fizzles uselessly. There is no spirit nearby.")
@@ -724,12 +738,10 @@
 	G.key = spirit.key
 	G.my_master = H
 	H.my_golem = G
-	// Master get hud
-	H.add_antag_hud(ANTAG_HUD_GOLEM, "agolem_master", H)
-	// Golom get hud
+	// Golem get hud
 	H.set_golem_hud()
-	var/datum/atom_hud/antag/A = huds[ANTAG_HUD_GOLEM]
-	A.add_to_single_hud(G, H)
+	var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+	golem_hud.add_to_single_hud(G, H)
 
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
 	G.mind.memory += "<B>[H]</B> - your master."
@@ -821,9 +833,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	STOP_PROCESSING(SSobj, src)
 	var/turf/T = get_turf(src)
-	src.visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
+	visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
-		src.visible_message("<span class='notice'>The [name] bursts open!</span>")
+		visible_message("<span class='notice'>The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
 		qdel(src)
 
@@ -832,7 +844,7 @@
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	if (environment.gas["phoron"] > MOLES_PHORON_VISIBLE)//phoron exposure causes the egg to hatch
-		src.Hatch()
+		Hatch()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/crayon))

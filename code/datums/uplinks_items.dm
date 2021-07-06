@@ -56,14 +56,14 @@
 	if(!istype(U))
 		return 0
 
-	if (!user || user.incapacitated())
+	if(!user || user.incapacitated())
 		return 0
 
-	if (!( istype(user, /mob/living/carbon/human)))
+	if(!( istype(user, /mob/living/carbon/human)))
 		return 0
 
-	// If the uplink's holder is in the user's contents
-	if ((U.loc in user.contents || (in_range(U.loc, user) && istype(U.loc.loc, /turf))))
+	// If the uplink's holder is in the user's contents or near him
+	if(U.Adjacent(user, recurse = 2))
 		user.set_machine(U)
 		if(cost > U.uses)
 			return 0
@@ -83,14 +83,24 @@
 		if(istype(I, /obj/item) && ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
-			U.purchase_log += {"[user] ([user.ckey]) bought <img src="logo_[tempstate].png"> [name] for [cost]."}
-			if(user.mind)
-				user.mind.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename]"}
-				user.mind.spent_TC += cost
-		U.interact(user)
+			loging(A, tempstate, bundlename)
 
 		return 1
 	return 0
+
+/datum/uplink_item/proc/loging(mob/living/carbon/human/user, tempstate, bundlename)
+	if(user.mind)
+		for(var/role in user.mind.antag_roles)
+			var/datum/role/R = user.mind.antag_roles[role]
+			var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
+			if(!S)
+				continue
+			S.spent_TC += cost
+			if(istype(R, /datum/role/operative))
+				R.faction.faction_scoreboard_data += {"<img src="logo_[tempstate].png"> [bundlename] for [cost] TC."}
+			else
+				S.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename] for [cost] TC."}
+
 
 /*
 //
@@ -261,8 +271,20 @@
 	name = "Armor Set"
 	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
 	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
-	cost = 10
+	cost = 6
 	uplink_types = list("traitor")
+
+/datum/uplink_item/dangerous/mine
+	name = "High Explosive Mine"
+	desc = "A mine that explodes upon pressure. Use multitool to disarm it."
+	item = /obj/item/mine
+	cost = 3
+
+/datum/uplink_item/dangerous/incendiary_mine
+	name = "Incendiary Mine"
+	desc = "A variation of many different mines, this one will set on fire anyone unfortunate to step on it."
+	item = /obj/item/mine/incendiary
+	cost = 3
 
 // AMMUNITION
 
@@ -376,6 +398,13 @@
 	name = "EMP missile"
 	desc = "A EMP missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket/emp
+	cost = 10
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/chemicals
+	name = "Chemical Warfare Tank"
+	desc = "A tank of chemicals to refuel your urge to deliver slow and painful death to others."
+	item = /obj/item/device/radio/beacon/syndicate_chemicals
 	cost = 10
 	uplink_types = list("nuclear")
 
@@ -737,6 +766,29 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
 
+// TELECRYSTALS
+
+/datum/uplink_item/telecrystals
+	category = "Telecrystals"
+
+/datum/uplink_item/telecrystals/one
+	name = "1 Telecrystal"
+	desc = "Withdraws one raw telecrystal to share with your killing buddies."
+	item = /obj/item/stack/telecrystal
+	cost = 1
+
+/datum/uplink_item/telecrystals/five
+	name = "5 Telecrystals"
+	desc = "Withdraws five raw telecrystals to gift to your lovely crime partner."
+	item = /obj/item/stack/telecrystal/five
+	cost = 5
+
+/datum/uplink_item/telecrystals/twenty
+	name = "20 Telecrystals"
+	desc = "Withdraws twenty raw telecrystals to wholly give yourself into hands of your accomplices."
+	item = /obj/item/stack/telecrystal/twenty
+	cost = 20
+
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass
@@ -758,6 +810,12 @@
 	name = "Syndicate Smokes"
 	desc = "Strong flavor, dense smoke, infused with tricordazine."
 	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
+	cost = 2
+
+/datum/uplink_item/badass/syndiedonuts
+	name = "Syndicate Donuts"
+	desc = "Special offer from Waffle Co., the box of 6 delicious donuts! But be careful, some of them are posioned!"
+	item = /obj/item/weapon/storage/fancy/donut_box/traitor
 	cost = 2
 
 /datum/uplink_item/badass/syndiecash

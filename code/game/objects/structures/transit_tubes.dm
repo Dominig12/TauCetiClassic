@@ -6,9 +6,9 @@
 /obj/structure/transit_tube
 	icon = 'icons/obj/pipes/transit_tube.dmi'
 	icon_state = "E-W"
-	density = 1
+	density = TRUE
 	layer = 3.1
-	anchored = 1.0
+	anchored = TRUE
 	var/list/tube_dirs = null
 	var/exit_delay = 2
 	var/enter_delay = 1
@@ -158,7 +158,7 @@
 			nexttube = tube
 			break
 	if(!nexttube)
-		pod.dir = turn(pod.dir, 180)
+		pod.set_dir(turn(pod.dir, 180))
 
 	if(icon_state == "closed" && pod)
 		pod.follow_tube()
@@ -308,13 +308,13 @@
 				break
 
 		if(current_tube == null)
-			dir = next_dir
+			set_dir(next_dir)
 			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
 			break
 
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
-		dir = next_dir
+		set_dir(next_dir)
 		loc = next_loc // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
@@ -322,7 +322,7 @@
 			current_tube.pod_stopped(src, dir)
 			break
 
-	density = 1
+	density = TRUE
 
 	moving = 0
 
@@ -379,14 +379,14 @@
 								station.open_animation()
 
 						else if(direction in station.directions())
-							dir = direction
+							set_dir(direction)
 							station.launch_pod()
 					return
 
 			for(var/obj/structure/transit_tube/tube in loc)
 				if(dir in tube.directions())
 					if(tube.has_exit(direction))
-						dir = direction
+						set_dir(direction)
 						return
 
 
@@ -405,7 +405,7 @@
 		tube_dirs = parse_dirs(icon_state)
 
 		if(copytext(icon_state, 1, 3) == "D-" || findtextEx(icon_state, "Pass"))
-			density = 0
+			density = FALSE
 
 
 

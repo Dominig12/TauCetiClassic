@@ -32,15 +32,15 @@
 
 				if(movement_target) // Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					if (movement_target.loc.x < src.x)
-						dir = WEST
+						set_dir(WEST)
 					else if (movement_target.loc.x > src.x)
-						dir = EAST
+						set_dir(EAST)
 					else if (movement_target.loc.y < src.y)
-						dir = SOUTH
+						set_dir(SOUTH)
 					else if (movement_target.loc.y > src.y)
-						dir = NORTH
+						set_dir(NORTH)
 					else
-						dir = SOUTH
+						set_dir(SOUTH)
 
 					if(isturf(movement_target.loc) )
 						movement_target.attack_animal(src)
@@ -51,7 +51,7 @@
 		if(prob(1))
 			emote("me",1,pick("dances around","chases its tail"))
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-				dir = i
+				set_dir(i)
 				sleep(1)
 
 	//Movement - this, speaking, simple_animal_A.I. code - should be converted into A.I. datum later on, for now - dirty copypasta of simple_animal.dm Life() proc.
@@ -163,19 +163,19 @@
 			healths.icon_state = "health7"
 
 	if(hud_used && hud_used.staminadisplay)
-		var/obj/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
+		var/atom/movable/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
 		SB.icon_state = "stam_bar_[round(stamina, 5)]"
 
 	if(oxygen_alert)
-		throw_alert("ian_oxy", /obj/screen/alert/ian_oxy)
+		throw_alert("ian_oxy", /atom/movable/screen/alert/ian_oxy)
 	else
 		clear_alert("ian_oxy")
 	if(phoron_alert)
-		throw_alert("ian_tox", /obj/screen/alert/ian_tox)
+		throw_alert("ian_tox", /atom/movable/screen/alert/ian_tox)
 	else
 		clear_alert("ian_tox")
 	if(fire_alert)
-		throw_alert("ian_hot", /obj/screen/alert/ian_hot)
+		throw_alert("ian_hot", /atom/movable/screen/alert/ian_hot)
 	else
 		clear_alert("ian_hot")
 
@@ -488,19 +488,19 @@
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
 			clear_alert("pressure")
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 		else
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 			else
-				throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 
 /mob/living/carbon/ian/handle_fire()
 	if(..())
@@ -622,7 +622,5 @@
 	tod = worldtime2text()
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	if(SSticker.mode)
-		SSticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 	return ..(gibbed)

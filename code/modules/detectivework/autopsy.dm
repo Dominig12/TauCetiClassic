@@ -199,7 +199,7 @@
 		usr.update_inv_r_hand()
 
 /obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
-	if(!istype(M) &!can_operate(M))
+	if(!istype(M) || !can_operate(M))
 		return
 
 	if(do_after(user,15,target = M))
@@ -223,6 +223,6 @@
 		M.visible_message("<span class='warning'>[user.name] scans the wounds on [M.name]'s [BP.name] with \the [src.name]</span>")
 		playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "[bicon(src)]<span class='notice'>Scanning completed!</span>")
-		src.add_data(BP)
+		add_data(BP)
 		flick("autopsy_scanning",src)
 		return 1

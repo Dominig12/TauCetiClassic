@@ -6,7 +6,7 @@
 	/*name = "Lockdown Control"
 	desc = "Used to control blast doors."
 	icon_state = "lockdown"
-	circuit = "/obj/item/weapon/circuitboard/lockdown"
+	circuit = /obj/item/weapon/circuitboard/lockdown
 	var/connected_doors
 	var/department*/
 	var/list/displayedNetworks
@@ -138,4 +138,4 @@
 				spawn(0)
 					D.close()
 
-	src.updateDialog()
+	updateDialog()

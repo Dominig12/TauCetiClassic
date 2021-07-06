@@ -1,5 +1,11 @@
 /datum/admins
-	var/current_tab =0
+	var/current_tab = 0
+
+	var/list/datum/secrets_menu/secrets_menu = list()
+
+	var/static/datum/announcement/station/gravity_off/announce_gravity_off = new
+	var/static/datum/announcement/station/gravity_on/announce_gravity_on = new
+	var/static/datum/announcement/centcomm/access_override/announce_override = new
 
 /datum/admins/proc/Secrets()
 	if(!check_rights(0))
@@ -52,6 +58,7 @@
 					<h4>Coder Secrets</h4>
 					<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
 					<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
+					<A href='?src=\ref[src];secretscoder=topicspam'>Spam to Topic()</A><BR>
 					"}
 
 		if(1) // IC Events
@@ -66,6 +73,8 @@
 					<A href='?src=\ref[src];secretsfun=securitylevel1'>Security Level - Blue</A><BR>
 					<A href='?src=\ref[src];secretsfun=securitylevel2'>Security Level - Red</A><br>
 					<A href='?src=\ref[src];secretsfun=securitylevel3'>Security Level - Delta</A><BR>
+					<h4>Do something stupid</h4>
+					<A href='?src=\ref[src];secretsfun=spawncompletesandwich'>Create a Complete Sandwich</A><BR>
 					"}
 
 		if(2) // OOC Events
@@ -193,11 +202,11 @@
 			if(gravity_is_on)
 				log_admin("[key_name(usr)] toggled gravity on.")
 				message_admins("<span class='notice'>[key_name_admin(usr)] toggled gravity on.</span>")
-				command_alert("Gravity generators are again functioning within normal parameters. Sorry for any inconvenience.", null, "gravon")
+				announce_gravity_on.play()
 			else
 				log_admin("[key_name(usr)] toggled gravity off.")
 				message_admins("<span class='notice'>[key_name_admin(usr)] toggled gravity off.</span>")
-				command_alert("Feedback surge detected in mass-distributions systems. Artifical gravity has been disabled whilst the system reinitializes. Further failures may result in a gravitational collapse and formation of blackholes. Have a nice day.", null, "gravoff")
+				announce_gravity_off.play()
 		// Make all areas powered
 		if("power")
 			feedback_inc("admin_secrets_fun_used",1)
@@ -225,7 +234,7 @@
 		// Warp all Players to Prison
 		if("prisonwarp")
 			if(!SSticker)
-				alert("The game hasn't started yet!", null, null, null, null, null)
+				tgui_alert(usr, "The game hasn't started yet!")
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","PW")
@@ -260,39 +269,15 @@
 		// Everyone is the traitor
 		if("traitor_all")
 			if(!SSticker)
-				alert("The game hasn't started yet!")
-				return
-			var/objective = sanitize(input("Enter an objective"))
-			if(!objective)
+				tgui_alert(usr, "The game hasn't started yet!")
 				return
 			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","TA([objective])")
 			for(var/mob/living/carbon/human/H in player_list)
 				if(H.stat == DEAD || !H.client || !H.mind) continue
 				if(is_special_character(H)) continue
-				//traitorize(H, objective, 0)
-				SSticker.mode.traitors += H.mind
-				H.mind.special_role = "traitor"
-				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", H)
-				var/datum/objective/new_objective = new
-				new_objective.owner = H
-				new_objective.explanation_text = objective
-				H.mind.objectives += new_objective
-				SSticker.mode.greet_traitor(H.mind)
-				//SSticker.mode.forge_traitor_objectives(H.mind)
-				SSticker.mode.finalize_traitor(H.mind)
+				create_and_setup_role(/datum/role/traitor/syndbeacon, H)
 			for(var/mob/living/silicon/A in player_list)
-				SSticker.mode.traitors += A.mind
-				A.mind.special_role = "traitor"
-				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", A)
-				var/datum/objective/new_objective = new
-				new_objective.owner = A
-				new_objective.explanation_text = objective
-				A.mind.objectives += new_objective
-				SSticker.mode.greet_traitor(A.mind)
-				SSticker.mode.finalize_traitor(A.mind)
-			message_admins("<span class='notice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
-			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
+				create_and_setup_role(/datum/role/traitor/syndbeacon, A)
 
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","ShM")
@@ -426,7 +411,7 @@
 		if("virus")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","V")
-			var/answer = alert("Do you want this to be a greater disease or a lesser one?",,"Greater","Lesser")
+			var/answer = tgui_alert(usr, "Do you want this to be a greater disease or a lesser one?",, list("Greater","Lesser"))
 			if(answer=="Lesser")
 				virus2_lesser_infection()
 				message_admins("[key_name_admin(usr)] has triggered a lesser virus outbreak.")
@@ -461,7 +446,7 @@
 				W.item_state = "w_suit"
 				W.item_color = "schoolgirl"
 			message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
-			station_announce(sound = "animes")
+			announcement_ping.play("animes")
 		// Egalitarian Station Mode
 		if("eagles")//SCRAW
 			feedback_inc("admin_secrets_fun_used",1)
@@ -470,7 +455,7 @@
 				if(is_station_level(W.z) && !istype(get_area(W), /area/station/bridge) && !istype(get_area(W), /area/station/civilian/dormitories) && !istype(get_area(W), /area/station/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
-			command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")
+			announce_override.play()
 		// Dorf Mode
 		if("dorf")
 			feedback_inc("admin_secrets_fun_used",1)
@@ -506,6 +491,16 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","ASTEROID")
 			usr.client.drop_asteroid()
+		if("spawncompletesandwich")
+			if(!check_rights(R_EVENT|R_FUN))
+				to_chat(usr, "<span class='warning'>You don't have permissions for this</span>")
+				return
+			var/turf/T = get_turf(usr)
+			message_admins("[key_name_admin(usr)] has created a complete sandwich at location [COORD(T)] [ADMIN_JMP(usr)]")
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","DASANDWICH")
+			var/obj/item/weapon/reagent_containers/food/snacks/csandwich/CS = new(get_turf(usr))
+			CS.complete()
 		else
 			to_chat(world, "oof, this is ["secretsfun"] not worked")
 	if(usr)
@@ -559,7 +554,7 @@
 				GM.temperature = 293
 				GM.update_values()
 
-				message_admins("[key_name_admin(usr)] has restored air in [T.x] [T.y] [T.z] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
+				message_admins("[key_name_admin(usr)] has restored air in [COORD(T)] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
 			else
 				to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 		// Bombing List
@@ -613,10 +608,10 @@
 		// Show Game Mode
 		if("showgm")
 			if(!SSticker)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr, "The game hasn't started yet!")
 			else if (SSticker.mode)
-				alert("The game mode is [SSticker.mode.name]")
-			else alert("For some reason there's a ticker, but not a game mode")
+				tgui_alert(usr, "The game mode is [SSticker.mode.name]")
+			else tgui_alert(usr, "For some reason there's a ticker, but not a game mode")
 		// Show Crew Manifest
 		if("manifest")
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
@@ -666,7 +661,7 @@
 
 		// Set Night Shift Mode
 		if("night_shift_set")
-			var/val = alert(usr, "What do you want to set night shift to?", "Night Shift", "On", "Off", "Automatic")
+			var/val = tgui_alert(usr, "What do you want to set night shift to?", "Night Shift", list("On", "Off", "Automatic"))
 			switch(val)
 				if("Automatic")
 					SSnightshift.can_fire = TRUE
@@ -729,6 +724,17 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
+		if("topicspam")
+			var/count = config.minutetopiclimit * 2
+			if(tgui_alert(usr, "Are you sure? You will be deadminned and [count] Topic() calls will be generated.",, list("Yes","No")) == "Yes")
+				to_chat(usr, "<span class='interface'>You are lost your keys to control this station. Please wait...</span>")
+				usr.client.holder.disassociate()
+				message_admins("[key_name_admin(usr)] started topic spam.")
+				for(var/i in 1 to count)
+					sleep(1)
+					usr.client.Topic("spam=[i]", list())
+				usr.client.deadmin_holder.reassociate()
+				to_chat(usr, "<span class='interface'>You again have the keys to control the planet, or at least a small space station.</span>")
 		else
 			to_chat(world, "oof, this is ["secretcoder"] not worked")
 

@@ -115,7 +115,7 @@
 
 	user.visible_message("<span class='warning'>[user.name] is trying to plant some kind of device on [target.name]!</span>")
 
-	if(do_after(user, 50, target = target) && in_range(user, H))
+	if(do_after(user, 50, target = target))
 		user.drop_item()
 		target = H
 		loc = null
@@ -145,3 +145,16 @@
 			qdel(src)
 		H.cut_overlay(I)
 		qdel(I)
+
+/obj/item/device/radio/beacon/syndicate_chemicals
+	name = "suspicious beacon"
+	desc = "A label on it reads: <i>Warning: Activating this device will send a container with hazardous chemicals to your location.</i>."
+	origin_tech = "bluespace=1;syndicate=4"
+
+/obj/item/device/radio/beacon/syndicate_chemicals/attack_self(mob/user)
+	if(user)
+		to_chat(user, "<span class='notice'>Locked In</span>")
+		new /obj/structure/reagent_dispensers/hazard( user.loc )
+		playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER)
+		qdel(src)
+	return

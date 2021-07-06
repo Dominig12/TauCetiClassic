@@ -135,13 +135,12 @@
 			return
 		else
 			var/obj/item/gland/gland = tool
-			user.drop_item()
+			user.drop_from_inventory(gland, target)
 			gland.Inject(target)
 			BP.cavity = 0
 			return
-	user.drop_item()
+	user.drop_from_inventory(tool, target)
 	BP.hidden = tool
-	tool.loc = target
 	BP.cavity = 0
 
 /datum/surgery_step/cavity/place_item/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -198,7 +197,6 @@
 			user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 			"<span class='notice'>You take [obj] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 			BP.implants -= obj
-			target.sec_hud_set_implants()
 			for(var/datum/wound/W in BP.wounds)
 				if(obj in W.embedded_objects)
 					W.embedded_objects -= obj
@@ -226,6 +224,8 @@
 		else
 			user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
 			"<span class='notice'>There's something inside [target]'s [BP.name], but you just missed it this time.</span>" )
+
+		target.sec_hud_set_implants()
 	else if (BP.hidden)
 		user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 		"<span class='notice'>You take something out of incision on [target]'s [BP.name]s with \the [tool].</span>" )

@@ -29,7 +29,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	move_self = 1
 	grav_pull = 0
 	contained = 0
-	density = 1
+	density = TRUE
 	energy = 0
 
 	var/list/orbiting_balls = list()
@@ -60,7 +60,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		pixel_x = 0
 		pixel_y = 0
 
-		dir = tesla_zap(src, 7, TESLA_DEFAULT_POWER)
+		set_dir(tesla_zap(src, 7, TESLA_DEFAULT_POWER))
 
 		pixel_x = -32
 		pixel_y = -32

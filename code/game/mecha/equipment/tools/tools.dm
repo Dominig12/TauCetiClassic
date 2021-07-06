@@ -34,13 +34,13 @@
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
 				set_ready_state(0)
 				chassis.use_power(energy_drain)
-				O.anchored = 1
+				O.anchored = TRUE
 				var/T = chassis.loc
 				if(do_after_cooldown(target))
 					if(T == chassis.loc && src == chassis.selected)
 						cargo_holder.cargo += O
 						O.loc = chassis
-						O.anchored = 0
+						O.anchored = FALSE
 						occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
 						log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 					else
@@ -447,7 +447,7 @@
 	P.creator = null
 	P.icon = 'icons/obj/objects.dmi'
 	P.failchance = 0
-	P.icon_state = "anom"
+	P.icon_state = "bluespace_wormhole_enter"
 	P.name = "wormhole"
 	do_after_cooldown()
 	src = null
@@ -488,20 +488,20 @@
 					return
 				locked = target
 				occupant_message("Locked on [target]")
-				send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+				send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 				return
 			else if(target!=locked)
 				if(locked in view(chassis))
 					locked.throw_at(target, 14, 1.5, chassis)
 					locked = null
-					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 					set_ready_state(0)
 					chassis.use_power(energy_drain)
 					do_after_cooldown()
 				else
 					locked = null
 					occupant_message("Lock on [locked] disengaged.")
-					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 		if(2)
 			if(!action_checks(target)) return
 			var/list/atoms = list()
@@ -528,7 +528,7 @@
 	..()
 	if(href_list["mode"])
 		mode = text2num(href_list["mode"])
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 	return
 
 
@@ -538,6 +538,7 @@
 	desc = "Boosts exosuit armor against armed melee attacks. Requires energy to operate."
 	icon_state = "mecha_abooster_ccw"
 	origin_tech = "materials=3"
+	selectable = FALSE
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
@@ -591,6 +592,7 @@
 	origin_tech = "materials=4"
 	equip_cooldown = 10
 	energy_drain = 50
+	selectable = FALSE
 	range = 0
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
@@ -664,6 +666,7 @@
 	equip_cooldown = 20
 	energy_drain = 100
 	range = 0
+	selectable = FALSE
 	var/health_boost = 2
 	var/datum/global_iterator/pr_repair_droid
 	var/icon/droid_overlay
@@ -707,10 +710,10 @@
 			log_message("Deactivated.")
 			set_ready_state(1)
 		chassis.add_overlay(droid_overlay)
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 	return
 
-/datum/global_iterator/mecha_repair_droid/process(var/obj/item/mecha_parts/mecha_equipment/repair_droid/RD as obj)
+/datum/global_iterator/mecha_repair_droid/process(obj/item/mecha_parts/mecha_equipment/repair_droid/RD)
 	if(!RD.chassis)
 		stop()
 		RD.set_ready_state(1)
@@ -750,6 +753,7 @@
 	energy_drain = 0
 	range = 0
 	var/datum/global_iterator/pr_energy_relay
+	selectable = FALSE
 	var/coeff = 100
 	var/list/use_channels = list(STATIC_EQUIP,STATIC_ENVIRON,STATIC_LIGHT)
 
@@ -813,7 +817,7 @@
 	if(!chassis) return
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_relay=1'>[pr_energy_relay.active()?"Dea":"A"]ctivate</a>"
 
-/datum/global_iterator/mecha_energy_relay/process(var/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/ER)
+/datum/global_iterator/mecha_energy_relay/process(obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/ER)
 	if(!ER.chassis || ER.chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 		stop()
 		ER.set_ready_state(1)
@@ -843,7 +847,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator
 	name = "phoron generator"
 	desc = "Generates power using solid phoron as fuel. Pollutes the environment."
-	icon_state = "tesla"
+	icon_state = "phoron"
 	origin_tech = "phorontech=2;powerstorage=2;engineering=1"
 	equip_cooldown = 10
 	energy_drain = 0
@@ -900,7 +904,7 @@
 			message = "Unit is full."
 		else
 			message = "[result] unit\s of [fuel] successfully loaded."
-			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 		occupant_message(message)
 	return
 
@@ -944,7 +948,7 @@
 	T.assume_air(GM)
 	return
 
-/datum/global_iterator/mecha_generator/process(var/obj/item/mecha_parts/mecha_equipment/generator/EG)
+/datum/global_iterator/mecha_generator/process(obj/item/mecha_parts/mecha_equipment/generator/EG)
 	if(!EG.chassis)
 		stop()
 		EG.set_ready_state(1)
@@ -978,7 +982,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear
 	name = "ExoNuclear reactor"
 	desc = "Generates power using uranium. Pollutes the environment."
-	icon_state = "tesla"
+	icon_state = "uranium"
 	origin_tech = "powerstorage=3;engineering=3"
 	max_fuel = 50000
 	fuel_per_cycle_idle = 10
@@ -998,7 +1002,7 @@
 
 /datum/global_iterator/mecha_generator/nuclear
 
-/datum/global_iterator/mecha_generator/nuclear/process(var/obj/item/mecha_parts/mecha_equipment/generator/nuclear/EG)
+/datum/global_iterator/mecha_generator/nuclear/process(obj/item/mecha_parts/mecha_equipment/generator/nuclear/EG)
 	if(..())
 		for(var/mob/living/carbon/M in view(EG.chassis))
 			M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
@@ -1037,13 +1041,13 @@
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
 				set_ready_state(0)
 				chassis.use_power(energy_drain)
-				O.anchored = 1
+				O.anchored = TRUE
 				var/T = chassis.loc
 				if(do_after_cooldown(target))
 					if(T == chassis.loc && src == chassis.selected)
 						cargo_holder.cargo += O
 						O.loc = chassis
-						O.anchored = 0
+						O.anchored = FALSE
 						chassis.occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
 						chassis.log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 					else
@@ -1162,7 +1166,8 @@
 /obj/item/mecha_parts/mecha_equipment/Drop_system/proc/perform_drop()
 	for(var/atom/movable/T in loc)
 		if(T != src && T != chassis.occupant && !(istype(T, /obj/structure/window) || istype(T, /obj/machinery/door/airlock) || istype(T, /obj/machinery/door/poddoor)))
-			if(!(T in chassis.contents)) T.ex_act(1)
+			if(T.loc != chassis)
+				T.ex_act(1)
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, chassis))

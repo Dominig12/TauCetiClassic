@@ -16,8 +16,7 @@
 	var/recent_fail = 0
 
 /obj/item/device/reagent_scanner/afterattack(atom/target, mob/user, proximity, params)
-	if (!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+	if(!proximity)
 		return
 	if(!isobj(target))
 		return

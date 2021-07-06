@@ -22,7 +22,7 @@
 
 	var/emagged = 0
 
-/datum/song_info/New(var/list/json)
+/datum/song_info/New(list/json)
 	title  = json["title"]
 	artist = json["artist"]
 	album  = json["album"]
@@ -62,9 +62,9 @@ var/global/loopModeNames=list(
 	desc = "A jukebox used for parties and shit."
 	icon = 'icons/obj/jukebox.dmi'
 	icon_state = "jukebox2-nopower"
-	density = 1
+	density = TRUE
 
-	anchored = 1
+	anchored = TRUE
 	playing = 0
 
 	var/loop_mode = JUKEMODE_SHUFFLE

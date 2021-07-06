@@ -39,30 +39,20 @@
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0
-	dog_owner = null
 
 	med_hud_set_health()
 	med_hud_set_status()
 
 	//Handle species-specific deaths.
-	if(species) species.handle_death(src)
-
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.infected_killed(src)
-		mode.body_count.Add(mind)
+	if(species)
+		species.handle_death(src)
 
 	//Check for heist mode kill count.
 	if(SSticker.mode && ( istype( SSticker.mode,/datum/game_mode/heist) ) )
-		//Check for last assailant's mutantrace.
-		/*if( LAssailant && ( istype( LAssailant,/mob/living/carbon/human ) ) )
-			var/mob/living/carbon/human/V = LAssailant
-			if (V.dna && (V.dna.mutantrace == "vox"))*/ //Not currently feasible due to terrible LAssailant tracking.
-		//world << "Vox kills: [vox_kills]"
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
 	if(!gibbed)
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
+		INVOKE_ASYNC(src, .proc/emote, "deathgasp") //let the world KNOW WE ARE DEAD
 
 		update_canmove()
 
@@ -74,7 +64,6 @@
 	if(SSticker && SSticker.mode)
 //		world.log << "k"
 		sql_report_death(src)
-		SSticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	if(my_golem)
 		my_golem.death()
 	if(my_master)
@@ -122,8 +111,8 @@
 			tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
 			timeofdeath = 0
 
-		if(BP.brainmob && BP.brainmob.mind && BP.brainmob.mind.changeling) //cuz fuck runtimes
-			var/datum/changeling/Host = BP.brainmob.mind.changeling
+		if(BP.brainmob && ischangeling(BP.brainmob)) //cuz fuck runtimes
+			var/datum/role/changeling/Host = BP.brainmob.mind.GetRoleByType(/datum/role/changeling)
 			if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
 				for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
 					if(istype(crab))

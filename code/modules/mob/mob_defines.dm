@@ -1,5 +1,5 @@
 /mob
-	density = 1
+	density = TRUE
 	layer = 4.0
 	animate_movement = 2
 //	flags = NOREACT
@@ -13,19 +13,19 @@
 	//Not in use yet
 	var/obj/effect/organstructure/organStructure = null
 
-	var/obj/screen/hands = null
-	var/obj/screen/pullin = null
-	var/obj/screen/internals = null
-	var/obj/screen/i_select = null
-	var/obj/screen/m_select = null
-	var/obj/screen/healths = null
-	var/obj/screen/throw_icon = null
-	var/obj/screen/pressure = null
-	var/obj/screen/pain = null
-	var/obj/screen/gun/item/item_use_icon = null
-	var/obj/screen/gun/move/gun_move_icon = null
-	var/obj/screen/gun/run/gun_run_icon = null
-	var/obj/screen/gun/mode/gun_setting_icon = null
+	var/atom/movable/screen/hands = null
+	var/atom/movable/screen/pullin = null
+	var/atom/movable/screen/internals = null
+	var/atom/movable/screen/i_select = null
+	var/atom/movable/screen/m_select = null
+	var/atom/movable/screen/healths = null
+	var/atom/movable/screen/throw_icon = null
+	var/atom/movable/screen/pressure = null
+	var/atom/movable/screen/pain = null
+	var/atom/movable/screen/gun/item/item_use_icon = null
+	var/atom/movable/screen/gun/move/gun_move_icon = null
+	var/atom/movable/screen/gun/run/gun_run_icon = null
+	var/atom/movable/screen/gun/mode/gun_setting_icon = null
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
@@ -33,15 +33,15 @@
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
-	var/obj/screen/zone_sel/zone_sel = null
-	var/obj/screen/leap/leap_icon = null
-	var/obj/screen/neurotoxin_icon = null
-	var/obj/screen/healthdoll = null
-	var/obj/screen/nutrition_icon = null
-	var/obj/screen/charge_icon = null
+	var/atom/movable/screen/zone_sel/zone_sel = null
+	var/atom/movable/screen/leap/leap_icon = null
+	var/atom/movable/screen/neurotoxin_icon = null
+	var/atom/movable/screen/healthdoll = null
+	var/atom/movable/screen/nutrition_icon = null
+	var/atom/movable/screen/charge_icon = null
 
-	var/obj/screen/xenomorph_plasma_display = null
-	var/obj/screen/nightvisionicon = null
+	var/atom/movable/screen/xenomorph_plasma_display = null
+	var/atom/movable/screen/nightvisionicon = null
 
 	var/me_verb_allowed = TRUE //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/speech_allowed = 1 //Meme Stuff
@@ -142,6 +142,8 @@
 
 	var/coughedtime = null
 
+	var/next_point_to = 0
+
 	var/music_lastplayed = "null"
 
 	var/job = null//Living
@@ -149,7 +151,6 @@
 	var/const/blindness = 1//Carbon
 	var/const/deafness = 2//Carbon
 	var/const/muteness = 4//Carbon
-
 
 	var/datum/dna/dna = null//Carbon
 	var/radiation = 0.0//Carbon
@@ -235,3 +236,14 @@
 	var/list/weather_immunities = list()
 
 	var/list/progressbars = null //for stacking do_after bars
+
+	// This is a ref to the religion that the mob is involved in.
+	// Mobs without mind can be member of a religion
+	var/datum/religion/my_religion
+
+	// datum/atom_hud
+	hud_possible = list(ANTAG_HUD, HOLY_HUD)
+	// Mob typing indication
+	var/typing = FALSE
+	var/obj/effect/overlay/typing_indicator/typing_indicator
+	var/typing_indicator_type = "default"

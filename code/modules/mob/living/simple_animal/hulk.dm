@@ -22,7 +22,7 @@
 
 	speed = 1
 	a_intent = INTENT_HARM
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
@@ -103,7 +103,7 @@
 	real_name = name
 	status_flags ^= CANPUSH
 	for(var/spell in hulk_powers)
-		spell_list += new spell(src)
+		AddSpell(new spell(src))
 
 /mob/living/simple_animal/hulk/unathi/Login()
 	..()
@@ -256,7 +256,7 @@
 		visible_message("<span class='userdanger'>[src] has punched \the [target]!</span>",\
 		"<span class='userdanger'>You punch the [target]!</span>",\
 		"<span class='userdanger'>You feel some weird vibration!</span>")
-		playsound(target, 'sound/effects/hulk_hit_airlock.ogg', VOL_EFFECTS_MASTER, 75)
+		playsound(target, 'sound/effects/hulk_attack.ogg', VOL_EFFECTS_MASTER, 75)
 		return 0
 	else
 		say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
