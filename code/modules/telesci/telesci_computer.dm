@@ -110,7 +110,23 @@
 	else
 		return ..()
 
-/obj/machinery/computer/telescience/ui_interact(mob/user)
+/obj/machinery/computer/telescience/tgui_data(mob/user)
+	var/list/data = list()
+	return data
+
+/obj/machinery/computer/telescience/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	var/icon/i = new icon();
+	i.DrawBox;
+
+/obj/machinery/computer/telescience/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui);
+	if(!ui)
+		ui = new(user, src, "telescience")
+		ui.open()
 	var/t
 	if(!telepad)
 		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
