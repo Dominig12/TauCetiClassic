@@ -17,3 +17,14 @@
 	mapGenerator = new mapGeneratorType()
 	mapGenerator.defineRegion(locate(startTurfX,startTurfY,startTurfZ), locate(endTurfX,endTurfY,endTurfZ))
 	mapGenerator.generate()
+
+/obj/effect/landmark/map_generatorCircle/bluespace
+	var/radius = 1
+	var/mapGeneratorType = /datum/map_generator/bluespace
+	var/datum/map_generator/mapGenerator
+
+/obj/effect/landmark/map_generatorCircle/bluespace/New()
+	..()
+	mapGenerator = new mapGeneratorType()
+	mapGenerator.defineCircularRegion(locate(max(x-radius, 0), y, z), locate(max(x+radius, 0), y, z))
+	mapGenerator.generate()
