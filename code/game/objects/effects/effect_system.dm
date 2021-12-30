@@ -208,6 +208,7 @@ steam.start() -- spawns the effect
 	layer = FLY_LAYER
 	var/amount = 6.0
 	var/time_to_live = 100
+	var/timer
 
 	//Remove this bit to use the old smoke
 	icon = 'icons/effects/96x96.dmi'
@@ -217,7 +218,11 @@ steam.start() -- spawns the effect
 /obj/effect/effect/smoke/atom_init()
 	. = ..()
 	set_opacity(TRUE)
-	QDEL_IN(src, time_to_live)
+	timer = QDEL_IN(src, time_to_live)
+
+/obj/effect/effect/smoke/infinity/atom_init()
+	. = ..()
+	deltimer(timer)
 
 /obj/effect/effect/smoke/Crossed(atom/movable/AM)
 	. = ..()
