@@ -106,6 +106,13 @@
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_plane = null
 
+/atom/movable/screen/plane_master/bluespace_distortion
+	name = "bluespace distortion"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = BLUESPACE_DISTORION_PLANE
+	render_target = BLUESPACE_DISTORION_RENDER_TARGET
+	render_relay_plane = null
+
 /atom/movable/screen/plane_master/area
 	name = "area plane"
 	plane = AREA_PLANE

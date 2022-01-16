@@ -2175,6 +2175,7 @@
 #include "code\modules\roguelike\mob_modifier.dm"
 #include "code\modules\roguelike\mob_roguelike.dm"
 #include "code\modules\roguelike\name_modifier.dm"
+#include "code\modules\roguelike\bluespace_travel\bluespace_event.dm"
 #include "code\modules\roguelike\bluespace_travel\bluespace_space.dm"
 #include "code\modules\roguelike\mob_modifiers\negative.dm"
 #include "code\modules\roguelike\mob_modifiers\positive.dm"
