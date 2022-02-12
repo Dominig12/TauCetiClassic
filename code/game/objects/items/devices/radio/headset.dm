@@ -17,6 +17,8 @@
 	var/ks1type = /obj/item/device/encryptionkey
 	var/ks2type = null
 
+	var/datum/signal_terminal/terminal
+
 /obj/item/device/radio/headset/atom_init()
 	. = ..()
 	if(ks1type)
@@ -24,6 +26,14 @@
 	if(ks2type)
 		keyslot2 = new ks2type(src)
 	INVOKE_ASYNC(src, .proc/recalculateChannels)
+	terminal = new(src, CALLBACK(src, .proc/test))
+
+/obj/item/device/radio/headset/attack_hand(mob/user)
+	. = ..()
+	terminal.show_terminal(user)
+
+/obj/item/device/radio/headset/proc/test()
+	visible_message("test")
 
 /obj/item/device/radio/headset/Destroy()
 	qdel(keyslot1)

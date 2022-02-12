@@ -316,3 +316,6 @@
 
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
+
+#define COMSIG_SEND_RADIO_SIGNAL "send_radio_signal"
+#define COMSIG_CONNECT_TO_INTERFACE "connect_to_interface"
