@@ -8,7 +8,7 @@
 		"Cult of Blood" = /datum/bible_info/cult/blood
 	)
 
-	pews_info_by_name = list(
+	emblem_info_by_name = list(
 		"Cult of Blood" = "dead"
 	)
 
@@ -182,7 +182,7 @@
 	for(var/datum/coords/C in coord_started_anomalies)
 		var/list/L = locate(C.x_pos, C.y_pos, C.z_pos)
 		var/turf/T = get_step(pick(L), pick(alldirs))
-		if(istype(T, /turf/space))
+		if(isenvironmentturf(T))
 			continue
 		var/anom = pick(strange_anomalies)
 		var/rand_time = force ? 0 : rand(1 SECOND, 1 MINUTE)
@@ -223,7 +223,7 @@
 		return FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.mind.assigned_role == "Captain" || H.species.flags[NO_BLOOD])
+		if(H.species.flags[NO_BLOOD])
 			return FALSE
 	if(M.ismindprotect())
 		return FALSE
