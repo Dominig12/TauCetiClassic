@@ -35,10 +35,7 @@
 	BB.silenced = quiet
 	return
 
-<<<<<<< HEAD
 /obj/item/ammo_casing/proc/throw_proj(turf/curloc, atom/target, turf/targloc, mob/living/user, params, boolet_number)
-=======
-/obj/item/ammo_casing/proc/throw_proj(obj/item/weapon/gun/weapon, atom/target, turf/targloc, mob/living/user, params, boolet_number)
 	var/turf/curloc = weapon.loc
 	if(istype(curloc, /obj/item/weapon/gun/projectile))
 		curloc = curloc.loc
@@ -46,7 +43,6 @@
 		curloc = curloc.loc
 	if(istype(curloc, /obj/item/rig_module/mounted)) // curloc = /obj/item/rig_module/mounted != turf istype
 		curloc = user.loc
->>>>>>> 15cdf981b1b4282b24ebe4ea656fc34d6b24e19e
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
 	if(targloc == curloc)

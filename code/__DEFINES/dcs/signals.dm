@@ -380,7 +380,6 @@
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
 
-<<<<<<< HEAD
 // sent if the waiter check was successful in /datum/pipe_system/component/check/proc/SuccessCheck(datum/pipe_system/process/process)
 #define COMSIG_GUN_CHECK_SUCCESS "gun_check_success"
 
@@ -392,7 +391,5 @@
 
 // sent when a new action has occurred in the firing process and this is the last component in /datum/pipe_system/component/proc/Action(datum/pipe_system/process/process)
 #define COMSIG_GUN_COMPONENT_ACTION_LAST "gun_component_action_last"
-=======
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
->>>>>>> 15cdf981b1b4282b24ebe4ea656fc34d6b24e19e
