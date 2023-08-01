@@ -53,7 +53,7 @@
 			new /obj/item/device/flashlight/emp(src)
 
 		if("smoothoperator")
-			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+			new /obj/item/weapon/gun/projectile/automatic/pistol/stechkin(src)
 			new /obj/item/weapon/silencer(src)
 			new /obj/item/ammo_box/magazine/stechkin(src)
 			new /obj/item/weapon/reagent_containers/food/snacks/soap/syndie(src)
@@ -71,6 +71,8 @@
 			new /obj/item/weapon/reagent_containers/glass/bottle/chefspecial(src)
 			new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
 			new /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/sanguisacid(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/bonebreaker(src)
 			new /obj/item/weapon/reagent_containers/syringe(src)
 			new /obj/item/weapon/gun/syringe/syndicate(src)
 

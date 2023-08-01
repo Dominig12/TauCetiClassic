@@ -6,6 +6,7 @@
 	density = TRUE
 	var/sortTag = ""
 	var/lot_number = null
+	var/image/lot_lock_image
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -69,6 +70,7 @@
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
 	var/lot_number = null
+	var/image/lot_lock_image
 
 	max_integrity = 5
 	damage_deflection = 0
@@ -145,6 +147,8 @@
 	if(!isobj(target))
 		return
 	var/obj/O = target
+	if(O.flags_2 & CANT_BE_INSERTED)
+		return
 	if(O.anchored)
 		return
 	if(O in user)
@@ -238,6 +242,25 @@
 
 	var/label = ""
 
+	var/next_instruction = 0
+
+/obj/item/device/tagger/atom_init()
+	. = ..()
+
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
+
+/obj/item/device/tagger/Destroy()
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+	return ..()
+
+/obj/item/device/tagger/proc/on_round_start(datum/source)
+	SIGNAL_HANDLER
+	lot_account_number = global.cargo_account.account_number
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
+/obj/item/device/tagger/shop/on_round_start(datum/source)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
 /obj/item/device/tagger/shop
 	name = "shop tagger"
 	desc = "Используется для наклейки ценников и бирок."
@@ -328,18 +351,58 @@
 	openwindow(user)
 	return
 
+/obj/item/device/tagger/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/wrench) && isturf(src.loc))
+		var/obj/item/weapon/wrench/Tool = W
+		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+			user.SetNextMove(CLICK_CD_INTERACT)
+			var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(src))
+			if(!anchored)
+				if(!Table)
+					to_chat(user, "<span class='warning'>Маркировщик можно прикрутить только к столу.</span>")
+					return
+				to_chat(user, "<span class='warning'>Маркировщик прикручен.</span>")
+				anchored = TRUE
+				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
+				return
+			to_chat(user, "<span class='notice'>Маркировщик откручен.</span>")
+			anchored = FALSE
+			UnregisterSignal(Table, list(COMSIG_PARENT_QDELETING))
+	else if(istagger(W))
+		return ..()
+	else if(can_apply_action(W, user))
+		get_action(W, user)
+
+/obj/item/device/tagger/proc/unwrench()
+	anchored = FALSE
+
 /obj/item/device/tagger/afterattack(obj/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
-		return
-	if(target.anchored)
-		return
-	if(user in target)
-		return
-	if(target == loc)
-		return
 
+	if(can_apply_action(target, user))
+		get_action(target, user)
+
+/obj/item/device/tagger/proc/can_apply_action(obj/target, mob/user)
+	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
+		return FALSE
+	if(target.anchored)
+		return FALSE
+	if(user in target)
+		return FALSE
+	if(target == loc)
+		return FALSE
+	if(target.flags & ABSTRACT)
+		return FALSE
+	if(isitem(target))
+		var/obj/item/I = target
+		if(I.abstract)
+			return FALSE
+
+	return TRUE
+
+/obj/item/device/tagger/proc/get_action(obj/target, mob/user)
 	switch(modes[mode])
 		if("Метка")
 			return
@@ -356,9 +419,9 @@
 		to_chat(user, "<span class='notice'>Нельзя повесить ценник на [target].</span>")
 		return
 
-	if(user.get_inactive_hand() == target)
+	if((src in user) && (user.get_inactive_hand() == target || user.get_active_hand() == target))
 		var/new_price = input("Введите цену:", "Маркировщик", input_default(lot_price), null)  as num
-		if(user.get_active_hand() != src || user.get_inactive_hand() != target)
+		if(user.get_active_hand() != src && user.get_active_hand() != target && user.get_inactive_hand() != src && user.get_inactive_hand() != target)
 			return
 		if(user.incapacitated())
 			return
@@ -387,7 +450,9 @@
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 
-	to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
+	if(next_instruction < world.time)
+		next_instruction = world.time + 30 SECONDS
+		to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
 
 	if(user.client && LAZYACCESS(user.client.browsers, "destTagScreen"))
 		openwindow(user)

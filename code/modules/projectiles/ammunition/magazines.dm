@@ -116,6 +116,9 @@
 	max_ammo = 1
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/rocket/four
+	max_ammo = 4
+
 /obj/item/ammo_box/magazine/internal/cylinder/rev45
 	name = "Colt revolver cylinder"
 	desc = "Oh god, this shouldn't be here."
@@ -525,6 +528,21 @@
 	multiple_sprites = TWO_STATES
 	overlay = "drozd-mag"
 
+/obj/item/ammo_box/magazine/wjpp
+	name = "small magazine (9mm)"
+	icon_state = "wjpp_mag"
+	origin_tech = "combat=1"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = "9mm"
+	max_ammo = 6
+	multiple_sprites = TWO_STATES
+	overlay = "wjpp-mag"
+
+/obj/item/ammo_box/magazine/wjpp/rubber
+	name = "small magazine (9mm rubber)"
+	icon_state = "wjpp_mag_rubber"
+	ammo_type = /obj/item/ammo_casing/c9mmr
+
 /obj/item/ammo_box/speedloader
 	name = "nonexistant speedloader"
 	multiple_sprites = MANY_STATES
@@ -544,6 +562,13 @@
 	caliber = "38"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38
+	max_ammo = 6
+
+/obj/item/ammo_box/speedloader/c38m
+	name = "speedloader (.38)"
+	caliber = "38"
+	icon_state = "38"
+	ammo_type = /obj/item/ammo_casing/c38m
 	max_ammo = 6
 
 /obj/item/ammo_box/speedloader/c45rubber

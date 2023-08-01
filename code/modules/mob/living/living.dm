@@ -15,7 +15,7 @@
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
 	beauty = new /datum/modval(0.0)
-	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), .proc/update_beauty)
+	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), PROC_REF(update_beauty))
 
 	beauty.AddModifier("stat", additive=beauty_living)
 
@@ -90,6 +90,9 @@
 		var/mob/living/carbon/C = src
 		C.spread_disease_to(M, DISEASE_SPREAD_CONTACT)
 
+	if(moving_diagonally)
+		return 1
+
 	if(M.pulling == src)
 		M.stop_pulling()
 
@@ -158,19 +161,11 @@
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
 		return 1
+	if(moving_diagonally)
+		return 1
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
-		if(istype(AM, /obj/structure/window)) // Why is it here?
-			var/obj/structure/window/W = AM
-			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
-				for(var/obj/structure/window/win in get_step(AM,t))
-					now_pushing = 0
-					return
-//			if(W.fulltile)
-//				for(var/obj/structure/window/win in get_step(W,t))
-//					now_pushing = 0
-//					return
 		if(pulling == AM)
 			stop_pulling()
 		step(AM, t)
@@ -714,7 +709,7 @@
 
 		. = ..()
 
-		if(pulling && !restrained())
+		if(pulling && !restrained() && old_loc != loc)
 			var/diag = get_dir(src, pulling)
 			if(get_dist(src, pulling) > 1 || ISDIAGONALDIR(diag))
 				if(isliving(pulling))
@@ -991,7 +986,6 @@
 
 		else if(CM.legcuffed && (CM.last_special <= world.time))
 			if(!CM.canmove && !CM.crawling)	return
-			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				to_chat(usr, )
@@ -1043,14 +1037,13 @@
 	set name = "Crawl"
 	set category = "IC"
 
-	if(isrobot(usr))
-		var/mob/living/silicon/robot/R = usr
-		R.toggle_all_components()
-		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
+	if(!crawling && HAS_TRAIT(src, TRAIT_NO_CRAWL))
+		to_chat(src, "<span class='warning'>Нет! ПОЛ ГРЯЗНЫЙ!</span>")
 		return
 
 	if(crawl_getup)
 		return
+
 
 	if((status_flags & FAKEDEATH) || buckled)
 		return
@@ -1093,7 +1086,7 @@
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
-		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
+		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", 25), 25)
 		return TRUE
 	return FALSE
 
@@ -1303,7 +1296,7 @@
 /mob/living/proc/naturechild_check()
 	return TRUE
 
-/mob/living/proc/get_nutrition()
+/mob/living/proc/get_satiation()
 	// This proc gets nutrition value with all possible alters.
 	// E.g. see how in carbon nutriment, plant matter, meat reagents are accounted.
 	// The difference between this and just nutrition, is that this proc shows how much nutrition a mob has
@@ -1367,7 +1360,7 @@
 
 	var/turf/simulated/T = loc
 	var/obj/structure/toilet/WC = locate(/obj/structure/toilet) in T
-	if(WC && WC.open)
+	if(WC && WC.lid_open)
 		return TRUE
 	if(locate(/obj/structure/sink) in T)
 		return TRUE
@@ -1517,3 +1510,40 @@
 
 /mob/living/proc/get_pumped(bodypart)
 	return 0
+
+// return TRUE if we failed our interaction
+/mob/living/interact_prob_brain_damage(atom/object)
+	if(getBrainLoss() >= 60)
+		visible_message("<span class='warning'>[src] stares cluelessly at [isturf(object.loc) ? object : ismob(object.loc) ? object : "something"] and drools.</span>")
+		return TRUE
+	else if(prob(getBrainLoss()))
+		to_chat(src, "<span class='warning'>You momentarily forget how to use [object].</span>")
+		return TRUE
+
+//Quality proc
+/mob/living/proc/trigger_syringe_fear()
+	to_chat(src, "<span class='userdanger'>IT'S A SYRINGE!!!</span>")
+	if(prob(5))
+		eye_blind = 20
+		blurEyes(40)
+		to_chat(src, "<span class='warning'>Darkness closes in...</span>")
+	if(prob(5))
+		hallucination = max(hallucination, 200)
+		to_chat(src, "<span class='warning'>Ringing in your ears...</span>")
+	if(prob(10))
+		SetSleeping(40 SECONDS)
+		to_chat(src, "<span class='warning'>Your will to fight wavers.</span>")
+	if(prob(30))
+		Paralyse(20)
+	if(prob(40))
+		make_dizzy(150)
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "scared", /datum/mood_event/scared)
+
+/mob/living/carbon/human/trigger_syringe_fear()
+	..()
+	if(prob(15))
+		var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_GROIN)
+		var/obj/item/organ/external/BP = get_bodypart(bodypart_name)
+		if(BP)
+			BP.take_damage(8, used_weapon = "Syringe") 	//half kithen-knife damage
+			to_chat(src, "<span class='warning'>You got a cut with a syringe.</span>")
