@@ -48,13 +48,9 @@
 		deity = "their progenitor"
 
 	//parse the language code and consume it
-	var/datum/language/speaking = parse_language(msg)
-	if(speaking)
-		msg = copytext_char(msg, 2 + length_char(speaking.key))
-	else if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.species.force_racial_language)
-			speaking = all_languages[H.species.language]
+	var/list/parsed = parse_language(msg)
+	msg = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	if(speaking)
 		msg = speaking.color_message(msg)
@@ -108,7 +104,7 @@
 
 /mob/living/carbon/human/pray_act(message, speaking, alt_name, verb_)
 	if(whisper_say(message, speaking, alt_name, "prays quietly"))
-		INVOKE_ASYNC(src, /mob.proc/pray_animation)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, pray_animation))
 	else
 		// Mimes, and other mute beings.
 		emote("pray")
@@ -124,7 +120,7 @@
 	next_pray_anim = world.time + 1 SECOND
 
 	// So restrained people can also pray.
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	//Show an image of the wielded weapon over the person who got dunked.

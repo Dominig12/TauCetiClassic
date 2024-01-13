@@ -53,6 +53,7 @@
 	interface_name = "mounted drill"
 	interface_desc = "A diamond-tipped industrial drill."
 	use_power_cost = 100 // normal drills use 15 energy, we mine 3 turfs at a time
+	usable = TRUE // Allow mode switching
 	origin_tech = "materials=5;powerstorage=3;engineering=3;programming=2"
 	device_type = /obj/item/weapon/pickaxe/drill/jackhammer // this one doesn't use energy
 
@@ -82,7 +83,7 @@
 	device_type = /obj/item/weapon/mining_scanner
 	origin_tech = "magnets=2;programming=2;engineering=2"
 
-/obj/item/weapon/rcd/mounted/useResource(amount, mob/user)
+/obj/item/weapon/rcd/mounted/use(amount, mob/user)
 	var/cost = amount*70 //Arbitary number that hopefully gives it as many uses as a plain RCD.
 	if(istype(loc,/obj/item/rig_module))
 		var/obj/item/rig_module/module = loc
@@ -92,7 +93,7 @@
 				return TRUE
 	return FALSE
 
-/obj/item/weapon/rcd/mounted/checkResource(amount, mob/user)
+/obj/item/weapon/rcd/mounted/tool_start_check(mob/user, amount)
 	var/cost = amount*70
 	if(istype(loc,/obj/item/rig_module))
 		var/obj/item/rig_module/module = loc
@@ -142,14 +143,12 @@
 		return TRUE
 
 	var/turf/T = get_turf(target)
-	if(need_adjacent && istype(T) && !T.Adjacent(get_turf(src)))
-		return FALSE
-
-	var/resolved
 	if(need_adjacent) // so we don't telepathically bash the target
-		resolved = target.attackby(device,holder.wearer)
-	if(!resolved && device && target)
-		device.afterattack(target,holder.wearer,1)
+		if(istype(T) && !T.Adjacent(get_turf(src)))
+			return FALSE
+		device.melee_attack_chain(target, holder.wearer)
+	else
+		device.afterattack(target, holder.wearer, FALSE)
 	return TRUE
 
 /obj/item/rig_module/chem_dispenser
@@ -263,7 +262,7 @@
 
 	var/mob/living/carbon/target_mob
 	if(target)
-		if(istype(target,/mob/living/carbon))
+		if(iscarbon(target))
 			target_mob = target
 		else
 			return FALSE
@@ -356,9 +355,28 @@
 	if (temp_adj < 0.5)
 		return passive_power_cost
 
-	H.bodytemperature -= temp_adj
+	H.adjust_bodytemperature(-temp_adj)
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
+
+/obj/item/rig_module/cooling_unit/advanced
+	name = "advanced hardsuit mounted cooling unit"
+	charge_consumption = 20
+	interface_name = "advanced mounted cooling unit"
+
+/obj/item/rig_module/emp_shield
+	name = "hardsuit EMP shield"
+	icon_state = "powersink"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 5 EMPs."
+	origin_tech = "engineering=2;magnets=2"
+	interface_name = "EMP shield"
+	var/uses = 5
+
+/obj/item/rig_module/emp_shield/adv
+	name = "hardsuit advanced EMP shield"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 20 EMPs."
+	origin_tech = "engineering=2;magnets=2;bluespace=3;"
+	uses = 20
 
 /obj/item/rig_module/teleporter_stabilizer
 	name = "hardsuit teleporter stabilizer"
@@ -477,6 +495,67 @@
 
 	return FALSE
 
+/obj/item/rig_module/selfrepair/adv
+	name = "hardsuit advanced self-repair module"
+
+/obj/item/rig_module/selfrepair/adv/process_module()
+	if(!active)
+		return passive_power_cost
+
+	var/mob/living/carbon/human/H = holder.wearer
+	var/obj/item/organ/external/DBP
+
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.is_robotic())
+			if(BP.brute_dam)
+				DBP = BP
+			else if(BP.burn_dam)
+				DBP = BP
+
+	if(!holder.brute_damage && !holder.burn_damage && !DBP)
+		deactivate()
+		to_chat(H, "<span class='notice'>Self-repair is completed</span>")
+		return passive_power_cost
+
+	var/datum/rig_charge/charge = charges["metal"]
+
+	if(!charge)
+		deactivate()
+		return FALSE
+
+	active_power_cost = passive_power_cost
+	if(holder.brute_damage && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+
+		charge.charges -= chargeuse
+		holder.repair_breaches(BRUTE, chargeuse, H, stop_messages = TRUE)
+
+		active_power_cost = chargeuse * 150
+	else if(holder.burn_damage && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+
+		charge.charges -= chargeuse
+		holder.repair_breaches(BURN, chargeuse, H, stop_messages = TRUE)
+
+		active_power_cost = chargeuse * 150
+	else if(DBP?.brute_dam && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+		DBP.heal_damage(10, 0, 0, 1)
+		charge.charges -= chargeuse
+
+		active_power_cost = chargeuse * 200
+	else if(DBP?.burn_dam && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+		DBP.heal_damage(0, 10, 0, 1)
+		charge.charges -= chargeuse
+
+		active_power_cost = chargeuse * 200
+	else
+		deactivate()
+		to_chat(H, "<span class='danger'>Not enough materials to continue self-repair</span>")
+
+	return active_power_cost
+
 /obj/item/rig_module/med_teleport
 	name = "hardsuit medical teleport system"
 	origin_tech = "programming=2;materials=2;bluespace=1"
@@ -552,7 +631,7 @@
 	if(damage == MODULE_DAMAGED && prob(2))
 		if(holder.wearer)
 			to_chat(holder.wearer, "<span class='warning'>Your damaged [name] irradiates you</span>")
-			holder.wearer.apply_effect(rand(5, 25), IRRADIATE, 0)
+			irradiate_one_mob(holder.wearer, rand(5, 25))
 
 	if(damage >= MODULE_DESTROYED)
 		if(!unstable)
@@ -564,7 +643,7 @@
 			else
 				holder.visible_message("<span class='warning'>The nuclear reactor inside [holder] is gloving red and looks very unstable</span>")
 			unstable = TRUE
-			addtimer(CALLBACK(src, .proc/boom), rand(60 SECONDS, 120 SECONDS))
+			addtimer(CALLBACK(src, PROC_REF(boom)), rand(60 SECONDS, 120 SECONDS))
 			light_color = LIGHT_COLOR_FLARE
 			set_light(5)
 
@@ -599,6 +678,13 @@
 /obj/item/rig_module/mounted_relay/atom_init()
 	. = ..()
 	relay = new relay_type(src)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/rig_module/mounted_relay/atom_init_late()
+	for(var/obj/machinery/telecomms/T in telecomms_list)
+		if(istype(T, /obj/machinery/telecomms/hub))
+			T.links |= relay
+			relay.links |= T
 
 /obj/item/rig_module/mounted_relay/process_module()
 	if(!active)
@@ -644,7 +730,7 @@
 /obj/item/rig_module/device/extinguisher/engage(atom/target)
 	. = ..()
 	if(device)
-		addtimer(CALLBACK(src, .proc/update_foam_amount), 5) // because extinguisher uses spawns
+		addtimer(CALLBACK(src, PROC_REF(update_foam_amount)), 5) // because extinguisher uses spawns
 
 /obj/item/rig_module/device/extinguisher/proc/update_foam_amount()
 	if(device)
@@ -695,7 +781,7 @@
 
 	charges["foaming agent"].charges = max(charges["foaming agent"].charges - per_use, 0)
 	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
-	INVOKE_ASYNC(src, .proc/spray_at, T)
+	INVOKE_ASYNC(src, PROC_REF(spray_at), T)
 
 	return TRUE
 

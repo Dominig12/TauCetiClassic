@@ -87,11 +87,15 @@
 
 	l_hand = /obj/item/weapon/storage/briefcase/centcomm
 
-	r_pocket = /obj/item/device/flash
+	l_pocket = /obj/item/device/flash
 
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty
 		)
+
+/datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
+		r_hand = /obj/item/weapon/melee/chainofcommand
 
 // CLOWN OUTFIT
 /datum/outfit/job/clown

@@ -91,7 +91,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		return
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='alert'>Newscaster cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")
@@ -113,8 +113,6 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
-	var/isbroken = 0  //1 if someone banged it with something heavy
-	var/ispowered = 1 //starts powered, changes with power_change()
 	//var/list/datum/feed_channel/channel_list = list() //This list will contain the names of the feed channels. Each name will refer to a data region where the messages of the feed channels are stored.
 	//OBSOLETE: We're now using a global news network
 	var/screen = 0                  //Or maybe I'll make it into a list within a list afterwards... whichever I prefer, go fuck yourselves :3
@@ -187,11 +185,11 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	return ..()
 
 /obj/machinery/newscaster/update_icon()
-	if(!ispowered || isbroken)
+	if(stat & (NOPOWER | BROKEN))
 		icon_state = "newscaster_off"
-		if(isbroken) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
+		if(stat & BROKEN) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
 			cut_overlays()
-			add_overlay(image(src.icon, "crack3"))
+			add_overlay(image(icon, "crack3"))
 		return
 
 	cut_overlays() //reset overlays
@@ -210,39 +208,35 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	return
 
 /obj/machinery/newscaster/power_change()
-	if(isbroken) //Broken shit can't be powered.
+	if(stat & BROKEN) //Broken shit can't be powered.
 		return
-	if( powered() )
-		src.ispowered = 1
+	if(powered())
 		stat &= ~NOPOWER
 		update_icon()
 	else
 		spawn(rand(0, 15))
-			src.ispowered = 0
 			stat |= NOPOWER
 			update_icon()
 	update_power_use()
 
 /obj/machinery/newscaster/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			src.isbroken=1
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				qdel(src)
-			else
-				update_icon() //can't place it above the return and outside the if-else. or we might get runtimes of null.update_icon() if(prob(50)) goes in.
-			return
-		else
+				return
+		if(EXPLODE_LIGHT)
 			if(prob(50))
-				src.isbroken=1
-			update_icon()
-			return
+				return
+
+	stat |= BROKEN
+	update_icon()
 
 /obj/machinery/newscaster/ui_interact(mob/user)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
-	if(isbroken)
+	if(stat & BROKEN)
 		return
 
 	if(isobserver(user))
@@ -538,21 +532,16 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		popup.set_content(dat)
 		popup.open()
 
-	/*if(src.isbroken) //debugging shit
-		return
-	src.hitstaken++
-	if(src.hitstaken==3)
-		src.isbroken = 1
-	update_icon()*/
-
-
 /obj/machinery/newscaster/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
 
 	if(href_list["set_channel_name"])
-		src.channel_name = sanitize_safe(input(usr, "Название Новостного Канала", "Обработчик Сети Новостей", input_default(channel_name)), MAX_LNAME_LEN)
+		var/new_name = sanitize_safe(input(usr, "Название Новостного Канала", "Обработчик Сети Новостей", input_default(channel_name)), MAX_LNAME_LEN)
+		if(!can_still_interact_with(usr) || !length(new_name))
+			return
+		src.channel_name = new_name
 		//update_icon()
 
 	else if(href_list["set_channel_lock"])
@@ -577,6 +566,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			src.screen = 7
 		else
 			var/choice = tgui_alert(usr,"Подтвердите создание Новостного Канала","Обработчик Сети Новостей", list("Подтвердить","Отменить"))
+			if(!can_still_interact_with(usr))
+				return
 			if(choice=="Подтвердить")
 				var/datum/feed_channel/newChannel = new /datum/feed_channel
 				newChannel.channel_name = src.channel_name
@@ -595,10 +586,16 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		for(var/datum/feed_channel/F in news_network.network_channels)
 			if( (!F.locked || F.author == scanned_user) && !F.censored)
 				available_channels += F.channel_name
-		src.channel_name = input(usr, "Выберите Канал", "Обработчик Сети Новостей") in available_channels
+		var/new_name = input(usr, "Выберите Канал", "Обработчик Сети Новостей") in available_channels
+		if(!can_still_interact_with(usr) || !length(new_name))
+			return
+		src.channel_name = new_name
 
 	else if(href_list["set_new_message"])
-		src.msg = sanitize(input(usr, "Напишите вашу Историю", "Обработчик Сети Новостей", input_default(src.msg)), extra = FALSE)
+		var/new_msg = sanitize(input(usr, "Напишите вашу Историю", "Обработчик Сети Новостей", input_default(src.msg)), extra = FALSE)
+		if(!can_still_interact_with(usr) || !length(new_msg))
+			return
+		src.msg = new_msg
 
 	else if(href_list["set_attachment"])
 		AttachPhoto(usr)
@@ -655,10 +652,16 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		src.screen = 14
 
 	else if(href_list["set_wanted_name"])
-		src.channel_name = sanitize(input(usr, "Укажите имя разыскиваемого лица", "Сетевой Обработчик Безопасности", input_default(channel_name)), MAX_LNAME_LEN)
+		var/new_name = sanitize(input(usr, "Укажите имя разыскиваемого лица", "Сетевой Обработчик Безопасности", input_default(channel_name)), MAX_LNAME_LEN)
+		if(!can_still_interact_with(usr) || !length(new_name))
+			return
+		channel_name = new_name
 
 	else if(href_list["set_wanted_desc"])
-		src.msg = sanitize(input(usr, "Укажите описание разыскиваемого лица. Это могут быть любые детали, которые вы считаете важными.", "Сетевой Обработчик Безопасности", input_default(msg)), extra = FALSE)
+		var/new_msg = sanitize(input(usr, "Укажите описание разыскиваемого лица. Это могут быть любые детали, которые вы считаете важными.", "Сетевой Обработчик Безопасности", input_default(msg)), extra = FALSE)
+		if(!can_still_interact_with(usr) || !length(new_msg))
+			return
+		msg = new_msg
 
 	else if(href_list["submit_wanted"])
 		var/input_param = text2num(href_list["submit_wanted"])
@@ -666,6 +669,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			src.screen = 16
 		else
 			var/choice = tgui_alert(usr,"Подтвердите [(input_param==1) ? ("создание") : ("редактирование")] объявления.","Сетевой Обработчик Безопасности", list("Подтвердить","Отменить"))
+			if(!can_still_interact_with(usr))
+				return
 			if(choice == "Подтвердить")
 				if(input_param == 1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
 					var/datum/feed_message/WANTED = new /datum/feed_message
@@ -695,6 +700,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			to_chat(usr, "The wanted issue has been distributed by a Nanotrasen higherup. You cannot take it down.")
 			return FALSE
 		var/choice = tgui_alert(usr, "Подтвердите удаление розыска.","Сетевой Обработчик Безопасности", list("Подтвердить","Отменить"))
+		if(!can_still_interact_with(usr))
+			return
 		if(choice=="Подтвердить")
 			news_network.wanted_issue = null
 			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
@@ -826,6 +833,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	else if(href_list["leave_a_comment"])
 		var/datum/feed_message/FM = locate(href_list["leave_a_comment"])
 		src.comment_msg = sanitize(input(usr, "Напишите комментарий", "Обработчик Сети Новостей", input_default(src.comment_msg)), extra = FALSE)
+		if(!can_still_interact_with(usr))
+			return
 		if(src.comment_msg == "" || src.comment_msg == null || src.scanned_user == "Unknown")
 			src.screen = 22
 		else
@@ -857,43 +866,53 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	updateUsrDialog()
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/user)
-	if(iswrench(I))
+	if(iswrenching(I))
 		if(user.is_busy())
 			return
 		to_chat(user, "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>")
 		if(I.use_tool(src, user, 60, volume = 50))
-			new /obj/item/newscaster_frame(loc)
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-			qdel(src)
+			deconstruct(TRUE)
 		return
 
-	if (src.isbroken)
-		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
-		user.visible_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
-	else
-		if(istype(I, /obj/item/weapon) )
-			user.do_attack_animation(src)
-			user.SetNextMove(CLICK_CD_MELEE)
-			var/obj/item/weapon/W = I
-			if(W.force <15)
-				user.visible_message("[user.name] hits the [src.name] with the [W.name] with no visible effect.")
-				playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	..()
+
+/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(stat & BROKEN)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 			else
-				src.hitstaken++
-				if(src.hitstaken==3)
-					user.visible_message("[user.name] smashes the [src.name]!")
-					src.isbroken=1
-					playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER)
-				else
-					user.visible_message("[user.name] forcefully slams the [src.name] with the [I.name]!")
-					playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		else
-			to_chat(user, "<span class='info'>This does nothing.</span>")
-	update_icon()
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+
+/obj/machinery/newscaster/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		new /obj/item/newscaster_frame(loc)
+	else
+		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+	..()
+
+/obj/machinery/newscaster/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/machinery/newscaster/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The newscaster controls are far too complicated for your tiny brain!</span>")
 	return
+
+/obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(. && hitstaken < 3)
+		hitstaken++
+		update_icon()
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
 	if(photo)
@@ -904,7 +923,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
 		user.drop_from_inventory(photo, src)
-	else if(istype(user,/mob/living/silicon))
+	else if(issilicon(user))
 		var/mob/living/silicon/tempAI = user
 		var/obj/item/device/camera/siliconcam/camera = tempAI.aiCamera
 
@@ -1098,13 +1117,11 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		if(src.scribble_page == src.curr_page)
 			to_chat(user, "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>")
 		else
-			var/s = sanitize(input(user, "Write something", "Newspaper", ""))
-			if (!s)
-				return
-			if (!user.Adjacent(src))
+			var/new_scribble = sanitize(input(user, "Write something", "Newspaper", ""))
+			if (!length(new_scribble))
 				return
 			src.scribble_page = src.curr_page
-			src.scribble = s
+			src.scribble = new_scribble
 			attack_self(user)
 		return
 	return ..()
@@ -1114,7 +1131,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 
 
 /obj/machinery/newscaster/proc/scan_user(mob/living/user)
-	if(istype(user,/mob/living/carbon/human))                       //User is a human
+	if(ishuman(user))                       //User is a human
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)                                      //Newscaster scans you
 			if(istype(human_user.wear_id, /obj/item/device/pda) )	//autorecognition, woo!

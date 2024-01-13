@@ -13,8 +13,8 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_sweep)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/energy.proc/can_spin)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/energy, can_sweep))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/energy, can_spin))
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/energy/proc/can_sweep(mob/user)
@@ -43,7 +43,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_SMALL
-	flags = CONDUCT | NOSHIELD | NOBLOODY
+	flags = CONDUCT | NOBLOODY
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	edge = 1
@@ -63,13 +63,15 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_TINY
-	flags = NOSHIELD | NOBLOODY
+	flags = NOBLOODY
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	edge = 1
 	var/hacked
 
 	var/can_combine = TRUE
+
+	var/blade_color
 
 /obj/item/weapon/melee/energy/sword/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/melee/energy/sword))
@@ -87,11 +89,11 @@
 		qdel(src)
 		user.put_in_hands(newSaber)
 
-	else if(ismultitool(I))
+	else if(ispulsing(I))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
-			item_color = "rainbow"
+			blade_color = "rainbow"
 			if (active)
 				active = FALSE
 				icon_state = "sword0"
@@ -121,7 +123,8 @@
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 1
 	throw_range = 1
-	w_class = SIZE_NORMAL//So you can't hide it in your pocket or some such.
-	flags = NOSHIELD | NOBLOODY | DROPDEL
+	w_class = SIZE_SMALL
+	flags = NOBLOODY | DROPDEL
+	flags_2 = CANT_BE_INSERTED
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system

@@ -453,7 +453,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("rdconsole", "rdservercontrol", "rdserver", "destructive_analyzer", "protolathe", "circuit_imprinter", "idcardconsole")
+	unlocks_designs = list("rdconsole", "rdservercontrol", "rdserver", "destructive_analyzer", "protolathe", "circuit_imprinter", "idcardconsole", "cellcharger")
 
 /datum/technology/tesla
 	name = "Tesla"
@@ -679,23 +679,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 200
 
-	unlocks_designs = list("med_data", "operating")
-
-/datum/technology/virology
-	name = "Virology"
-	desc = "Virology"
-	id = "virology"
-	tech_type = RESEARCH_BIOTECH
-
-	x = 0.4
-	y = 0.8
-	icon = "vialbox"
-
-	required_technologies = list("basic_med_machines")
-	required_tech_levels = list()
-	cost = 500
-
-	unlocks_designs = list("pandemic")
+	unlocks_designs = list("med_data", "operating", "operating_table")
 
 /datum/technology/adv_med_machines
 	name = "Advanced Medical Machines"
@@ -711,7 +695,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("sleeper", "cryotube", "crewconsole")
+	unlocks_designs = list("sleeper", "cryotube", "crewconsole", "reagentgrinder")
 
 /datum/technology/cloning
 	name = "Cloning"
@@ -727,7 +711,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("scan_console", "clonecontrol", "clonepod", "clonescanner")
+	unlocks_designs = list("scan_console", "clonecontrol", "clonepod", "clonescanner", "cmf_console", "cmf_scanner")
 
 /datum/technology/hydroponics
 	name = "Hydroponics"
@@ -807,7 +791,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("adv_sensor", "nano_mani", "implant_chem", "implant_death", "implant_tracking", "defibrillators_compact", "sensor_device", "scalpel_laser2", "biocan", "secmed_hud", "implanter", "airbag", "lazarus")
+	unlocks_designs = list("adv_sensor", "nano_mani", "implant_chem", "implant_death", "implant_tracking", "defibrillators_compact", "sensor_device", "scalpel_laser2", "biocan", "secmed_hud", "implanter", "airbag", "lazarus", "hud_calibrator")
 
 /datum/technology/med_teleportation
 	name = "Medical Teleportation"
@@ -839,7 +823,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("phasic_sensor", "pico_mani", "adv_mass_spectrometer", "adv_reagent_scanner", "implant_loyal", "implant_mindshield", "defibrillators_standalone", "scalpel_laser3", "chemsprayer", "rapidsyringe")
+	unlocks_designs = list("phasic_sensor", "pico_mani", "adv_mass_spectrometer", "adv_reagent_scanner", "implant_loyal", "implant_mindshield", "defibrillators_standalone", "scalpel_laser3", "chemsprayer", "rapidsyringe", "changtest")
 
 /datum/technology/portable_chemistry
 	name = "Portable Chemistry"
@@ -905,7 +889,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("sflash")
+	unlocks_designs = list("sflash","laserpractice")
 
 /datum/technology/advanced_nonlethal
 	name = "Advanced Non-Lethal"
@@ -969,7 +953,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("large_Grenade", "ammo_9mm")
+	unlocks_designs = list("large_Grenade", "smg_ammo_9mm")
 
 /datum/technology/exotic_weaponry
 	name = "Exotic Weaponry"
@@ -1147,7 +1131,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mrspacman")
+	unlocks_designs = list("mrspacman", "circ", "teg")
 
 /datum/technology/fusion_power_generation
 	name = "R-UST Mk. 8 Tokamak Generator"
@@ -1245,7 +1229,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("comm_monitor", "comm_server", "message_monitor", "s-receiver", "s-bus", "s-hub", "s-relay", "s-processor", "s-server", "s-broadcaster", "s-ansible", "s-filter", "s-amplifier", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter")
+	unlocks_designs = list("comm_monitor", "comm_server", "message_monitor", "s-receiver", "s-bus", "s-hub", "s-relay", "s-processor", "s-server", "s-broadcaster", "s-ansible", "s-filter", "s-amplifier", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter", "holochip")
 
 /datum/technology/bluespace_shield
 	name = "Bluespace Shields"
@@ -1309,7 +1293,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("bluespacebeaker", "splitbeaker", "bag_holding", "minerbag_holding", "blutrash", "survivalcapsule", "portalgun")
+	unlocks_designs = list("bluespacebeaker", "splitbeaker", "bag_holding", "minerbag_holding", "blutrash", "survivalcapsule", "portalgun", "bluespace_storage")
 
 /datum/technology/bluespace_rped
 	name = "Bluespace RPED"
@@ -1343,7 +1327,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 0
 
-	unlocks_designs = list("mechrecharger", "cyborgrecharger", "cyborg_analyzer", "mmi")
+	unlocks_designs = list("mechrecharger", "cyborgrecharger", "cyborg_analyzer", "mmi", "borg_upgrade_hud")
 
 /datum/technology/mech_ripley
 	name = "Ripley"
@@ -1362,8 +1346,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	unlocks_designs = list("ripley_main", "ripley_peri")
 
 /datum/technology/mech_odysseus
-	name = "Odyssey"
-	desc = "Odyssey"
+	name = "Odysseus"
+	desc = "Odysseus"
 	id = "mech_odysseus"
 	tech_type = RESEARCH_ROBOTICS
 
@@ -1391,7 +1375,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain", "borg_upgrade_security")
+	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain")
 
 /datum/technology/artificial_intelligence
 	name = "Artificial intelligence"
@@ -1583,7 +1567,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("rigadvancedai", "riggrenadelauncherflashbang", "rigdrill", "rigselfrepair", "rigmountedtaser", "rigcombatinjector", "rigmedicalinjector", "rigstabilizer")
+	unlocks_designs = list("rigadvancedai", "riggrenadelauncherflashbang", "rigdrill", "rigselfrepair", "rigmountedtaser", "rigcombatinjector", "rigmedicalinjector", "rigstabilizer", "rigempshield")
 
 /datum/technology/toptier_hardsuit_modules
 	name = "Top-Tier Hardsuit Modules"
@@ -1609,13 +1593,13 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "binary_encryption_key"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.1
-	y = 0.5
+	x = 0.25
+	y = 0.2
 	icon = "headset"
 
 	required_technologies = list()
 	required_tech_levels = list(RESEARCH_BLUESPACE = 5)
-	cost = 2000
+	cost = 1000
 
 	unlocks_designs = list("binaryencrypt")
 
@@ -1625,13 +1609,13 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "chameleon_kit"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.3
-	y = 0.5
+	x = 0.50
+	y = 0.2
 	icon = "chamelion"
 
 	required_technologies = list("binary_encryption_key")
 	required_tech_levels = list(RESEARCH_ENGINEERING = 10)
-	cost = 3000
+	cost = 2000
 
 	unlocks_designs = list("chameleon")
 
@@ -1641,8 +1625,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "freedom_implant"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.5
-	y = 0.5
+	x = 0.75
+	y = 0.2
 	icon = "freedom"
 
 	required_technologies = list("chameleon_kit")
@@ -1657,7 +1641,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "tyrant_aimodule"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.7
+	x = 0.75
 	y = 0.5
 	icon = "module"
 
@@ -1673,12 +1657,76 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "borg_syndicate_module"
 	tech_type = RESEARCH_ILLEGAL
 
-	x = 0.9
+	x = 0.50
 	y = 0.5
 	icon = "borgmodule"
 
 	required_technologies = list("tyrant_aimodule")
 	required_tech_levels = list(RESEARCH_ROBOTICS = 10)
-	cost = 5000
+	cost = 4000
 
 	unlocks_designs = list("borg_syndicate_module")
+
+/datum/technology/ai_detector
+	name = "Artificial Intelligence Detector"
+	desc = "Artificial Intelligence Detector"
+	id = "ai_detector"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.25
+	y = 0.5
+	icon = "aidetector"
+
+	required_technologies = list("borg_syndicate_module")
+	required_tech_levels = list(RESEARCH_ROBOTICS = 10)
+	cost = 4000
+
+	unlocks_designs = list("ai_detector")
+
+/datum/technology/smuggler_satch
+	name = "Smuggler's Satchel"
+	desc = "Smuggler's Satchel"
+	id = "smuggler_satch"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.25
+	y = 0.8
+	icon = "smuggler"
+
+	required_technologies = list("ai_detector")
+	required_tech_levels = list(RESEARCH_BLUESPACE = 6)
+	cost = 4000
+
+	unlocks_designs = list("smuggler_satch")
+
+/datum/technology/voice_changer
+	name = "Voice Changer"
+	desc = "Voice Changer"
+	id = "voice_changer"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.50
+	y = 0.8
+	icon = "voicechanger"
+
+	required_technologies = list("smuggler_satch")
+	required_tech_levels = list(RESEARCH_BIOTECH = 7)
+	cost = 5000
+
+	unlocks_designs = list("voice_changer")
+
+/datum/technology/camera_bug
+	name = "Camera Bug"
+	desc = "Camera Bug"
+	id = "camera_bug"
+	tech_type = RESEARCH_ILLEGAL
+
+	x = 0.75
+	y = 0.8
+	icon = "camerabug"
+
+	required_technologies = list("voice_changer")
+	required_tech_levels = list(RESEARCH_ENGINEERING = 12)
+	cost = 5000
+
+	unlocks_designs = list("camera_bug")

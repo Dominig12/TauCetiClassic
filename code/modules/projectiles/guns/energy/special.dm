@@ -1,26 +1,14 @@
 /obj/item/weapon/gun/energy/ionrifle
 	name = "ion rifle"
-	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
+	desc = "Портативная винтовка, созданная для уничтожения механизированных и механических противников."
 	icon_state = "ionrifle"
-	item_state = "ionrifle"
+	item_state = null
 	origin_tech = "combat=2;magnets=4"
 	w_class = SIZE_NORMAL
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-
-/obj/item/weapon/gun/energy/ionrifle/update_icon()
-	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = CEIL(ratio * 4) * 25
-	switch(modifystate)
-		if (0)
-			if(ratio > 100)
-				icon_state = "[initial(icon_state)]100"
-				item_state = "[initial(item_state)]100"
-			else
-				icon_state = "[initial(icon_state)][ratio]"
-				item_state = "[initial(item_state)][ratio]"
-	return
+	modifystate = 0
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	if(severity <= 2)
@@ -29,20 +17,9 @@
 	else
 		return
 
-/obj/item/weapon/gun/energy/ionrifle/classic
-	name = "ion rifle"
-	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
-	icon_state = "oldion"
-	item_state = "oldion"
-	slot_flags = null
-
-/obj/item/weapon/gun/energy/ionrifle/tactifool
-	icon_state = "tfionrifle"
-	item_state = "tfionrifle"
-
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
-	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
+	desc = "Оружие, которое за счет большого количества контролируемого излучения постепенно разрушает цель на составные элементы."
 	icon_state = "decloner"
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	can_be_holstered = TRUE
@@ -50,7 +27,7 @@
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
-	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
+	desc = "Инструмент, чей принцип работы основывается на управляемом излучениее, вызывающий мутации в клетках растений."
 	icon_state = "flora"
 	item_state = "gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
@@ -86,7 +63,7 @@
 
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
-	desc = "For the love of god, make sure you're aiming this the right way!"
+	desc = "Ради бога, убедитесь, что вы нацелены правильно!"
 	icon_state = "riotgun"
 	item_state = "c20r"
 	w_class = SIZE_NORMAL
@@ -119,7 +96,7 @@
 
 /obj/item/weapon/gun/energy/meteorgun/pen
 	name = "meteor pen"
-	desc = "The pen is mightier than the sword."
+	desc = "Перо сильнее меча."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	item_state = "pen"
@@ -130,13 +107,13 @@
 
 /obj/item/weapon/gun/energy/mindflayer
 	name = "mind flayer"
-	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
+	desc = "Прототип винтовки, найденный на развалинах исследовательской станции Эпсилон"
 	icon_state = "xray"
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 
 /obj/item/weapon/gun/energy/toxgun
 	name = "phoron pistol"
-	desc = "A specialized firearm designed to fire lethal bolts of phoron."
+	desc = "Специализированное огнестрельное оружие, предназначенное для стрельбы смертоносными зарядами форона."
 	icon_state = "toxgun"
 	w_class = SIZE_SMALL
 	origin_tech = "combat=5;phorontech=4"
@@ -145,7 +122,7 @@
 
 /obj/item/weapon/gun/energy/sniperrifle
 	name = "sniper rifle"
-	desc = "Designed by W&J Company, W2500-E sniper rifle constructed of lightweight materials, fitted with a SMART aiming-system scope."
+	desc = "Снайперская винтовка W2500-E, разработанная компанией W&J, изготовлена из легких материалов и оснащена прицелом системы SMART."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "w2500e"
 	item_state = "w2500e"
@@ -179,7 +156,7 @@
 
 /obj/item/weapon/gun/energy/sniperrifle/rails
 	name = "Rails rifle"
-	desc = "With this weapon you'll be the boss at any Arena."
+	desc = "С этой пушкой вы станете боссом любой Арены."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "relsotron"
 	item_state = "relsotron"
@@ -191,7 +168,7 @@
 //Tesla Cannon
 /obj/item/weapon/gun/tesla
 	name = "Tesla Cannon"
-	desc = "Cannon which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
+	desc = "Оружие, использующие электрический заряд для поражения нескольких целей. Вращайте рукоятку генератора, чтобы зарядить её."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "tesla"
 	item_state = "tesla"
@@ -226,16 +203,16 @@
 /obj/item/weapon/gun/tesla/attack_self(mob/living/user)
 	if(charging)
 		charging = FALSE
-		user.visible_message("<span class='danger'>[user] stops spinning generator on Tesla Cannon!</span>",\
-		                     "<span class='red'>You stop charging Tesla Cannon...</span>")
+		user.visible_message("<span class='danger'>[user] останавливает вращение рукоятки генератора на пушке Тесла!</span>",\
+		                     "<span class='red'>Вы остановились заряжать пушку Тесла...</span>")
 		cooldown = TRUE
 		spawn(50)
 			cooldown = FALSE
 		return
 	if(cooldown || charge == 3)
 		return
-	user.visible_message("<span class='danger'>[user] starts spinning generator on Tesla Cannon!</span>",\
-	                     "<span class='red'>You start charging Tesla Cannon...</span>")
+	user.visible_message("<span class='danger'>[user] начинает вращать рукоятку генератор на пушке Тесла!</span>",\
+	                     "<span class='red'>Вы начинаете заряжать пушку Тесла...</span>")
 	charging = TRUE
 	charge(user)
 
@@ -243,24 +220,18 @@
 	if(!..())
 		return FALSE
 	if(!charge)
-		to_chat(user, "<span class='red'>Tesla Cannon is not charged!</span>")
-	else if(!istype(target, /mob/living))
-		to_chat(user, "<span class='red'>Tesla Cannon needs to be aimed directly at living target.</span>")
+		to_chat(user, "<span class='red'>Пушка Тесла не заряжена!</span>")
+	else if(!isliving(target))
+		to_chat(user, "<span class='red'>Пушка Тесла должна быть направлена непосредственно на живую цель.</span>")
 	else if(charging)
-		to_chat(user, "<span class='red'>You can't shoot while charging!</span>")
+		to_chat(user, "<span class='red'>Вы не можете стрелять во время зарядки!</span>")
 	else if(!los_check(user, target))
-		to_chat(user, "<span class='red'>Something is blocking our line of shot!</span>")
+		to_chat(user, "<span class='red'>Что-то загораживает нам линию выстрела!</span>")
 	else
 		Bolt(user, target, user, charge)
 		charge = 0
 
 	update_icon()
-
-	/*if(user.hand) with custom inhand sprites - yes, without - no.
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()*/
-
 	return 0
 
 /obj/item/weapon/gun/tesla/proc/los_check(mob/A, mob/B)
@@ -291,7 +262,7 @@
 
 /obj/item/weapon/gun/tesla/emp_act(severity)
 	if(charge)
-		if(istype(loc, /mob/living/carbon))
+		if(iscarbon(loc))
 			var/mob/living/carbon/M = loc
 			M.electrocute_act(5 * (4 - severity) * charge, src, , , 1)
 		charge = 0
@@ -299,7 +270,7 @@
 
 /obj/item/weapon/gun/tesla/rifle
 	name = "Tesla rifle"
-	desc = "Rifle which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
+	desc = "Винтовка, использующие электрический заряд для поражения нескольких целей. Вращайте рукоятку генератора, чтобы зарядить её."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "arctesla"
 	item_state = "arctesla"
@@ -312,7 +283,7 @@
 */
 /obj/item/weapon/gun/energy/pyrometer
 	name = "pyrometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда в результате прямого физического контакта с пользователем."
 
 	w_class = SIZE_TINY
 	icon = 'icons/obj/gun.dmi'
@@ -350,13 +321,13 @@
 		..()
 
 /obj/item/weapon/gun/energy/pyrometer/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		panel_open = !panel_open
 		user.visible_message("<span class='notice'>[user] [panel_open ? "un" : ""]screws [src]'s panel [panel_open ? "open" : "shut"].</span>", "<span class='notice'>You [panel_open ? "un" : ""]screw [src]'s panel [panel_open ? "open" : "shut"].</span>")
 
 	else if(panel_open)
-		if(iscrowbar(I))
+		if(isprying(I))
 			if(ML)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				user.put_in_hands(ML)
@@ -375,11 +346,14 @@
 		return ..()
 
 /obj/item/weapon/gun/energy/pyrometer/emag_act(mob/user)
-	if(!emagged)
-		ammo_type += new /obj/item/ammo_casing/energy/pyrometer/emagged(src)
-		origin_tech += ";syndicate=1"
-
-		emagged = TRUE
+	if(emagged)
+		return FALSE
+	ammo_type += new /obj/item/ammo_casing/energy/pyrometer/emagged(src)
+	fire_delay = 12
+	origin_tech += ";syndicate=1"
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибка ошибкаааааааа .</span>")
+	return TRUE
 
 /obj/item/weapon/gun/energy/pyrometer/update_icon()
 	return
@@ -391,7 +365,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/universal
 	name = "universal pyrometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct use physical contact. Comes with built-in multi-color laser pointer. And all possible pyrometer modes!"
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте. Поставляется со встроенным многоцветным лазерным указателем и способен работать во всех возможных режимах!"
 	icon_state = "pyrometer_robotics"
 	item_state = "pyrometer_robotics"
 
@@ -409,7 +383,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/ce
 	name = "chief engineer's tactical pyrometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Comes with a neat sniper-scope!"
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенным многоцветным лазерным указателем и с удобным снайперским прицелом!"
 	icon_state = "pyrometer_ce"
 	item_state = "pyrometer_ce"
 
@@ -419,7 +393,7 @@
 		/obj/item/ammo_casing/energy/pyrometer/atmospherics,
 	)
 
-	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/quadultra
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra
 
 /obj/item/weapon/gun/energy/pyrometer/ce/atom_init()
 	. = ..()
@@ -427,7 +401,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/science_phoron
 	name = "phoron-orienter pyrometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is fine-tuned for detecting when your pipe is about to burst."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенным многоцветным лазерным указателем. Настроен для определения момента прорыва трубы."
 	icon_state = "pyrometer_science_phoron"
 	item_state = "pyrometer_science_phoron"
 
@@ -437,7 +411,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/engineering
 	name = "machinery pyrometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Detects overheated machinery."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенным многоцветным лазерным указателем. Обнаруживает перегрев оборудования."
 	icon_state = "pyrometer_engineering"
 	item_state = "pyrometer_engineering"
 
@@ -450,7 +424,7 @@
 
 
 /obj/item/weapon/gun/energy/pyrometer/atmospherics
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is used to determine how much a living human would be screwed if he was to breath the air in the room you \"scan\"."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенной многоцветной лазерной указкой. Используется для определения того, насколько сильно пострадает живой человек, если он будет дышать воздухом, находящимся в комнате \"scan\"."
 	icon_state = "pyrometer_atmospherics"
 	item_state = "pyrometer_atmospherics"
 
@@ -460,17 +434,17 @@
 
 /obj/item/weapon/gun/energy/pyrometer/medical
 	name = "NC thermometer"
-	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is used to determine the temperature of your skeleton in the closet."
+	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте с пользователем. Поставляется со встроенной многоцветной лазерной указкой. Используется для определения температуры скелета в шкафу."
 	icon_state = "pyrometer_medical"
 	item_state = "pyrometer_medical"
 
 	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/medical)
 
-	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/ultra
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/high/ultra
 
 /obj/item/weapon/gun/energy/gun/portal
 	name = "bluespace wormhole projector"
-	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires an anomaly core to function. Fits in a bag."
+	desc = "Проектор, излучающий квантово-связанные блюспейс лучи высокой плотности. Для работы требуется ядро аномалии. Помещается в сумку."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	icon_state = "portal"
 	modifystate = 0
@@ -489,7 +463,7 @@
 /obj/item/weapon/gun/energy/gun/portal/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(!prob(reliability))
 		if(firing_core && !is_centcom_level(z))
-			to_chat(user, "<span class='warning'>The wormhole projector malfunctions, teleporting away!</span>")
+			to_chat(user, "<span class='warning'>Проектор червоточины неисправен, оно телепортирует прочь!</span>")
 			user.drop_from_inventory(src)
 			do_teleport(src, get_turf(src), 7, asoundin = 'sound/effects/phasein.ogg')
 			return
@@ -503,24 +477,24 @@
 /obj/item/weapon/gun/energy/gun/portal/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/device/assembly/signaler/anomaly))
 		if(firing_core)
-			to_chat(user, "<span class='warning'>Wormhole projector already has an anomaly core installed!</span>")
+			to_chat(user, "<span class='warning'>В проекторе червоточины уже установлено ядро аномалии!</span>")
 			playsound(user, 'sound/machines/airlock/access_denied.ogg', VOL_EFFECTS_MASTER)
 			return
 		user.drop_from_inventory(C, src)
-		to_chat(user, "<span class='notice'>You insert [C] into the wormhole projector and the weapon gently hums to life.</span>")
+		to_chat(user, "<span class='notice'>Вы вставляете [C] в проектор червоточины, и устройство начинает мягко гудеть.</span>")
 		playsound(user, 'sound/weapons/guns/plasma10_load.ogg', VOL_EFFECTS_MASTER)
 		firing_core = C
 		modifystate = 2
 		update_icon()
 		update_inv_mob()
 
-	if(isscrewdriver(C))
+	if(isscrewing(C))
 		if(!firing_core)
-			to_chat(user, "<span class='warning'>There is no firing core installed!</span>")
+			to_chat(user, "<span class='warning'>В нем не установлено ядро аномалии!</span>")
 			return
 		firing_core.forceMove(get_turf(user))
 		firing_core = null
-		to_chat(user, "<span class='notice'>You pop the anomaly core out of the projector.</span>")
+		to_chat(user, "<span class='notice'>Вы извлекли ядро аномалии из проектора.</span>")
 		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		icon_state = "portal"
 		modifystate = 0
@@ -560,7 +534,7 @@
 
 /obj/item/weapon/gun/energy/gun/portal/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal/portalgun(target, null, 10)
-	RegisterSignal(P, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
+	RegisterSignal(P, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
 	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
 		qdel(p_orange)
 		p_orange = P
@@ -572,3 +546,121 @@
 
 /obj/item/weapon/gun/energy/gun/portal/emp_act(severity)
 	return
+
+/obj/item/weapon/gun/energy/retro
+	name ="retro phaser"
+	icon_state = "retro"
+	item_state = null
+	desc = "Устаревшая модель стандартного лазерного оружия, больше не используемая ни службами безопасности, ни военными силами НаноТрейзен. Тем не менее, он все еще достаточно смертоносен и прост в обслуживании, что делает его любимым среди пиратов и других преступников."
+	can_be_holstered = TRUE
+	ammo_type = list(/obj/item/ammo_casing/energy/phaser)
+
+/obj/item/weapon/gun/energy/retro/atom_init()
+	. = ..()
+	if(power_supply)
+		power_supply.maxcharge = 1500
+		power_supply.charge = 1500
+
+/obj/item/weapon/gun/medbeam
+	name = "prototype medical retrosynchronizer"
+	desc = "Прототип лечебной пушки, которая медленно возвращает органику в прежнее состояние, исцеляя их."
+	icon_state = "medigun"
+	item_state = "medigun"
+	var/mob/living/current_target
+	var/last_check = 0
+	var/check_delay = 10 //Check los as often as possible, max resolution is SSobj tick though
+	var/max_range = 8
+	var/active = FALSE
+	var/beam_state = "medbeam"
+	var/datum/beam/current_beam = null
+
+/obj/item/weapon/gun/medbeam/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/gun/medbeam/Destroy()
+	LoseTarget()
+	return ..()
+
+/obj/item/weapon/gun/medbeam/dropped(mob/user)
+	..()
+	LoseTarget()
+
+/obj/item/weapon/gun/medbeam/equipped(mob/user)
+	..()
+	LoseTarget()
+
+/obj/item/weapon/gun/medbeam/attack(atom/target, mob/living/user)
+	if(user.a_intent != INTENT_HARM)
+		Fire(target, user)
+		return
+	return ..()
+
+/obj/item/weapon/gun/medbeam/proc/LoseTarget()
+	if(active)
+		QDEL_NULL(current_beam)
+		active = FALSE
+	if(current_target)
+		UnregisterSignal(current_target, COMSIG_PARENT_QDELETING)
+	current_target = null
+
+/obj/item/weapon/gun/medbeam/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(isliving(user))
+		add_fingerprint(user)
+
+	if(current_target)
+		LoseTarget()
+	if(!isliving(target) || user == target)
+		return
+
+	current_target = target
+	RegisterSignal(current_target, COMSIG_PARENT_QDELETING, PROC_REF(LoseTarget))
+	active = TRUE
+	current_beam = new(user, current_target, time = 6000, beam_icon_state = beam_state, btype = /obj/effect/ebeam/medical)
+	INVOKE_ASYNC(current_beam, TYPE_PROC_REF(/datum/beam, Start))
+	user.visible_message("<span class='notice'>[user] aims their [src] at [target]!</span>")
+	playsound(user, 'sound/weapons/guns/medbeam.ogg', VOL_EFFECTS_MASTER)
+
+/obj/item/weapon/gun/medbeam/process()
+	var/source = loc
+	if(!isliving(source))
+		LoseTarget()
+		return
+
+	if(!current_target)
+		LoseTarget()
+		return
+
+	if(world.time <= last_check + check_delay)
+		return
+
+	last_check = world.time
+
+	if(get_dist(source, current_target) > max_range || !check_trajectory(source, current_target, pass_flags = PASSTABLE, flags = 0))
+		LoseTarget()
+		to_chat(source, "<span class='warning'>Вы потеряли контроль над лучом!</span>")
+		return
+
+	if(current_target)
+		on_beam_tick(current_target)
+
+/obj/item/weapon/gun/medbeam/proc/on_beam_tick()
+	if(current_target.stat == DEAD)
+		LoseTarget()
+		return
+
+	current_target.adjustBruteLoss(-5)
+	current_target.adjustFireLoss(-5)
+	current_target.adjustToxLoss(-2)
+	current_target.adjustOxyLoss(-2)
+
+/obj/item/weapon/gun/medbeam/syndi
+	name = "ominous medical retrosynchronizer"
+	desc = "Кроме цветовой гаммы, эта лечебная пушка НаноТрейзен ничем не отличается от своего аналога. Звучит знакомо."
+	icon_state = "medigun_syndi"
+	item_state = "medigun_syndi"
+	beam_state = "medbeam_syndi"
+
+/obj/effect/ebeam/medical
+	name = "medical beam"
+	icon_state = "medbeam"

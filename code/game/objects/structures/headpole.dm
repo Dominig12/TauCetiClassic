@@ -24,8 +24,8 @@
 		display_head.dir = SOUTH
 		display_head.pixel_y = -3
 		display_head.pixel_x = 1
-		display_head.layer = 3
-		display_head.plane = 0
+		display_head.layer = INFRONT_MOB_LAYER
+		display_head.plane = GAME_PLANE
 		add_overlay(display_head)
 	if(S)
 		spear = S
@@ -40,7 +40,7 @@
 
 /obj/structure/headpole/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(iscrowbar(W))
+	if(isprying(W))
 		to_chat(user, "You pry \the [head] off \the [spear].")
 		if(head)
 			head.forceMove(get_turf(src))

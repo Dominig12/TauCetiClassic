@@ -14,8 +14,6 @@
 	return module_active
 
 /mob/living/silicon/robot/put_in_active_hand(obj/item/W)
-	if(lying && !(W.flags & ABSTRACT))
-		return FALSE
 	if(!istype(W))
 		return FALSE
 	if(W.anchored)
@@ -49,7 +47,7 @@
 
 	return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, T, src)
 
-/mob/living/silicon/robot/u_equip(obj/W)
+/mob/living/silicon/robot/u_equip(obj/item/W)
 	if(!W || (W != module_active))
 		return 0
 	uneq_active()
@@ -271,7 +269,6 @@
 		return
 	if(!module_state_1)
 		module_state_1 = O
-		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE
 		O.screen_loc = inv1.screen_loc
 		contents += O
@@ -279,7 +276,6 @@
 			sight_mode |= module_state_1:sight_mode
 	else if(!module_state_2)
 		module_state_2 = O
-		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE
 		O.screen_loc = inv2.screen_loc
 		contents += O
@@ -287,7 +283,6 @@
 			sight_mode |= module_state_2:sight_mode
 	else if(!module_state_3)
 		module_state_3 = O
-		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE
 		O.screen_loc = inv3.screen_loc
 		contents += O

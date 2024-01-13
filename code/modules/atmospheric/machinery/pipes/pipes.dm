@@ -3,7 +3,7 @@
 	use_power = NO_POWER_USE
 	can_buckle = 1
 	buckle_require_restraints = 1
-	buckle_lying = -1
+	buckle_lying = TRUE
 
 	var/datum/gas_mixture/air_temporary // used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent
@@ -18,6 +18,9 @@
 	. = ..()
 
 /obj/machinery/atmospherics/pipe/Destroy()
+	if(SSair.stop_airnet_processing)
+		return ..()
+
 	releaseAirToTurf()
 	qdel(air_temporary)
 	air_temporary = null

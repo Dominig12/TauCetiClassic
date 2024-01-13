@@ -8,6 +8,8 @@
 //Grown foods
 //Subclass so we can pass on values
 /obj/item/weapon/reagent_containers/food/snacks/grown
+	food_type = NATURAL_FOOD
+	food_moodlet = /datum/mood_event/natural_food
 	var/seed_type
 	var/plantname = ""
 	var/species = ""
@@ -112,6 +114,15 @@
 	reagents.add_reagent("bicaridine", 1+round((potency / 10), 1))
 	bitesize = 1+round(reagents.total_volume / 3, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/poppy/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/cable_piece = I
+		if(cable_piece.use(3))
+			new /obj/item/clothing/head/poppy_crown(get_turf(loc))
+			qdel(src)
+			return
+	return ..()
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed_type = /obj/item/seeds/harebell
 	name = "harebell"
@@ -119,6 +130,7 @@
 	icon_state = "harebell"
 	potency = 1
 	filling_color = "#d4b2c9"
+	slot_flags = SLOT_FLAGS_HEAD
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell/atom_init()
 	. = ..()
@@ -249,6 +261,7 @@
 	desc = "A mountain climate herb with a soft, cold blue flower, known to contain an abundance of chemicals in it's flower useful to treating burns- Bad for the allergic to pollen."
 	icon_state = "mtear"
 	filling_color = "#70c470"
+	slot_flags = SLOT_FLAGS_HEAD
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mtear/atom_init()
 	. = ..()
@@ -257,7 +270,7 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mtear/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	var/obj/item/stack/medical/ointment/tajaran/poultice = new /obj/item/stack/medical/ointment/tajaran(user.loc)
 
@@ -267,7 +280,7 @@
 	to_chat(user, "<span class='notice'>You mash the petals into a poultice.</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shand/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	var/obj/item/stack/medical/bruise_pack/tajaran/poultice = new /obj/item/stack/medical/bruise_pack/tajaran(user.loc)
 
@@ -374,10 +387,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/atom_init()
 	. = ..()
 	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("space_drugs", 1+round(potency / 8, 1))
+	reagents.add_reagent("ambrosium", 1+round(potency / 8, 1))
 	reagents.add_reagent("kelotane", 1+round(potency / 8, 1))
 	reagents.add_reagent("bicaridine", 1+round(potency / 10, 1))
-	reagents.add_reagent("toxin", 1+round(potency / 10, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
@@ -387,6 +399,8 @@
 	icon_state = "ambrosiadeus"
 	potency = 10
 	filling_color = "#229e11"
+	food_moodlet = /datum/mood_event/tasty_food
+	food_type = TASTY_FOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus/atom_init()
 	. = ..()
@@ -430,6 +444,8 @@
 	desc = "Emblazoned upon the apple is the word 'Kallisti'."
 	icon_state = "goldapple"
 	potency = 15
+	food_type = VERY_TASTY_FOOD
+	food_moodlet = /datum/mood_event/very_tasty_food
 	filling_color = "#f5cb42"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple/atom_init()
@@ -477,9 +493,14 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/hatchet) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/melee/energy))
 		to_chat(user, "<span class='notice'>You carve a face into [src]!</span>")
-		new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
-		qdel(src)
-		return
+		if (tgui_alert(usr, "Шлем или Декор?", "Что вырезать?", list("Шлем", "Декор")) == "Шлем")
+			new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
+			qdel(src)
+			return
+		else
+			new /obj/item/weapon/carved_pumpkin (user.loc)
+			qdel(src)
+			return
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/lime
@@ -630,9 +651,10 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new/obj/effect/decal/cleanable/tomato_smudge(loc)
-	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
@@ -656,7 +678,7 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	new /mob/living/simple_animal/hostile/tomato(user.loc, potency)
 	qdel(src)
@@ -685,9 +707,10 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new/obj/effect/decal/cleanable/blood/splatter(loc)
-	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		reagents.reaction(A)
@@ -706,32 +729,20 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 	reagents.add_reagent("lube", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
+	AddComponent(/datum/component/slippery, 8, NONE, CALLBACK(src, PROC_REF(AfterSlip)))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/proc/AfterSlip(mob/living/carbon/human/M)
+	M.Stun(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new/obj/effect/decal/cleanable/blood/oil(loc)
-	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		reagents.reaction(A)
 	qdel(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(atom/movable/AM)
-	. = ..()
-	if (iscarbon(AM))
-		var/mob/living/carbon/C = AM
-
-		if (ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if ((H.shoes && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
-				return
-
-		C.stop_pulling()
-		to_chat(C, "<span class='notice'>You slipped on the [name]!</span>")
-		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-		if(!C.buckled)
-			C.Stun(8)
-			C.Weaken(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed_type = /obj/item/seeds/wheatseed
@@ -929,7 +940,7 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	new /mob/living/simple_animal/mushroom(user.loc)
 	qdel(src)
@@ -967,12 +978,12 @@
 	set_light(round(potency/10,1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
-	var/obj/effect/glowshroom/planted = new /obj/effect/glowshroom(user.loc)
+	var/obj/structure/glowshroom/planted = new /obj/structure/glowshroom(user.loc)
 
 	planted.delay = lifespan * 50
-	planted.endurance = endurance
+	planted.modify_max_integrity(endurance)
 	planted.yield = yield
 	planted.potency = potency
 	qdel(src)
@@ -1050,7 +1061,8 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	var/mob/M = usr
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
 	var/inner_teleport_radius = potency / 15
@@ -1058,13 +1070,13 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/blood/oil(loc)
-		visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+		visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 		qdel(src)
 		return
 	for(var/turf/T in orange(M,outer_teleport_radius))
 		if(T in orange(M,inner_teleport_radius))
 			continue
-		if(istype(T, /turf/space))
+		if(isenvironmentturf(T))
 			continue
 		if(T.density)
 			continue
@@ -1101,5 +1113,19 @@
 				s.set_up(3, 1, A)
 				s.start()
 	new/obj/effect/decal/cleanable/blood/oil(loc)
-	visible_message("<span class='notice'>The [name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed, causing a distortion in space-time.</span>","<span class='notice'>You hear a splat and a crackle.</span>")
 	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
+	name = "Сhur'eech nut"
+	cases = list("орех Чур'их", "ореха Чур'их", "ореху Чур'их", "орех Чур'их", "орехом Чур'их", "орехе Чур'их")
+	icon_state = "chureechnut"
+	desc = "Огромный орех небесного цвета, который славится поистине сладким вкусом."
+	potency = 10
+	seed_type = /obj/item/seeds/chureech_nut
+	filling_color = "#91ebff"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1 + round(potency / 5))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)

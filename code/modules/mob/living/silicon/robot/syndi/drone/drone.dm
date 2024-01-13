@@ -13,6 +13,8 @@
 	var/operator_health_last = null
 	var/msg_cooldown = 0
 
+	spawner_args = null
+
 /mob/living/silicon/robot/drone/syndi/atom_init()
 	. = ..()
 	set_ai_link(null)
@@ -27,8 +29,9 @@
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with a Cybersun Ind. logo and the subscript: 'Cybersun Industries: I will definitely fix it tomorrow!'"
 
 /mob/living/silicon/robot/drone/syndi/Destroy()
+	var/datum/action/stop_control/A = locate() in actions
+	qdel(A)
 	loose_control()
-	QDEL_LIST(actions)
 	return ..()
 
 /mob/living/silicon/robot/drone/syndi/init(laws_type, ai_link, datum/religion/R)
@@ -77,6 +80,11 @@
 	key = M.key
 	M.key = "@[key]"
 	to_chat(src, "You're now controlling the [name].")
+
+/mob/living/silicon/robot/drone/syndi/create_mind()
+	..()
+	mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	mind.skills.maximize_active_skills()
 
 /mob/living/silicon/robot/drone/syndi/proc/loose_control()
 	if(!operator)

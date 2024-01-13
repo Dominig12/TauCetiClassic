@@ -37,10 +37,16 @@
 /mob/dead/new_player/proc/show_titlescreen()
 	winset(client, "lobbybrowser", "is-disabled=false;is-visible=true")
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/lobby) //Sending pictures to the client
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/lobby)
 	assets.send(src)
 
-	client << browse(global.current_lobby_screen, "file=titlescreen.gif;display=0")
+	if(global.custom_lobby_image)
+		client << browse(global.custom_lobby_image, "file=titlescreen.gif;display=0") // png? jpg?
+	else
+		if(client.prefs.lobbyanimation)
+			client << browse(global.lobby_screens[global.lobby_screen]["mp4"], "file=[global.lobby_screen].mp4;display=0")
+		client << browse(global.lobby_screens[global.lobby_screen]["png"], "file=[global.lobby_screen].png;display=0")
+
 	client << browse(get_lobby_html(), "window=lobbybrowser")
 
 /mob/dead/new_player/proc/hide_titlescreen()
@@ -79,12 +85,34 @@
 		return
 
 	if(href_list["lobby_ready"])
+		if(config.alt_lobby_menu)
+			return
 		if(ready && SSticker.timeLeft <= 50)
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
 			return
 		if(SSticker && SSticker.current_state <= GAME_STATE_PREGAME)
 			ready = !ready
 			client << output(ready, "lobbybrowser:setReadyStatus")
+		return
+
+	if(href_list["lobby_be_special"])
+		if(config.alt_lobby_menu)
+			return
+		if(client.prefs.selected_quality_name)
+			var/datum/quality/quality = SSqualities.qualities_by_type[SSqualities.registered_clients[client.ckey]]
+			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
+			SSqualities.announce_quality(client, quality)
+			return
+		if(!client.prefs.selecting_quality)
+			var/datum/preferences/P = client.prefs
+			P.selecting_quality = TRUE
+			if(tgui_alert(
+				src,
+				"Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.",
+				"Особенность",
+				list("ДА!!!", "Нет")) == "ДА!!!")
+				SSqualities.register_client(client)
+			P.selecting_quality = FALSE
 		return
 
 	if(href_list["lobby_observe"])
@@ -97,37 +125,13 @@
 		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
 			if(!client)
 				return
-			var/mob/dead/observer/observer = new()
-
-			spawning = 1
-			playsound_stop(CHANNEL_MUSIC) // MAD JAMS cant last forever yo
-
-
-			observer.started_as_observer = 1
-			close_spawn_windows()
-			var/obj/O = locate("landmark*Observer-Start")
-			to_chat(src, "<span class='notice'>Now teleporting.</span>")
-			observer.loc = O.loc
-			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
-
-			// client.prefs.update_preview_icon()
-			// observer.icon = client.prefs.preview_icon
-			observer.icon = 'icons/mob/mob.dmi'
-			observer.icon_state = "ghost"
-			observer.alpha = 127
-
-			if(client.prefs.be_random_name)
-				client.prefs.real_name = random_name(client.prefs.gender)
-			observer.real_name = client.prefs.real_name
-			observer.name = observer.real_name
-			if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
-				observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
-			observer.key = key
-			qdel(src)
+			spawn_as_observer()
 
 			return
 
 	if(href_list["lobby_join"])
+		if(config.alt_lobby_menu)
+			return
 		if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 			to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
@@ -140,13 +144,22 @@
 		LateChoices()
 		return
 
+	if(href_list["event_join"])
+		if(!config.alt_lobby_menu)
+			return
+		if(!spawners_menu)
+			spawners_menu = new()
+
+		spawners_menu.tgui_interact(src)
+		return
+
 	if(href_list["lobby_crew"])
 		ViewManifest()
 		return
 
 	if(href_list["SelectedJob"])
-		if(!enter_allowed)
-			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+		if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
 			return
 
 		if(client.prefs.species != HUMAN)
@@ -175,12 +188,45 @@
 		return FALSE
 	if(!job.player_old_enough(client))
 		return FALSE
-	if(!job.is_species_permitted(client.prefs.species))
-		return FALSE
 	if(!job.map_check())
+		return FALSE
+	if(!job.is_species_permitted(client.prefs.species))
+		var/datum/quality/quality = SSqualities.qualities_by_name[client.prefs.selected_quality_name]
+		//skip check by quality
+		if(istype(quality, /datum/quality/unrestricted))
+			return TRUE
 		return FALSE
 	return TRUE
 
+/mob/dead/new_player/proc/spawn_as_observer()
+	var/mob/dead/observer/observer = new()
+	spawning = 1
+	playsound_stop(CHANNEL_MUSIC) // MAD JAMS cant last forever yo
+
+	observer.started_as_observer = 1
+	close_spawn_windows()
+	var/obj/O = locate("landmark*Observer-Start")
+	to_chat(src, "<span class='notice'>Now teleporting.</span>")
+	observer.loc = O.loc
+	observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
+
+	// client.prefs.update_preview_icon()
+	// observer.icon = client.prefs.preview_icon
+	observer.icon = 'icons/mob/mob.dmi'
+	observer.icon_state = "ghost"
+
+	observer.alpha = 127
+
+	if(client.prefs.be_random_name)
+		client.prefs.real_name = random_name(client.prefs.gender)
+	observer.real_name = client.prefs.real_name
+	observer.name = observer.real_name
+	if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
+		observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
+	observer.key = key
+	qdel(src)
+
+	return observer
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if (src != usr)
@@ -188,8 +234,8 @@
 	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 		return 0
-	if(!enter_allowed)
-		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
 		return 0
 	if(!IsJobAvailable(rank))
 		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
@@ -201,9 +247,14 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+
+
+	SSjob.EquipRank(character, rank, TRUE)					//equips the human
+
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+		SSqualities.give_quality(character, TRUE)
+		character.PutDisabilityMarks()
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")
@@ -224,13 +275,8 @@
 		qdel(src)
 		return
 
-	character.loc = pick(latejoin)
-	character.lastarea = get_area(loc)
+	character.forceMove(pick(latejoin), keep_buckled = TRUE)
 	show_location_blurb(character.client)
-	// Moving wheelchair if they have one
-	if(character.buckled && istype(character.buckled, /obj/structure/stool/bed/chair/wheelchair))
-		character.buckled.loc = character.loc
-		character.buckled.set_dir(character.dir)
 
 	SSticker.mode.latespawn(character)
 
@@ -386,7 +432,7 @@
 
 	new_character.lastarea = get_area(loc)
 	if(client.prefs.language)
-		new_character.add_language(client.prefs.language)
+		new_character.add_language(client.prefs.language, LANGUAGE_NATIVE)
 
 	if(SSticker.random_players)
 		new_character.gender = pick(MALE, FEMALE)
@@ -399,16 +445,16 @@
 
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
-		if(mind.assigned_role == "Clown")				//give them a clownname if they are a clown
-			new_character.real_name = pick(clown_names)	//I hate this being here of all places but unfortunately dna is based on real_name!
-			new_character.rename_self("clown")
 		mind.original = new_character
 		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
 	new_character.name = real_name
 	new_character.dna.ready_dna(new_character)
-	new_character.dna.b_type = client.prefs.b_type
 	new_character.dna.UpdateSE()
+	new_character.dna.original_character_name = new_character.real_name
+	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_WELL_FED)
+	var/old_base_metabolism = new_character.get_metabolism_factor()
+	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
 
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in

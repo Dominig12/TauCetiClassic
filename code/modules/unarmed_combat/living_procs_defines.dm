@@ -25,7 +25,7 @@
 	var/attack_push_vis_effect
 	var/attack_disarm_vis_effect
 
-/mob/living/verb/read_possible_combos()
+/mob/living/proc/read_possible_combos()
 	set name = "Combos Cheat Sheet"
 	set desc = "A list of all possible combos with rough descriptions."
 	set category = "IC"
@@ -46,7 +46,6 @@
 
 		dat += "</p></hr>"
 
-
 	var/datum/browser/popup = new(usr, "combos_list", "Combos Cheat Sheet", 500, 350)
 	popup.set_content(dat)
 	popup.open()
@@ -58,7 +57,7 @@
 	var/retFlags = 0
 	var/retVerb = "attack"
 	var/retSound = null
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4
@@ -76,7 +75,7 @@
 
 /mob/living/attack_animal(mob/living/simple_animal/attacker)
 	if(attacker.melee_damage <= 0)
-		attacker.emote("[attacker.friendly] [src]")
+		attacker.me_emote("[attacker.friendly] [src]")
 		return TRUE
 	return attack_unarmed(attacker)
 
@@ -245,6 +244,7 @@
 	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	if(show_message)
 		visible_message("<span class='warning'><B>[attacker] pushed [src]!</B></span>")
+
 	return TRUE
 
 /mob/living/proc/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
@@ -275,7 +275,7 @@
 	if(ishuman(src)) // This is stupid. TODO: abstract get_armor() proc.
 		var/mob/living/carbon/human/H = src
 		BP = H.get_bodypart(ran_zone(BP))
-		armor_block = run_armor_check(BP, "melee")
+		armor_block = run_armor_check(BP, MELEE)
 
 	if(damSound)
 		playsound(src, damSound, VOL_EFFECTS_MASTER)
@@ -295,12 +295,12 @@
 // Add combo points to all attackers.
 /mob/living/proc/add_combo_value_all(value)
 	for(var/datum/combo_handler/CS in combos_saved)
-		CS.fullness += value
+		CS.points += value
 
 // Add combo points to all my combo-controllers.
 /mob/living/proc/add_my_combo_value(value)
 	for(var/datum/combo_handler/CS in combos_performed)
-		CS.fullness += value
+		CS.points += value
 
 // Returns TRUE if a combo was executed.
 /mob/living/proc/try_combo(mob/living/target)
@@ -387,3 +387,8 @@
 /mob/living/proc/remove_moveset_source(source)
 	for(var/datum/combat_moveset/moveset in movesets_by_source[source])
 		remove_moveset(moveset, source)
+
+/mob/living/turn_light_off()
+	. = ..()
+	for(var/obj/item/F in contents)
+		F.turn_light_off()

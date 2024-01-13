@@ -12,11 +12,18 @@
 	throwforce = 6
 	w_class = SIZE_NORMAL
 	origin_tech = list("biotech" = 2, "powerstorage" = 1)
-	action_button_name = "Remove/Replace Paddles"
+	item_action_types = list(/datum/action/item_action/hands_free/paddles)
 
 	var/obj/item/weapon/shockpaddles/linked/paddles
 	var/obj/item/weapon/stock_parts/cell/bcell = null
 	var/charge_time = 1 SECONDS
+
+/datum/action/item_action/hands_free/paddles
+	name = "Remove/Replace Paddles"
+
+/datum/action/item_action/hands_free/paddles/Activate()
+	var/obj/item/weapon/defibrillator/S = target
+	S.toggle_paddles()
 
 /obj/item/weapon/defibrillator/atom_init() // starts without a cell for rnd
 	. = ..()
@@ -61,9 +68,6 @@
 	cut_overlays()
 	add_overlay(new_overlays)
 
-/obj/item/weapon/defibrillator/ui_action_click()
-	toggle_paddles()
-
 /obj/item/weapon/defibrillator/attack_hand(mob/user)
 	if(loc == user)
 		toggle_paddles()
@@ -73,7 +77,7 @@
 /obj/item/weapon/defibrillator/MouseDrop()
 	. = ..()
 	if(ismob(loc))
-		if(!CanMouseDrop(src))
+		if(!CanMouseDrop(src, usr))
 			return
 		var/mob/M = loc
 		if(!M.unEquip(src))
@@ -97,7 +101,7 @@
 			to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
 			update_icon()
 
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(bcell)
 			bcell.update_icon()
 			bcell.forceMove(get_turf(src.loc))
@@ -128,6 +132,7 @@
 
 	if(paddles.loc != src)
 		reattach_paddles(user) //Remove from their hands and back onto the defib unit
+		update_item_actions()
 		return
 
 	if(!slot_check())
@@ -136,6 +141,7 @@
 		if(!usr.put_in_hands(paddles)) //Detach the paddles into the user's hands
 			to_chat(user, "<span class='warning'>You need a free hand to hold the paddles!</span>")
 		update_icon() //success
+		update_item_actions()
 
 //checks that the base unit is in the correct slot to be used
 /obj/item/weapon/defibrillator/proc/slot_check()
@@ -235,7 +241,7 @@
 /obj/item/weapon/shockpaddles/proc/set_cooldown(delay)
 	cooldown = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/reset_cooldown), delay, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), delay, TIMER_UNIQUE)
 
 /obj/item/weapon/shockpaddles/proc/reset_cooldown()
 	if(cooldown)
@@ -328,6 +334,8 @@
 
 // This proc is used so that we can return out of the revive process while ensuring that busy and update_icon() are handled
 /obj/item/weapon/shockpaddles/proc/try_revive(mob/living/carbon/human/H, mob/user)
+	if(!handle_fumbling(user, H, SKILL_TASK_DIFFICULT, list(/datum/skill/medical = SKILL_LEVEL_TRAINED), text_target = src))
+		return
 	//beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 	user.visible_message("<span class='warning'>\The [user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
 	if(!do_after(user, 30, target = H))
@@ -405,7 +413,7 @@
 		H.adjustFireLoss(burn_damage_amt)
 	H.updatehealth()
 
-	if(H.health < config.health_threshold_dead)
+	if((H.health < config.health_threshold_dead) || (H.suiciding))
 		make_announcement("buzzes, \"Defibrillation failed - Patinent's body is too wounded to sustain heart beating.\"")
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
@@ -417,6 +425,7 @@
 		if(F)
 			F.electrocute_act(150)
 		else
+			user.Stun(6)
 			user.Weaken(6)
 
 	make_announcement("pings, \"Defibrillation successful.\"")
@@ -496,6 +505,7 @@
 	Shockpaddles that are linked to a base unit
 */
 /obj/item/weapon/shockpaddles/linked
+	icon_state = "defibpaddleslinked0"
 	var/obj/item/weapon/defibrillator/base_unit
 
 /obj/item/weapon/shockpaddles/linked/atom_init(mapload, obj/item/weapon/defibrillator/defib)
@@ -525,6 +535,11 @@
 
 /obj/item/weapon/shockpaddles/linked/make_announcement(message)
 	base_unit.audible_message("<b>\The [base_unit]</b> [message]", "\The [base_unit] vibrates slightly.")
+
+/obj/item/weapon/shockpaddles/linked/update_icon()
+	icon_state = "defibpaddleslinked[is_wielded()]"
+	if(cooldown)
+		icon_state = "defibpaddleslinked[is_wielded()]_cooldown"
 
 /*
 	Standalone Shockpaddles

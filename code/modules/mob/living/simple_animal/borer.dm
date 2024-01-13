@@ -2,6 +2,8 @@
 	name = "host brain"
 	real_name = "host brain"
 
+	show_examine_log = FALSE
+
 /mob/living/captive_brain/say_understands(mob/other, datum/language/speaking)
 	var/mob/living/simple_animal/borer/my_borer = loc
 	if(!istype(loc))
@@ -32,15 +34,12 @@
 			if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "[FOLLOW_LINK(M, src)] The captive mind of [src] whispers, \"[message]\"")
 
-/mob/living/captive_brain/emote(act, m_type = SHOWMSG_VISUAL, message, auto)
-	return
-
 /mob/living/simple_animal/borer
 	name = "cortical borer"
 	real_name = "cortical borer"
-	desc = "A small, quivering sluglike creature."
-	speak_emote = list("chirrups")
-	emote_hear = list("chirrups")
+	desc = "Маленькое существо, похожее на слизняка."
+	speak_emote = list("шипит")
+	emote_hear = list("шипит")
 	response_help  = "pokes the"
 	response_disarm = "prods the"
 	response_harm   = "stomps on the"
@@ -78,6 +77,8 @@
 	var/leaving = FALSE
 	var/has_reproduced = FALSE                 // Whether or not the borer has reproduced, for objective purposes.
 
+	show_examine_log = FALSE
+
 /mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = FALSE, gen = 1)
 	. = ..()
 	generation = gen
@@ -86,7 +87,7 @@
 
 	host_brain = new/mob/living/captive_brain(src)
 	if(request_ghosts)
-		create_spawner(/datum/spawner/borer, "borer", src)
+		create_spawner(/datum/spawner/living/borer, src)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
 	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_GHOSTLY, , show_warnings = TRUE)
@@ -120,7 +121,7 @@
 		if(prob(5))
 			host.adjustBrainLoss(rand(1,2))
 		if(prob(host.getBrainLoss() * 0.05))
-			host.emote("[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
+			host.emote("[pick(list("blink", "choke", "drool", "twitch", "gasp"))]")
 
 /mob/living/simple_animal/borer/say_understands(mob/other, datum/language/speaking)
 	return host == other
@@ -136,7 +137,7 @@
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if (stat)
+	if (stat != CONSCIOUS)
 		return
 
 	if (client)
@@ -216,6 +217,7 @@
 
 	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
 	to_chat(M, "<span class='warning'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
+	M.Stun(3)
 	M.Weaken(3)
 
 	dominate_cd = world.time
@@ -250,7 +252,7 @@
 	to_chat(src, "You begin delicately adjusting your connection to the host brain...")
 	assuming = TRUE
 
-	addtimer(CALLBACK(src, .proc/take_control), 300 + (host.brainloss * 5))
+	addtimer(CALLBACK(src, PROC_REF(take_control)), 300 + (host.brainloss * 5))
 
 /mob/living/simple_animal/borer/proc/take_control()
 	assuming = FALSE
@@ -287,7 +289,7 @@
 		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
-	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in list("bicaridine","tramadol","hyperzine","alkysine")
+	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in list("bicaridine","tramadol","nuka_cola","alkysine")
 	if(!chem)
 		return
 
@@ -331,7 +333,7 @@
 	if(host.stat == CONSCIOUS)
 		to_chat(host, "An odd, uncomfortable pressure begins to build inside your skull, behind your ear...")
 
-	addtimer(CALLBACK(src, .proc/let_go), 200)
+	addtimer(CALLBACK(src, PROC_REF(let_go)), 200)
 
 /mob/living/simple_animal/borer/proc/let_go()
 	if(!host || !src || QDELETED(host) || QDELETED(src))

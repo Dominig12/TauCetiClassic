@@ -1,5 +1,5 @@
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	pierce_protection = UPPER_TORSO|LOWER_TORSO
 	cold_protection = UPPER_TORSO|LOWER_TORSO
@@ -29,13 +29,20 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+/obj/item/clothing/suit/armor/vest/fullbody/psy_robe
+	name = "purple robes"
+	desc = "Heavy, royal purple robes threaded with psychic amplifiers and weird, bulbous lenses. Do not machine wash."
+	icon_state = "psyamp"
+	item_state = "psyamp"
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 0, bio = 100, rad = 100)
+
 /obj/item/clothing/suit/storage/flak
 	name = "security armor"
 	desc = "An armored vest that protects against some damage. This one has four pockets for storage."
 	icon_state = "armorsec"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	pierce_protection = UPPER_TORSO|LOWER_TORSO
 	cold_protection = UPPER_TORSO|LOWER_TORSO
@@ -44,11 +51,32 @@
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.4
 	armor = list(melee = 50, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/suit/storage/flak/atom_init()
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.set_slots(slots = 4, slot_size = SIZE_TINY)
+
+/obj/item/clothing/suit/storage/flak/police
+	name = "police armor"
+	desc = "An armored vest that protects against some damage. This one has four pockets for storage and a custom paintjob in colors of OCD."
+	icon_state = "police_armor"
+	flags = HEAR_TALK
+
+/obj/item/clothing/suit/storage/flak/police/fullbody
+	name = "police fullbody armor"
+	desc = "A set of armor covering the entire body. This variant is used by OCD and is painted accordingly."
+	icon_state = "police_armor_fullbody"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+/obj/item/clothing/suit/storage/flak/police/fullbody/heavy
+	name = "heavy fullbody armor"
+	desc = "A set of armor used by special weapons and tactics units of OCD. Justice will be served."
+	icon_state = "police_armor_heavy"
+	slowdown = 0.2
+	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/marinad
 	name = "marine armor"
@@ -57,8 +85,9 @@
 	item_state = "marinad_armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1
+	slowdown = 0.5
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
@@ -73,6 +102,7 @@
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	flags = null
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
@@ -96,12 +126,11 @@
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
-	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
+	desc = "A suit of armor with heavy padding to protect against melee attacks."
 	icon_state = "riot"
 	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1
 	armor = list(melee = 80, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 
@@ -126,6 +155,7 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 10, bullet = 80, laser = 20, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
+	flags = HEAR_TALK
 
 /obj/item/clothing/suit/storage/flak/bulletproof/atom_init()
 	. = ..()
@@ -151,6 +181,12 @@
 	if (prob(hit_reflect_chance))
 		return 1
 
+/obj/item/clothing/suit/armor/laserproof/police
+	name = "police ablative armor"
+	desc = "An experimental model of ablative armor issued in limited numbers to special units of OCD. This set of armor protects not only against lasers but is also sturdy enough to withstand other damage types."
+	icon_state = "police_armor_inspector"
+	armor = list(melee = 35, bullet = 35, laser = 65, energy = 75, bomb = 0, bio = 0, rad = 0)
+
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
 	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
@@ -160,8 +196,9 @@
 	permeability_coefficient = 0.01
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1
+	slowdown = 0.2
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 0, rad = 0)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/clothing/head/helmet, /obj/item/weapon/tank)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
@@ -170,8 +207,8 @@
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
 	desc = "An armored jacket used in special operations."
-	icon_state = "detective_brown"
-	item_state = "det_suit"
+	icon_state = "detective_trenchcoat_brown"
+	item_state = "detective_trenchcoat_brown"
 	blood_overlay_type = "coat"
 	flags_inv = 0
 	body_parts_covered = UPPER_TORSO|ARMS
@@ -186,42 +223,80 @@
 	flags = ONESIZEFITSALL
 	armor = list(melee = 50, bullet = 55, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/storage/flak/blueshield
+	name = "blueshield armor vest"
+	desc = "It's heavy and somehow... comfortable?"
+	icon_state = "blueshield"
+	item_state = "armor"
+	armor = list(melee = 60, bullet = 55, laser = 50, energy = 35, bomb = 35, bio = 0, rad = 0)
+	flags = ONESIZEFITSALL
 
 //Reactive armor
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
-/obj/item/clothing/suit/armor/reactive
-	name = "reactive teleport armor"
-	desc = "Someone seperated our Research Director from his own head!"
-	var/active = 0.0
+/obj/item/clothing/suit/armor/vest/reactive
+	name = "experimental teleport armor"
+	desc = "High-tech armor with a huge bunch of sensors and fancy stuff inside. But why was this armor entrusted to a scientist?"
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
-	blood_overlay_type = "armor"
-	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/active = FALSE
 
-/obj/item/clothing/suit/armor/reactive/Get_shield_chance()
+/obj/item/clothing/suit/armor/vest/reactive/Get_shield_chance()
 	if(active)
-		return 35
+		return 50
 	return 0
 
-/obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
-	src.active = !( src.active )
-	if (src.active)
-		to_chat(user, "<span class='notice'>The reactive armor is now active.</span>")
-		src.icon_state = "reactive"
-		src.item_state = "reactive"
+/obj/item/clothing/suit/armor/vest/reactive/attack_self(mob/user)
+	active = !(active)
+	if(active)
+		to_chat(user, "<span class='notice'>The reactive armor is now active. Solid protective system deactivated.</span>")
+		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+		icon_state = "reactive"
+		item_state = "reactive"
+		add_fingerprint(user)
 	else
-		to_chat(user, "<span class='notice'>The reactive armor is now inactive.</span>")
-		src.icon_state = "reactiveoff"
-		src.item_state = "reactiveoff"
+		to_chat(user, "<span class='notice'>The reactive armor is now inactive. Solid protective system activated.</span>")
+		armor = list(melee = 50, bullet = 45, laser = 40, energy = 20, bomb = 0, bio = 0, rad = 0)
+		icon_state = "reactiveoff"
+		item_state = "reactiveoff"
 		add_fingerprint(user)
 	return
 
-/obj/item/clothing/suit/armor/reactive/emp_act(severity)
-	active = 0
-	src.icon_state = "reactiveoff"
-	src.item_state = "reactiveoff"
+/obj/item/clothing/suit/armor/vest/reactive/emp_act(severity)
+	active = FALSE
+	icon_state = "reactiveoff"
+	item_state = "reactiveoff"
+	armor = list(melee = 50, bullet = 45, laser = 40, energy = 20, bomb = 0, bio = 0, rad = 0)
 	..()
+
+/obj/item/clothing/suit/armor/vest/reactive/proc/teleport_user(range, mob/user, text)
+	if(!isnull(text))
+		visible_message("<span class='userdanger'>The reactive teleport system flings [user.name] clear of [text]!</span>")
+	var/list/turfs = list()
+	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
+	smoke.set_up(5, 0, user.loc)
+	smoke.attach(user)
+	smoke.start()
+	for(var/turf/T in orange(range))
+		if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
+			continue
+		if(isenvironmentturf(T))
+			continue
+		if(T.density)
+			continue
+		if(T.x>world.maxx-6 || T.x<6)
+			continue
+		if(T.y>world.maxy-6 || T.y<6)
+			continue
+		turfs += T
+	if(!turfs.len)
+		turfs += pick(/turf in orange(range))
+	var/turf/picked = pick(turfs)
+	if(!isturf(picked))
+		return
+	user.forceMove(picked)
+	playsound(user, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
+	return TRUE
 
 
 //All of the armor below is mostly unused
@@ -249,7 +324,7 @@
 	gas_transfer_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 3
+	slowdown = 1.5
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 0
 
@@ -280,14 +355,14 @@
 	var/obj/item/weapon/gun/holstered = null
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1
+	slowdown = 0.5
 	armor = list(melee = 60, bullet = 65, laser = 50, energy = 60, bomb = 40, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/tactical/verb/holster()
 	set name = "Holster"
 	set category = "Object"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
+	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
 
@@ -322,7 +397,7 @@
 	item_state = "assaultarmor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	armor = list(melee = 60, bullet = 60, laser = 50, energy = 70, bomb = 50, bio = 0, rad = 50)
+	armor = list(melee = 80, bullet = 70, laser = 55, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -344,7 +419,46 @@
 	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
 	icon_state = "M66_KevlarVest"
 	item_state = "armor"
-	item_color = "M66_KevlarVest"
 	blood_overlay_type = "armor"
 	armor = list(melee = 60, bullet = 80, laser = 40, energy = 50, bomb = 25, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/suit/armor/crusader
+	name = "crusader tabard"
+	desc = "It's a chainmail with some cloth draped over. Non nobis domini and stuff."
+	icon_state = "crusader"
+	item_state = "armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 25, bio = 0, rad = 10)
+	siemens_coefficient = 1.2
+
+/obj/item/clothing/suit/armor/vest/surplus
+	name = "surplus armor vest"
+	desc = "An armored vest with outdated armor plates, no longer used by galactic militaries. At least it's cheap."
+	icon_state = "armor_surplus_1"
+	armor = list(melee = 45, bullet = 40, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/armor/vest/surplus/atom_init()
+	. = ..()
+	icon_state = "surplus_armor_[rand(1,2)]"
+
+/obj/item/clothing/suit/armor/vest/durathread
+	name = "durathread vest"
+	desc = "A vest made of durathread and a bunch of rags, tied with wires."
+	icon_state = "Duraarmor"
+	item_state = "Duraarmor"
+	armor = list(melee = 45, bullet = 15, laser = 50, energy = 35, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/armor/duracoat
+	name = "durathread coat"
+	desc = "A coat made from durathread, looks stylish."
+	icon_state = "Duracoat"
+	item_state = "Duracoat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	armor = list(melee = 40, bullet = 5, laser = 40, energy = 25, bomb = 0, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT
+	siemens_coefficient = 0.4

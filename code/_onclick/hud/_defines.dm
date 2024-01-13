@@ -96,8 +96,8 @@
 #define ui_internal "EAST-1:28,CENTER-3:19"
 
 //aliens
-#define ui_alien_nightvision "EAST-1:28,CENTER:17"
-#define ui_alien_health "EAST-1:28,CENTER-1:15"			//aliens have the health display where humans have the pressure damage indicator.
+#define ui_alien_nightvision "EAST-1:28,CENTER-1:15" //aliens have the nightvision display where humans have the pressure damage indicator.
+#define ui_alien_health "EAST-1:28,CENTER:17"
 #define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"
 
 // Ghosts
@@ -153,3 +153,19 @@
 
 //Families
 #define ui_wanted_lvl "NORTH,11"
+
+//Holomaps
+#define ui_holomap "WEST:120, SOUTH:30"
+// Leap
+#define ui_human_leap "CENTER+3:20,SOUTH:5"
+
+#define ui_direction_arrow "CENTER,CENTER"
+
+// Hud slots
+#define HUD_SLOT_MAIN		1
+#define HUD_SLOT_ADDING		2
+#define HUD_SLOT_HOTKEYS	4
+
+#define HUD_COPY_ICON	1
+#define HUD_COPY_COLOR	2
+#define HUD_COPY_ALPHA	4

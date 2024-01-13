@@ -2,6 +2,7 @@
 	name = "Strained Muscles"
 	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
 	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Cannot be used in lesser form."
+	button_icon_state = "strained_muscles"
 	genomecost = 2
 	req_human = 1
 	max_genetic_damage = 5
@@ -39,6 +40,7 @@
 		stacks++
 		if(stacks >= 30)
 			to_chat(owner,"<span class='danger'>We collapse in exhaustion.</span>")
+			owner.Stun(3)
 			owner.Weaken(3)
 			owner.emote("gasp")
 			var/datum/role/changeling/C = owner.mind.GetRoleByType(/datum/role/changeling)
@@ -48,6 +50,7 @@
 		if(owner.stat != CONSCIOUS || owner.halloss >= 90)
 			active = !active
 			to_chat(owner,"<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
+			owner.Stun(2)
 			owner.Weaken(2)
 			var/datum/role/changeling/C = owner.mind.GetRoleByType(/datum/role/changeling)
 			C.strained_muscles = 0

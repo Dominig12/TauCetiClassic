@@ -292,14 +292,14 @@ for(var/atom in bag_of_atoms)
   - spawn(10), сюрприз-сюрприз вовсе не одна секунда.
 - Вторая проблема - ссылки в ассинхронном вызове. Если вы ссылаетесь на объект, который под спавном, и что-то в этом время удалит этот объект(Попытается), то внутри спавна останется ссылка на него.
 - Третья проблема - отсутствие возможности профилизировать вызванный под спавном код. В профайлере он будет подписываться как "ASYNC FUNCTION CALL", или что-то подобное, что вообще ничего не говорит о том что это за функция такая.
-- Четвёртая проблема - нагрузка на процессор. Спавн очень специфично "асинхронизируется". Он не только вызывает асинхронный вызов, но и решает подсчитать когда он должен закончиться.
+- Четвёртая проблема - отсутствие контроля над выполнением. В случае с, к примеру, таймером, которые вынесены в отдельную подсистему - можно выбирать приоритет выполнения таймера, в то время как spawn() является низкоуровневым byond-проком, не контролируется нами, и может работать не всегда оптимальным для нас способом.
 
 В зависимости от того, как используется спавн есть два пути замены:
 - Если **spawn(time)**:
-  - Как правило, такие спавны заменяются на ```addtimer(CALLBACK(thingtocall, thingtocall_path.proc/proc_name, args), time)```
+  - Как правило, такие спавны заменяются на ```addtimer(CALLBACK(thingtocall, TYPE_PROC_REF(thingtocall_path, proc_name), args), time)```
   - Если с помощью спавна лишь изменяется переменная датума, то лучше использовать ```VARSET_IN(datum, var, var_value, time)```.
 - Если **spawn()** или **spawn(0)**:
-  - Если спавн содержит единственный прок, то просто оберните его в ```INVOKE_ASYNC(thingtocall, thingtocall_path.proc/proc_name, args)```. Иначе перенесите всё содержимое спавна в новый прок, который уже и добавите в ```INVOKE_ASYNC(thingtocall, thingtocall_path.proc/proc_name, args)```
+  - Если спавн содержит единственный прок, то просто оберните его в ```INVOKE_ASYNC(thingtocall, TYPE_PROC_REF(thingtocall_path, proc_name), args)```. Иначе перенесите всё содержимое спавна в новый прок, который уже и добавите в ```INVOKE_ASYNC(thingtocall, TYPE_PROC_REF(thingtocall_path, proc_name), args)```
   - Если всё содержимое прока обернуто в спавн, то в самом проке прописать ```set waitfor = FALSE```
 
 Примеры замен под спойлерами ниже:
@@ -327,8 +327,8 @@ for(var/atom in bag_of_atoms)
 //Хорошо:
 /mob/some/class/proc/foo()
 	code
-	addtimer(CALLBACK(src, .proc/do_something_wrapper, variable), 20)
-	addtimer(CALLBACK(other_mob, /mob.proc/do_something_crazy, a, b), 40)
+	addtimer(CALLBACK(src, PROC_REF(do_something_wrapper), variable), 20)
+	addtimer(CALLBACK(other_mob, TYPE_PROC_REF(/mob, do_something_crazy), a, b), 40)
 	VARSET_IN(src, name, "Steve", 30)
 
 /mob/some/class/proc/do_something_wrapper(variable)
@@ -381,7 +381,7 @@ for(var/atom in bag_of_atoms)
 //Хорошо:
 /mob/some/class/proc/foo()
 	code
-	INVOKE_ASYNC(src, .proc/do_something_wrapper, variable)
+	INVOKE_ASYNC(src, PROC_REF(do_something_wrapper), variable)
 
 /mob/some/class/proc/do_something_wrapper(variable)
 	switch(variable)

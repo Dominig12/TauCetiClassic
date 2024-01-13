@@ -13,6 +13,8 @@ var/global/list/alldepartments = list("Central Command")
 	active_power_usage = 200
 	interact_offline = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/obj/item/weapon/card/id/scan = null // identification
 	var/authenticated = 0
 
@@ -21,6 +23,8 @@ var/global/list/alldepartments = list("Central Command")
 
 	var/department = "Unknown" // our department
 	var/dptdest = "Central Command" // the department we're sending to
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_TRAINED)
+
 
 /obj/machinery/faxmachine/atom_init()
 	. = ..()
@@ -111,13 +115,10 @@ var/global/list/alldepartments = list("Central Command")
 
 	if(href_list["remove"])
 		if(tofax)
-			if(!ishuman(usr))
-				to_chat(usr, "<span class='warning'>You can't do it.</span>")
-			else
-				tofax.loc = usr.loc
-				usr.put_in_hands(tofax)
-				to_chat(usr, "<span class='notice'>You take the paper out of \the [src].</span>")
-				tofax = null
+			tofax.loc = usr.loc
+			usr.put_in_hands(tofax)
+			to_chat(usr, "<span class='notice'>You take the paper out of \the [src].</span>")
+			tofax = null
 
 	if(href_list["scan"])
 		if (scan)
@@ -140,9 +141,10 @@ var/global/list/alldepartments = list("Central Command")
 		authenticated = 0
 
 	if(href_list["dept"])
-		var/lastdpt = dptdest
-		dptdest = input(usr, "Which department?", "Choose a department", "") as null|anything in alldepartments
-		if(!dptdest) dptdest = lastdpt
+		var/new_dep_dest = input(usr, "Which department?", "Choose a department", "") as null|anything in alldepartments
+		if(!new_dep_dest || !can_still_interact_with(usr))
+			return
+		dptdest = new_dep_dest
 
 	if(href_list["auth"])
 		if ( (!( authenticated ) && (scan)) )
@@ -177,7 +179,7 @@ var/global/list/alldepartments = list("Central Command")
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
 
-	else if(iswrench(O))
+	else if(iswrenching(O))
 		default_unfasten_wrench(user, O)
 
 /proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P, obj/machinery/faxmachine/fax)
@@ -196,7 +198,7 @@ var/global/list/alldepartments = list("Central Command")
 
 	send_fax(sender, P, "Central Command")
 
-	add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
+	SSStatistics.add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
 
 	for(var/client/X in global.admins)
 		X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)

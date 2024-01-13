@@ -40,7 +40,7 @@
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)
-		emote("growls at [.]")
+		me_emote("growls at [.]")
 
 
 
@@ -81,7 +81,7 @@
 	if(.)
 		trigger()
 
-/mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
+/mob/living/simple_animal/hostile/mimic/crate/UnarmedAttack(atom/target)
 	. = ..()
 	if(.)
 		icon_state = initial(icon_state)
@@ -114,11 +114,12 @@
 	qdel(src)
 	..()
 
-/mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
+/mob/living/simple_animal/hostile/mimic/crate/UnarmedAttack(atom/target)
 	. =..()
-	var/mob/living/L = .
-	if(istype(L))
+	if(isliving(target))
+		var/mob/living/L = target
 		if(prob(15))
+			L.Stun(1)
 			L.Weaken(2)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
@@ -156,7 +157,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/creator)
 
-	if((istype(O, /obj/item) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
+	if((isitem(O) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
 
 		O.loc = src
 		name = O.name
@@ -171,7 +172,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			if(O.density && O.anchored)
 				knockdown_people = 1
 				melee_damage *= 2
-		else if(istype(O, /obj/item))
+		else if(isitem(O))
 			var/obj/item/I = O
 			health = 15 * I.w_class
 			melee_damage = 2 + I.force
@@ -188,12 +189,13 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	if(destroy_objects)
 		..()
 
-/mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
+/mob/living/simple_animal/hostile/mimic/copy/UnarmedAttack(atom/target)
 	. = ..()
 	if(knockdown_people)
-		var/mob/living/L = .
-		if(istype(L))
+		if(isliving(target))
+			var/mob/living/L = target
 			if(prob(15))
+				L.Stun(1)
 				L.Weaken(1)
 				L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
@@ -208,10 +210,16 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	attacktext = "hugs"
 	a_intent = INTENT_HELP
 
+/mob/living/simple_animal/hostile/mimic/copy/flora/atom_init(mapload)
+	var/obj/structure/flora/copy = locate() in loc
+	if (!copy)
+		return INITIALIZE_HINT_QDEL
+	return ..(mapload, copy)
+
 /mob/living/simple_animal/hostile/mimic/prophunt
 	name = "mimic"
 	real_name = "mimic"
-	desc = "Absolutely not de-beaked or harmless. Keep away from corpses."
+	desc = "Абсолютно не безобидный и скорее всего очень кусючий. Держать подальше от трупов."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "headcrab"
 	icon_living = "headcrab"
@@ -241,17 +249,17 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/prophunt/MouseEntered()
 	. = ..()
-	if(istype(my_prototype, /obj/item))
+	if(isitem(my_prototype))
 		apply_outline()
 
 /mob/living/simple_animal/hostile/mimic/prophunt/MouseExited()
 	. = ..()
-	if(istype(my_prototype, /obj/item))
+	if(isitem(my_prototype))
 		remove_outline()
 
 /mob/living/simple_animal/hostile/mimic/prophunt/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
-	if(src != over && istype(my_prototype, /obj/item))
+	if(src != over && isitem(my_prototype))
 		remove_outline()
 
 /mob/living/simple_animal/hostile/mimic/prophunt/RangedAttack(atom/A, params)

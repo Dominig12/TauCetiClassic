@@ -79,7 +79,7 @@
  * Invokes async toggle artifact
  */
 /datum/artifact_effect/proc/ToggleActivate(reveal_toggle = TRUE)
-	INVOKE_ASYNC(src, .proc/toggle_artifact_effect, reveal_toggle)
+	INVOKE_ASYNC(src, PROC_REF(toggle_artifact_effect), reveal_toggle)
 
 /**
  * Stops/starts processing, updates artifact icon, displays visible_message
@@ -93,7 +93,9 @@
 	if(istype(holder, /obj/machinery/artifact))
 		var/obj/machinery/artifact/A = holder
 		A.update_icon()
-	if(!reveal_toggle && !holder)
+	if(!reveal_toggle)
+		return
+	if(!holder)
 		return
 	var/display_msg = activated ? pick(ARTIFACT_ACTIVATION_MESSAGES): pick(ARTIFACT_DEACTIVATION_MESSAGES)
 	var/atom/toplevelholder = holder

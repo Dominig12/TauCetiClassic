@@ -1,6 +1,8 @@
 var/global/list/preferences_datums = list()
 
-var/global/const/MAX_SAVE_SLOTS = 10
+#define MAX_SAVE_SLOTS 10
+#define MAX_SAVE_SLOTS_SUPPORTER MAX_SAVE_SLOTS+10
+#define GET_MAX_SAVE_SLOTS(Client) ((Client && Client.supporter) ? MAX_SAVE_SLOTS_SUPPORTER : MAX_SAVE_SLOTS)
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
@@ -33,7 +35,6 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
-	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/clientfps = -1
 
@@ -51,6 +52,10 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/outline_enabled = TRUE
 	var/outline_color = COLOR_BLUE_LIGHT
 	var/eorg_enabled = TRUE
+
+	var/show_runechat = TRUE
+
+	var/list/custom_emote_panel = list()
 
 	//TGUI
 	var/tgui_fancy = TRUE
@@ -75,8 +80,9 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we are a random name every round
 	var/gender = MALE					//gender of character (well duh)
+	var/neuter_gender_voice = MALE		//for male/female emote sounds but with neuter gender
 	var/age = 30						//age of character
-	var/b_type = "A+"					//blood type (not-chooseable)
+	var/height = HUMANHEIGHT_MEDIUM		//height of character
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
 	var/socks = 1						//socks type
@@ -101,8 +107,12 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/r_eyes = 0						//Eye color
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
+	var/r_belly = 0
+	var/g_belly = 0
+	var/b_belly = 0
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
+	var/insurance = INSURANCE_NONE
 
 	//Some faction information.
 	var/home_system = "None"            //System of birth.
@@ -110,6 +120,7 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/faction = "None"                //Antag faction/general associated faction.
 	var/religion = "None"               //Religious association.
 	var/nanotrasen_relation = "Neutral"
+	var/vox_rank = "Larva"              //Vox ranks
 
 	//Job preferences 2.0 - indexed by job title , no key or value implies never
 	var/list/job_preferences = list()
@@ -128,6 +139,11 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/med_record = ""
 	var/sec_record = ""
 	var/gen_record = ""
+
+	// Qualities
+	// Quality selected.
+	var/selected_quality_name
+	var/selecting_quality = FALSE
 
 	// Quirk list
 	var/list/positive_quirks = list()
@@ -149,6 +165,13 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/parallax = PARALLAX_HIGH
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = TRUE
+	var/lobbyanimation = FALSE
+	// lighting settings
+	var/glowlevel = GLOW_MED // or bloom
+	var/lampsexposure = TRUE // idk how we should name it
+	var/lampsglare = FALSE // aka lens flare
+	//Impacts performance clientside
+	var/eye_blur_effect = TRUE
 
   //custom loadout
 	var/list/gear = list()
@@ -158,7 +181,7 @@ var/global/const/MAX_SAVE_SLOTS = 10
 /datum/preferences/New(client/C)
 	parent = C
 	UI_style = global.available_ui_styles[1]
-	b_type = random_blood_type()
+	custom_emote_panel = global.emotes_for_emote_panel
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -341,8 +364,11 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	character.gen_record = gen_record
 
 	character.gender = gender
+	character.neuter_gender_voice = neuter_gender_voice
 	character.age = age
-	character.b_type = b_type
+	character.height = height
+
+	character.regenerate_icons()
 
 	if(species == IPC)
 		qdel(character.bodyparts_by_name[BP_HEAD])
@@ -362,6 +388,8 @@ var/global/const/MAX_SAVE_SLOTS = 10
 			if("Human")
 				var/obj/item/organ/external/head/robot/ipc/human/H = new(null)
 				H.insert_organ(character)
+		var/obj/item/organ/internal/eyes/ipc/IO = new(null)
+		IO.insert_organ(character)
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
@@ -370,6 +398,10 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	character.r_hair = r_hair
 	character.g_hair = g_hair
 	character.b_hair = b_hair
+
+	character.r_belly = r_belly
+	character.g_belly = g_belly
+	character.b_belly = b_belly
 
 	character.r_grad = r_grad
 	character.g_grad = g_grad
@@ -391,8 +423,10 @@ var/global/const/MAX_SAVE_SLOTS = 10
 
 	character.home_system = home_system
 	character.citizenship = citizenship
+	character.roundstart_insurance = insurance
 	character.personal_faction = faction
 	character.religion = religion
+	character.vox_rank = vox_rank
 
 	// Destroy/cyborgize bodyparts & organs
 
@@ -442,11 +476,8 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
 	if(!l_leg && !r_leg) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
-		character.buckled = W
-		character.update_canmove()
 		W.set_dir(character.dir)
-		W.buckled_mob = character
-		W.add_fingerprint(character)
+		W.buckle_mob(character)
 
 	if(underwear > underwear_m.len || underwear < 1)
 		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
@@ -465,12 +496,6 @@ var/global/const/MAX_SAVE_SLOTS = 10
 		backbag = 1 //Same as above
 	character.backbag = backbag
 	character.use_skirt = use_skirt
-
-	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
-	if(character.gender in list(PLURAL, NEUTER))
-		if(isliving(src)) //Ghosts get neuter by default
-			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
-			character.gender = MALE
 
 	if(icon_updates)
 		character.update_body()

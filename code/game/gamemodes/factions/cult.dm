@@ -9,6 +9,8 @@
 	min_roles = 3
 	max_roles = 3
 
+	stat_type = /datum/stat/faction/cult
+
 	// For objectives
 	var/datum/mind/sacrifice_target = null
 	var/list/sacrificed = list()
@@ -39,8 +41,17 @@
 		return FALSE
 
 	var/list/possibles_objectives = subtypesof(/datum/objective/cult) + /datum/objective/target/sacrifice
-	for(var/i in 1 to rand(2, 3))
-		AppendObjective(pick_n_take(possibles_objectives))
+
+	var/objectives_weight = 0
+	while(objectives_weight < 5)
+		var/datum/objective/O = AppendObjective(pick(possibles_objectives), TRUE)
+		if(istype(O, /datum/objective/target/sacrifice) || istype(O, /datum/objective/cult/job_convert))
+			objectives_weight += 1.0
+			continue //Still in possibles_objectives
+		var/datum/objective/cult/C = O
+		objectives_weight += C.weight
+		possibles_objectives -= C.type
+
 	return TRUE
 
 /datum/faction/cult/AdminPanelEntry()
@@ -114,7 +125,7 @@
 	<B>Захвачено зон:</B> [religion.captured_areas.len - religion.area_types.len]<BR>
 	<B>Накоплено Favor/Piety:</B> [religion.favor]/[religion.piety]<BR>
 	<B>Рун на станции:</B> [religion.runes.len]<BR>
-	<B>Аномалий уничтожено:</B> [score["destranomaly"]]<BR>
+	<B>Аномалий уничтожено:</B> [SSStatistics.score.destranomaly]<BR>
 	<HR>"}
 
 	return dat

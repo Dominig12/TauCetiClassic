@@ -3,9 +3,8 @@
 	endWhen			= 120
 
 /datum/event/blob/start()
-	var/turf/T = pick(blobstart)
-	if(!T)
+	if(!length(landmarks_list["blobstart"])) // add return codes for create_spawner
 		kill()
 		return
 
-	create_spawner(/datum/spawner/blob_event, "blob_event")
+	create_spawner(/datum/spawner/blob_event)

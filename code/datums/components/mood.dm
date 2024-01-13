@@ -14,13 +14,12 @@
 
 	START_PROCESSING(SSmood, src)
 
-	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
-	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
-	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
-	RegisterSignal(get_area(parent), COMSIG_AREA_UPDATE_BEAUTY, /datum/component/mood.proc/update_beauty)
-	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, .proc/on_revive)
-	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
-	RegisterSignal(parent, COMSIG_MOB_SLIP, .proc/on_slip)
+	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, PROC_REF(add_event))
+	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, PROC_REF(clear_event))
+	RegisterSignal(parent, COMSIG_ENTER_AREA, PROC_REF(check_area_mood))
+	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, PROC_REF(on_revive))
+	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, PROC_REF(modify_hud))
+	RegisterSignal(parent, COMSIG_MOB_SLIP, PROC_REF(on_slip))
 
 	var/mob/living/owner = parent
 	owner.become_area_sensitive(MOOD_COMPONENT_TRAIT)
@@ -32,10 +31,8 @@
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
 	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
-	var/area/A = get_area(parent)
-	if(A)
-		UnregisterSignal(A, list(COMSIG_AREA_UPDATE_BEAUTY))
 	unmodify_hud()
+	QDEL_LIST_ASSOC_VAL(mood_events)
 	return ..()
 
 /datum/component/mood/proc/print_mood(mob/user)
@@ -221,33 +218,34 @@
 		return
 	spirit = amount
 
+	var/prev_spirit_level = spirit_level
+
 	var/mob/living/master = parent
 	switch(spirit)
 		if(SPIRIT_BAD to SPIRIT_LOW)
-			master.mood_additive_speed_modifier = 1.0
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 6
 		if(SPIRIT_LOW to SPIRIT_POOR)
-			master.mood_additive_speed_modifier = 0.5
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 5
 		if(SPIRIT_POOR to SPIRIT_DISTURBED)
-			master.mood_additive_speed_modifier = 0.25
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 4
 		if(SPIRIT_DISTURBED to SPIRIT_NEUTRAL)
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = 0.0
 			spirit_level = 3
 		if(SPIRIT_NEUTRAL + 1 to SPIRIT_HIGH + 1) //shitty hack but +1 to prevent it from responding to super small differences
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 2
 		if(SPIRIT_HIGH + 1 to INFINITY)
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 1
 	update_mood_icon()
+
+	if(spirit_level > prev_spirit_level)
+		to_chat(parent, "<span class='warning'>Ваше настроение ухудшилось.</span>")
+	if(spirit_level < prev_spirit_level)
+		to_chat(parent, "<span class='notice'>Ваше настроение улучшилось.</span>")
 
 // Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 /datum/component/mood/proc/add_event(datum/source, category, type, ...)
@@ -260,7 +258,7 @@
 			clear_event(null, category)
 		else
 			if(the_event.timeout)
-				addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+				addtimer(CALLBACK(src, PROC_REF(clear_event), null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 			return //Don't have to update the event.
 
 	var/list/params = args.Copy(4)
@@ -272,9 +270,9 @@
 	update_mood()
 
 	if(the_event.timeout)
-		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(clear_event), null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-	mood_events = sortTim(mood_events, cmp=/proc/cmp_abs_mood_dsc, associative=TRUE)
+	mood_events = sortTim(mood_events, cmp=GLOBAL_PROC_REF(cmp_abs_mood_dsc), associative=TRUE)
 
 /datum/component/mood/proc/clear_event(datum/source, category)
 	SIGNAL_HANDLER
@@ -304,10 +302,10 @@
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
 	screen_obj.color = "#4b96c4"
-	hud.adding += screen_obj
+	screen_obj.add_to_hud(hud)
 
-	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
-	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
+	RegisterSignal(hud, COMSIG_PARENT_QDELETING, PROC_REF(unmodify_hud))
+	RegisterSignal(screen_obj, COMSIG_CLICK, PROC_REF(hud_click))
 
 	update_mood_icon()
 
@@ -318,8 +316,7 @@
 		return
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
-	if(hud?.adding)
-		hud.adding -= screen_obj
+	screen_obj.remove_from_hud(hud)
 	QDEL_NULL(screen_obj)
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
@@ -376,11 +373,6 @@
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A, atom/OldLoc)
 	SIGNAL_HANDLER
-
-	var/area/OA = get_area(OldLoc)
-	if(OA)
-		UnregisterSignal(OA, list(COMSIG_AREA_UPDATE_BEAUTY))
-	RegisterSignal(A, list(COMSIG_AREA_UPDATE_BEAUTY), /datum/component/mood.proc/update_beauty)
 
 	update_beauty(A)
 	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))

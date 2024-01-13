@@ -7,7 +7,6 @@
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
-	item_color = "black"
 	desc = "It's a plain jumpsuit. It seems to have a small dial on the wrist."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -24,7 +23,6 @@
 	desc = "Groovy!"
 	icon_state = "psyche"
 	item_state = "psyche"
-	item_color = "psyche"
 	update_icon()
 	update_inv_mob()
 
@@ -35,6 +33,8 @@
 
 	var/picked = input("Select jumpsuit to change it to", "Chameleon Jumpsuit")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
+		return
+	if(!(src in usr) || usr.incapacitated())
 		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
@@ -53,7 +53,6 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	item_color = A.item_color
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
 
@@ -65,7 +64,6 @@
 	name = "grey cap"
 	icon_state = "greysoft"
 	item_state = "greysoft"
-	item_color = "grey"
 	desc = "It looks like a plain hat, but upon closer inspection, there's an advanced holographic array installed inside. It seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	body_parts_covered = 0
@@ -86,7 +84,6 @@
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
 	item_state = "greysoft"
-	item_color = "grey"
 	update_icon()
 	update_inv_mob()
 
@@ -97,6 +94,8 @@
 
 	var/picked = input("Select headwear to change it to", "Chameleon Hat")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
+		return
+	if(!(src in usr) || usr.incapacitated())
 		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
@@ -114,7 +113,8 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	item_color = A.item_color
+	flags = initial(flags)
+	flags |= (A.flags & (BLOCKHAIR | BLOCKHEADHAIR))
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
@@ -145,7 +145,6 @@
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
 	item_state = "armor"
-	item_color = "armor"
 	update_icon()
 	update_inv_mob()
 
@@ -156,6 +155,8 @@
 
 	var/picked = input("Select exosuit to change it to", "Chameleon Exosuit")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
+		return
+	if(!(src in usr) || usr.incapacitated())
 		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
@@ -173,7 +174,6 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	item_color = A.item_color
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
@@ -185,7 +185,6 @@
 	name = "black shoes"
 	icon_state = "black"
 	item_state = "bl_shoes"
-	item_color = "black"
 	desc = "They're comfy black shoes, with clever cloaking technology built in. It seems to have a small dial on the back of each shoe."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -203,7 +202,6 @@
 	desc = "A pair of black shoes."
 	icon_state = "black"
 	item_state = "bl_shoes"
-	item_color = "black"
 	update_icon()
 	update_inv_mob()
 
@@ -214,6 +212,8 @@
 
 	var/picked = input("Select shoes to change it to", "Chameleon Shoes")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
+		return
+	if(!(src in usr) || usr.incapacitated())
 		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
@@ -231,7 +231,6 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	item_color = A.item_color
 	update_inv_mob()
 
 //**********************
@@ -268,6 +267,8 @@
 	var/picked = input("Select backpack to change it to", "Chameleon Backpack")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
 		return
+	if(!(src in usr) || usr.incapacitated())
+		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/weapon/storage/backpack/A = new newtype
 
@@ -284,7 +285,6 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	item_color = A.item_color
 	update_inv_mob()
 
 //********************
@@ -295,7 +295,6 @@
 	name = "black gloves"
 	icon_state = "black"
 	item_state = "bgloves"
-	item_color = "brown"
 	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -312,7 +311,6 @@
 	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
 	icon_state = "black"
 	item_state = "bgloves"
-	item_color = "brown"
 	update_icon()
 	update_inv_mob()
 
@@ -323,6 +321,8 @@
 
 	var/picked = input("Select gloves to change it to", "Chameleon Gloves")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
+		return
+	if(!(src in usr) || usr.incapacitated())
 		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
@@ -340,7 +340,6 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	item_color = A.item_color
 	flags_inv = A.flags_inv
 	update_inv_mob()
 
@@ -378,6 +377,8 @@
 
 	var/picked = input("Select mask to change it to", "Chameleon Mask")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
+		return
+	if(!(src in usr) || usr.incapacitated())
 		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
@@ -434,6 +435,8 @@
 	var/picked = input("Select glasses to change it to", "Chameleon Glasses")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
 		return
+	if(!(src in usr) || usr.incapacitated())
+		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
 
@@ -463,7 +466,7 @@
 	item_state = "deagle"
 	w_class = SIZE_SMALL
 	origin_tech = "combat=2;materials=2;syndicate=3"
-	mag_type = /obj/item/ammo_box/magazine/chameleon
+	initial_mag = /obj/item/ammo_box/magazine/chameleon
 	var/list/gun_choices = list()
 
 /obj/item/weapon/gun/projectile/chameleon/atom_init()
@@ -488,6 +491,8 @@
 
 	var/picked = input("Select gun to change it to", "Chameleon Gun")as null|anything in gun_choices
 	if(!picked || !gun_choices[picked])
+		return
+	if(!(src in usr) || usr.incapacitated())
 		return
 	var/newtype = gun_choices[picked]
 	var/obj/item/weapon/gun/A = new newtype

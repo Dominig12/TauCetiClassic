@@ -29,32 +29,23 @@
 
 	hud_used = new hud_type(src)
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
+	hud_used.show_hud(istype(loc, /obj/mecha) ? HUD_STYLE_REDUCED : HUD_STYLE_STANDARD)
 	update_sight()
 	return TRUE
 
-// TOTAL SHITCODE
-// PLEASE REMOVE WHEN HUD SYSTEM IS REDONE
-// IS REQUIRED BECAUSE THE ONLY THING THAT USES HUD SIGNALS IS
-// THE MOOD SYSTEM WHICH ONLY HUMANS HAVE (WHICH REQUIRES HUD UPDATE AFTERWARDS)
-// AND USING SHOW_HUD ON ANY MOB THAT ISN'T HUMAN CAUSES RUNTIMES
-// ~Luduk
-/mob/living/carbon/human/create_mob_hud()
-	. = ..()
-	if(!.)
-		return
-
-	if(hud_used.mymob)
-		hud_used.show_hud(hud_used.hud_version)
-
 /mob/Login()
 	player_list |= src
+
+	if(client.holder)
+		global.keyloop_list |= src
+	else if(stat != DEAD || !SSlag_switch?.measures[DISABLE_DEAD_KEYLOOP])
+		global.keyloop_list |= src
+
 	update_Login_details()
 	world.update_status()
 
 	client.images = null				//remove the images such as AIs being unable to see runes
 	client.screen = list()				//remove hud items just in case
-
-	QDEL_NULL(hud_used)		//remove the hud objects
 
 	create_mob_hud()
 
@@ -63,6 +54,9 @@
 	next_move = 1
 
 	..()
+
+	SEND_SIGNAL(src, COMSIG_LOGIN)
+	logout_reason = LOGOUT_UNKNOWN
 
 	if(loc && !isturf(loc))
 		client.eye = loc
@@ -79,9 +73,15 @@
 	blocker.blend_mode = BLEND_MULTIPLY
 	blocker.color = list(1,1,1,0,1,1,1,0,1,1,1,0,0,0,0,1,0,0,0,1)
 	blocker.alpha = 255
-	blocker.layer = ABOVE_HUD_LAYER
 	blocker.plane = ABOVE_HUD_PLANE
 	blocker.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	//Users with different eye_blur_effect pref OR client disconnected during eye_blurry effect
+	var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in client.screen
+	if(PM)
+		PM.remove_filter("eye_blur_angular")
+		PM.remove_filter("eye_blur_gauss")
+	clear_fullscreen("blurry")
 
 	// atom_huds
 	reload_huds()
@@ -93,15 +93,12 @@
 
 	client.screen += blocker
 
-	if(abilities)
-		client.verbs |= abilities
-
-	if(istype(src, /mob/living/silicon/ai))
+	if(isAI(src))
 		client.show_popup_menus = 0
 	else
 		client.show_popup_menus = 1
 
-	if(istype(src,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = src
-		if(H.species && H.species.abilities)
-			client.verbs |= H.species.abilities
+	if(client.click_intercept)
+		client.click_intercept.post_login()
+
+	client.change_view(world.view)

@@ -4,7 +4,10 @@
 	if (!istype(M))
 		return 0
 
-	if(istype(M, /mob/living/carbon/human))
+	if(HAS_TRAIT(M, TRAIT_VACCINATED))
+		return 0
+
+	if(ishuman(M))
 
 		if (vector == DISEASE_SPREAD_AIRBORNE)
 			if(M.internal)	//not breathing infected air helps greatly
@@ -51,8 +54,8 @@
 	if(target_zone && ishuman(M))
 		var/mob/living/carbon/human/H = M
 
-		var/armor = H.getarmor(target_zone, "melee")
-		var/bioarmor = H.getarmor(target_zone, "bio")
+		var/armor = H.getarmor(target_zone, MELEE)
+		var/bioarmor = H.getarmor(target_zone, BIO)
 
 		return max((100 - max(armor, bioarmor/2)), 0) / 2
 	return 100
@@ -77,6 +80,8 @@
 	if(!istype(M))
 //		log_debug("Bad mob")
 		return
+	if(HAS_TRAIT(M, TRAIT_VACCINATED))
+		return
 	if ("[disease.uniqueID]" in M.virus2)
 		return
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
@@ -85,12 +90,12 @@
 	if(M.reagents.has_reagent("spaceacillin") && !ignore_antibiotics)
 		return
 
-	if(istype(M,/mob/living/carbon/monkey))
+	if(ismonkey(M))
 		var/mob/living/carbon/monkey/chimp = M
 		if (!(chimp.greaterform in disease.affected_species))
 			return
 
-	if(istype(M,/mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/chump = M
 		if (!(chump.species.name in disease.affected_species))
 			return
@@ -107,10 +112,18 @@
 		M.virus2["[D.uniqueID]"] = D
 		M.med_hud_set_status()
 
+/obj/machinery/hydroponics/proc/infect_planttray_virus2(datum/disease2/disease/source)
+	if("[source.uniqueID]" in virus2)
+		return
+	if(!can_be_infected(source))
+		return
+	var/datum/disease2/disease/D = source.getcopy()
+	virus2["[D.uniqueID]"] = D
+
 //Infects mob M with random lesser disease, if he doesn't have one
 /proc/infect_mob_random_lesser(mob/living/carbon/M)
 	var/datum/disease2/disease/D = new /datum/disease2/disease
-	D.makerandom()
+	D.makerandom(spread_vector = DISEASE_SPREAD_AIRBORNE)
 	D.infectionchance = 1
 	infect_virus2(M,D,1)
 	M.med_hud_set_status()
@@ -118,7 +131,7 @@
 //Infects mob M with random greated disease, if he doesn't have one
 /proc/infect_mob_random_greater(mob/living/carbon/M)
 	var/datum/disease2/disease/D = new /datum/disease2/disease
-	D.makerandom(1)
+	D.makerandom(1, DISEASE_SPREAD_AIRBORNE)
 	infect_virus2(M,D,1)
 	M.med_hud_set_status()
 

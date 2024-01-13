@@ -11,10 +11,17 @@
 	if(stat == DEAD)
 		return say_dead(message)
 
-	var/datum/language/xeno_language = all_languages["Xenomorph language"]
+	var/datum/language/xeno_language = all_languages[LANGUAGE_XENOMORPH]
 
 	if(message[1] == "*")
 		return emote(copytext(message, 2))
+
+	if(length(message) >= 1)
+		if(message[1] == ";")
+			message = copytext(message, 1 + length(message[1]))
+			message = trim(message)
+			alien_talk(message)
+			return
 
 	if(length(message) >= 2)
 		if(parse_message_mode(message) == "alientalk")

@@ -30,11 +30,11 @@
 	return ..()
 
 /obj/effect/portal/Bumped(mob/M)
-	INVOKE_ASYNC(src, .proc/teleport, M)
+	INVOKE_ASYNC(src, PROC_REF(teleport), M)
 
 /obj/effect/portal/Crossed(atom/movable/AM)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/teleport, AM)
+	INVOKE_ASYNC(src, PROC_REF(teleport), AM)
 
 /obj/effect/portal/proc/can_teleport(atom/movable/M)
 	if(istype(M, /obj/effect)) //sparks don't teleport
@@ -104,7 +104,7 @@
 /obj/effect/portal/tsci_wormhole/Crossed(atom/movable/AM)
 	set waitfor = 0
 
-	. = .()
+	. = ..()
 	if(teleport(AM, TELE_CHECK_ALL, TRUE, FALSE))
 		handle_special_effects(AM)
 
@@ -122,7 +122,7 @@
 
 		if(prob(20))
 			bad_effects += 1
-			H.confused += 3
+			H.AdjustConfused(3)
 			var/msg = pick("You feel dizzy.", "Your head starts spinning.")
 			to_chat(H, "<span class='warning'>[msg]</span>")
 		if(prob(20))

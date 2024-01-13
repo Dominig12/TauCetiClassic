@@ -4,6 +4,7 @@
 	name = "Last Resort"
 	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel."
 	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
+	button_icon_state = "last_resort"
 	chemical_cost = 20
 	genomecost = 1
 	req_human = 1
@@ -11,20 +12,25 @@
 	max_genetic_damage = 10
 	can_be_used_in_abom_form = FALSE
 
+/obj/effect/proc_holder/changeling/headcrab/can_sting(mob/user, mob/target)
+	. = ..()
+	if(tgui_alert(user, "Are we sure we wish to sacrifice our current body?","Last Resort", list("Yes","No")) != "Yes")
+		return FALSE
+
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	var/datum/mind/M = user.mind
 	for(var/mob/living/carbon/human/H in range(2,user))
 		to_chat(H,"<span class='userdanger'>You are blinded by a shower of blood!</span>")
 		H.Stun(1)
 		H.apply_effect(20,EYE_BLUR)
-		H.confused += 3
+		H.AdjustConfused(3)
 	for(var/mob/living/silicon/S in range(2,user))
 		to_chat(S,"<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
-		S.Weaken(3)
+		S.Stun(3)
 
 	// Prevents having Regenerate verb after rebirth.
 	var/datum/role/changeling/C = M.GetRoleByType(/datum/role/changeling)
-	C.purchasedpowers -= locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers
+	qdel(locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers)
 
 	// In case we did it out of stasis
 	if (C.instatis)
@@ -55,7 +61,7 @@
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
 	gender = NEUTER
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE|PASSMOB
 	health = 50
 	maxHealth = 50
 	melee_damage = 5
@@ -91,7 +97,7 @@
 			egg.origin = mind
 		visible_message("<span class='warning'>[src] plants something in [victim]'s flesh!</span>", \
 					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
-		addtimer(CALLBACK(src, .proc/death), 100)
+		addtimer(CALLBACK(src, PROC_REF(death)), 100)
 		egg_lain = TRUE
 
 /obj/item/changeling_egg
@@ -124,7 +130,15 @@
 	origin.transfer_to(M)
 	var/datum/role/changeling/C = origin.GetRoleByType(/datum/role/changeling)
 	if(C)
-		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		var/obj/effect/proc_holder/changeling/lesserform/A = locate(/obj/effect/proc_holder/changeling/lesserform) in C.purchasedpowers
+		if(!A) //If ling doesnt have lesserfrom, give them one-use
+			A = new (null)
+			A.last_resort = TRUE
+			C.purchasedpowers += A
+			A.on_purchase(M)
+		A.action.button_icon_state = "human_form"
+		A.action.button.name = "Human form"
+		A.action.button.UpdateIcon()
 		M.changeling_update_languages(C.absorbed_languages)
 		for(var/mob/living/parasite/essence/E in src)
 			E.enter_host(M)

@@ -20,6 +20,9 @@
 		return
 	if (!user || !imp)
 		return
+	if (isskeleton(M))
+		to_chat(user, "<span class='warning'>Implant where?</span>")
+		return
 
 	user.visible_message("<span class ='userdanger'>[user] is attemping to implant [M].</span>")
 
@@ -105,13 +108,13 @@
 /obj/item/weapon/implanter/compressed/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(istype(target,/obj/item) && imp)
+	if(isitem(target) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)
 			to_chat(user, "<span class='warning'>Something is already scanned inside the implant!</span>")
 			return
 		c.scanned = target
-		if(istype(target.loc,/mob/living/carbon/human))
+		if(ishuman(target.loc))
 			var/mob/living/carbon/human/H = target.loc
 			H.remove_from_mob(target)
 		else if(istype(target.loc,/obj/item/weapon/storage))
@@ -127,3 +130,34 @@
 /obj/item/weapon/implanter/storage/atom_init()
 	imp = new /obj/item/weapon/implant/storage(src)
 	. = ..()
+
+/obj/item/weapon/implanter/freedom
+	name = "implanter (F)"
+
+/obj/item/weapon/implanter/freedom/atom_init()
+	imp = new /obj/item/weapon/implant/freedom(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/uplink
+	name = "implanter (U)"
+
+/obj/item/weapon/implanter/uplink/atom_init()
+	imp = new /obj/item/weapon/implant/uplink(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/abductor
+	name = "Strange implanter"
+
+/obj/item/weapon/implanter/abductor/atom_init()
+	imp = new /obj/item/weapon/implant/abductor(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/abductor/update()
+	if (imp)
+		icon_state = "cimplanter2"
+	else
+		icon_state = "cimplanter0"
+	return

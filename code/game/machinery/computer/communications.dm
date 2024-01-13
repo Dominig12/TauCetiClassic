@@ -37,6 +37,8 @@
 
 	var/datum/announcement/station/command/announcement = new
 
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_PRO)
+
 /obj/machinery/computer/communications/atom_init()
 	. = ..()
 	communications_list += src
@@ -53,7 +55,7 @@
 			return ..()
 
 	for(var/mob/living/silicon/ai/shuttlecaller as anything in ai_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
 	if(sent_strike_team)
@@ -519,7 +521,7 @@
 		if(timer_maint_revoke_id)
 			deltimer(timer_maint_revoke_id)
 			timer_maint_revoke_id = 0
-		timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE) // Want to give them time to get out of maintenance.
+		timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(revoke_maint_all_access), FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE) // Want to give them time to get out of maintenance.
 
 		return 1
 	return

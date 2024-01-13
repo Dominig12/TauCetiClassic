@@ -64,6 +64,22 @@
 			return TRUE
 	return FALSE
 
+/proc/is_path_in_list(t, list/L)
+	if(!length(L) || !t)
+		return FALSE
+	for(var/type in L)
+		if(ispath(t, type))
+			return TRUE
+	return FALSE
+
+/proc/get_type_in_list(atom/A, list/L)
+	if(!length(L) || !A)
+		return null
+	for(var/type in L)
+		if(istype(A, type))
+			return type
+	return null
+
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
 	if(istype(list))
@@ -290,7 +306,7 @@
 
 
 //any value in a list
-/proc/sortList(list/L, cmp=/proc/cmp_text_asc)
+/proc/sortList(list/L, cmp=GLOBAL_PROC_REF(cmp_text_asc))
 	return sortTim(L.Copy(), cmp)
 
 //Mergsorge: uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
@@ -826,6 +842,8 @@
 #define LAZYADDASSOCLIST(L, K, V) if(!L) { L = list(); } L[K] += list(V);
 // Removes value V and key K from associative list L
 #define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
+///Accesses an associative list, returns null if nothing is found
+#define LAZYACCESSASSOC(L, I, K) L ? L[I] ? L[I][K] ? L[I][K] : null : null : null
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 
