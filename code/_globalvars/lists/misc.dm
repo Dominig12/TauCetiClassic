@@ -29,7 +29,10 @@ var/global/list/roles_ingame_minute_unlock = list(
 	ROLE_SHADOWLING = 4320,
 	ROLE_FAMILIES = 2160,
 	ROLE_REPLICATOR = 2880,
+<<<<<<< HEAD
 	ROLE_IMPOSTER = 720,
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	ROLE_GHOSTLY = 360,
 )
 
@@ -198,3 +201,8 @@ var/global/static/list/color_by_hex = list(
 var/global/list/deconverted_roles = list()
 
 var/global/list/reagents_list = typecacheof(/datum/reagent)
+<<<<<<< HEAD
+=======
+
+var/global/list/virus_types_by_pool
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d

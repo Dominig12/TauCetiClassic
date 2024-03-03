@@ -461,6 +461,11 @@ var/global/bomb_set
 		qdel(src)
 
 /obj/item/weapon/disk/nuclear/Destroy()
+<<<<<<< HEAD
+=======
+	SHOULD_CALL_PARENT(FALSE)
+
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	var/turf/targetturf = pick_landmarked_location("blobstart", least_used = FALSE)
 	var/turf/diskturf = get_turf(src)
 	forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"

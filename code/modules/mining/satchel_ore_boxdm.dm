@@ -35,7 +35,11 @@
 
 /obj/structure/ore_box/proc/dump_box_contents()
 	for(var/obj/item/weapon/ore/O as anything in contents)
+<<<<<<< HEAD
 		O.Move(loc)
+=======
+		O.forceMove(loc)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/structure/ore_box/deconstruct(disassembled)
 	dump_box_contents()

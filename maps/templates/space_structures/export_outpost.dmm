@@ -101,6 +101,7 @@
 	dir = 1;
 	pixel_y = -7
 	})
+<<<<<<< HEAD
 "ao" = (
 /obj/structure/window/fulltile/reinforced{
 	dir = 1;
@@ -109,6 +110,8 @@
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 "aq" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -139,7 +142,11 @@
 	},
 /area/space_structures/export_outpost)
 "av" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/beige{
+=======
+/obj/structure/stool/bed/chair/comfy/white{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -477,7 +484,11 @@
 	},
 /area/space_structures/export_outpost)
 "bm" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/beige{
+=======
+/obj/structure/stool/bed/chair/comfy/white{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /obj/item/weapon/storage/wallet/random,
@@ -1091,7 +1102,11 @@ ad
 aB
 ae
 aN
+<<<<<<< HEAD
 ao
+=======
+aq
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 aX
 aW
 bv
@@ -1116,7 +1131,11 @@ ab
 ag
 aK
 aK
+<<<<<<< HEAD
 ao
+=======
+aq
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 bl
 bp
 au

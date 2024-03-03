@@ -94,6 +94,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 	//SPELL LOSS END
 
 	//MIND TRANSFER BEGIN
+<<<<<<< HEAD
 	if(caster.mind.special_verbs.len)//If the caster had any special verbs, remove them from the mob verb list.
 		for(var/V in caster.mind.special_verbs)//Since the caster is using an object spell system, this is mostly moot.
 			caster.verbs -= V//But a safety nontheless.
@@ -102,6 +103,8 @@ Also, you never added distance checking after target is selected. I've went ahea
 		for(var/V in victim.mind.special_verbs)
 			victim.verbs -= V
 
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	victim.logout_reason = LOGOUT_SWAP
 	caster.logout_reason = LOGOUT_SWAP
 	var/mob/dead/observer/ghost = victim.ghostize(can_reenter_corpse = FALSE)
@@ -110,17 +113,9 @@ Also, you never added distance checking after target is selected. I've went ahea
 	caster.mind.transfer_to(victim)
 	victim.spell_list = caster.spell_list//Now they are inside the victim's body.
 
-	if(victim.mind.special_verbs.len)//To add all the special verbs for the original caster.
-		for(var/V in caster.mind.special_verbs)//Not too important but could come into play.
-			caster.verbs += V
-
 	ghost.mind.transfer_to(caster)
 	caster.key = ghost.key	//have to transfer the key since the mind was not active
 	caster.spell_list = ghost.spell_list
-
-	if(caster.mind.special_verbs.len)//If they had any special verbs, we add them here.
-		for(var/V in caster.mind.special_verbs)
-			caster.verbs += V
 
 	//MIND TRANSFER END
 

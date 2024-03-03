@@ -170,9 +170,19 @@
 var/global/list/station_head_portraits = list()
 ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 /obj/item/portrait/captain
+<<<<<<< HEAD
 	desc = "Портрет главы станции Исход."
 	icon_state = "portrait_empty"
 
+=======
+	desc = "Портрет главы станции."
+	icon_state = "portrait_empty"
+
+/obj/item/portrait/captain/atom_init()
+	. = ..()
+	desc = "Портрет главы [station_name_ru()]."
+
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /proc/update_station_head_portraits()
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(update_station_head_portraits)), 10 MINUTES)
 	var/image/Heads_photo
@@ -184,6 +194,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 
 	if(CAP)
 		Heads_photo = image(CAP.fields["photo_f"])
+<<<<<<< HEAD
 		newdesc = "Портрет [CAP.fields["name"]], главы станции Исход."
 	else if(HOP)
 		Heads_photo = image(HOP.fields["photo_f"])
@@ -191,6 +202,15 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	else if(HOS)
 		Heads_photo = image(HOS.fields["photo_f"])
 		newdesc = "Портрет [HOS.fields["name"]], главы службы безопасности станции Исход."
+=======
+		newdesc = "Портрет [CAP.fields["name"]], главы [station_name_ru()]."
+	else if(HOP)
+		Heads_photo = image(HOP.fields["photo_f"])
+		newdesc = "Портрет [HOP.fields["name"]], главы кадровой службы [station_name_ru()]."
+	else if(HOS)
+		Heads_photo = image(HOS.fields["photo_f"])
+		newdesc = "Портрет [HOS.fields["name"]], главы службы безопасности [station_name_ru()]."
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 	if(Heads_photo)
 		Heads_photo.add_filter("portrait_mask", 1, alpha_mask_filter(icon = icon('icons/obj/stationobjs.dmi', "portrait_mask")))

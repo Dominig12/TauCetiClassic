@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /turf
 	var/dynamic_lighting = TRUE
 	var/force_lighting_update = FALSE
@@ -10,25 +11,18 @@
 	var/tmp/list/datum/lighting_corner/corners
 	var/tmp/has_opaque_atom = FALSE // Not to be confused with opacity, this will be TRUE if there's any opaque atom on the tile.
 
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
-	var/datum/light_source/L
-	var/thing
-	for (thing in affecting_lights)
-		L = thing
-		L.vis_update()
+	lighting_corner_NE?.vis_update()
+	lighting_corner_SE?.vis_update()
+	lighting_corner_SW?.vis_update()
+	lighting_corner_NW?.vis_update()
 
 /turf/proc/lighting_clear_overlay()
 	if (lighting_object)
 		qdel(lighting_object, TRUE)
-
-	var/datum/lighting_corner/C
-	var/thing
-	for (thing in corners)
-		if(!thing)
-			continue
-		C = thing
-		C.update_active()
 
 // Builds a lighting object for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
@@ -39,23 +33,7 @@
 	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
 		return
 
-	if (!lighting_corners_initialised)
-		generate_missing_corners()
-
 	new/atom/movable/lighting_object(src)
-
-	var/thing
-	var/datum/lighting_corner/C
-	var/datum/light_source/S
-	for (thing in corners)
-		if(!thing)
-			continue
-		C = thing
-		if (!C.active) // We would activate the corner, calculate the lighting for it.
-			for (thing in C.affecting)
-				S = thing
-				S.recalc_corner(C)
-			C.active = TRUE
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
@@ -63,13 +41,20 @@
 		return 1
 
 	var/totallums = 0
-	var/thing
 	var/datum/lighting_corner/L
-	for (thing in corners)
-		if(!thing)
-			continue
-		L = thing
+	L = lighting_corner_NE
+	if (L)
 		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_SE
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_SW
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_NW
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+		
 
 	totallums /= 12 // 4 corners, each with 3 channels, get the average.
 
@@ -104,28 +89,20 @@
 			else
 				lighting_clear_overlay()
 
-/turf/proc/get_corners()
-	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
-		return null
-	if (!lighting_corners_initialised)
-		generate_missing_corners()
-	if (has_opaque_atom)
-		return null // Since this proc gets used in a for loop, null won't be looped though.
-
-	return corners
-
 /turf/proc/generate_missing_corners()
-	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
-		return
+	if (!lighting_corner_NE)
+		lighting_corner_NE = new/datum/lighting_corner(src, NORTH|EAST)
+	
+	if (!lighting_corner_SE)
+		lighting_corner_SE = new/datum/lighting_corner(src, SOUTH|EAST)
+	
+	if (!lighting_corner_SW)
+		lighting_corner_SW = new/datum/lighting_corner(src, SOUTH|WEST)
+	
+	if (!lighting_corner_NW)
+		lighting_corner_NW = new/datum/lighting_corner(src, NORTH|WEST)
+	
 	lighting_corners_initialised = TRUE
-	if (!corners)
-		corners = list(null, null, null, null)
-
-	for (var/i = 1 to 4)
-		if (corners[i]) // Already have a corner on this direction.
-			continue
-
-		corners[i] = new/datum/lighting_corner(src, global.LIGHTING_CORNER_DIAGONAL[i])
 
 /turf/proc/set_dynamic_lighting(new_dynamic_lighting = DYNAMIC_LIGHTING_ENABLED)
 	if (new_dynamic_lighting == dynamic_lighting)

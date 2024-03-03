@@ -37,7 +37,11 @@
 		holochip.deactivate_holomap()
 	..()
 
+<<<<<<< HEAD
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user)
+=======
+/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	if(istype(I, /obj/item/holochip))
 		if(flags & ABSTRACT)
 			return    //You can't insert holochip in abstract item.
@@ -65,6 +69,23 @@
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
 
+<<<<<<< HEAD
+=======
+	if(!issignaler(I)) //Eh, but we don't want people making secbots out of space helmets.
+		return ..()
+
+	var/obj/item/device/assembly/signaler/S = I
+	if(!S.secured)
+		to_chat(user, "<span class='notice'>The signaler not secured.</span>")
+		return ..()
+
+	var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
+	user.put_in_hands(A)
+	to_chat(user, "<span class='notice'>You add \the [I] to the helmet.</span>")
+	qdel(I)
+	qdel(src)
+
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/item/clothing/head/helmet/psyamp
 	name = "psychic amplifier"
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."

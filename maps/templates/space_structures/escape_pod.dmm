@@ -3,19 +3,31 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/space)
 "b" = (
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/space)
 "c" = (
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/space)
 "d" = (
 /obj/structure/object_wall/pod{
@@ -59,19 +71,31 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/space)
 "j" = (
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/space)
 "k" = (
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/space)
 "l" = (
 /obj/structure/object_wall/pod{

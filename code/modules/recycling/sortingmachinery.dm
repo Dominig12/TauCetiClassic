@@ -395,10 +395,13 @@
 		return FALSE
 	if(target.flags & ABSTRACT)
 		return FALSE
+<<<<<<< HEAD
 	if(isitem(target))
 		var/obj/item/I = target
 		if(I.abstract)
 			return FALSE
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 	return TRUE
 

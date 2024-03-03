@@ -117,7 +117,10 @@
 	item_state = "card-id"
 	item_state_world = "data_world"
 	layer = 3
+<<<<<<< HEAD
 	level = 2
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	desc = "Эта дискета содержит координаты легендарной планеты Клоунов. Обращайтесь с ней осторожно."
 	function = "teleporter"
 	data = "Clown Land"
@@ -250,7 +253,11 @@
 
 /obj/item/weapon/card/id/blueshield
 	name = "identification card"
+<<<<<<< HEAD
 	desc = "A card issued to blueshield officer."
+=======
+	desc = "ID карта офицера, которая олицетворяет личный щит командования станции и представителей Центрального Командования."
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	icon_state = "blueshield"
 	item_state = "int_id"
 	item_state_world = "blueshield_world"

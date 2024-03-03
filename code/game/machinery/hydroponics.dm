@@ -211,7 +211,11 @@
 		if(isnull(V))
 			CRASH("virus2 nulled before calling activate()")
 		else
+<<<<<<< HEAD
 			V.affect_plants(src)
+=======
+			V.on_process(src)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/machinery/hydroponics/proc/ripen()
 	harvest = TRUE

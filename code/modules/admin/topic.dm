@@ -755,11 +755,14 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
 
+<<<<<<< HEAD
 		if(jobban_isbanned(M, ROLE_IMPOSTER) || isbanned_dept)
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_IMPOSTER];jobban4=\ref[M]'>[ROLE_IMPOSTER]</a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_IMPOSTER];jobban4=\ref[M]'>[ROLE_IMPOSTER]</a></td>"
 
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 		jobs += "</tr><tr align='center'>"
 
 		jobs += "</tr></table>"
@@ -1118,6 +1121,8 @@
 		dat += "<HR>"
 		for(var/type in subtypesof(/datum/modesbundle))
 			var/datum/modesbundle/bound_type = type
+			if(initial(bound_type.hide_for_shitspawn))
+				continue
 			var/bname = initial(bound_type.name)
 			dat += {"<A href='?src=\ref[src];c_mode2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [master_mode]"}

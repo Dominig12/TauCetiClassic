@@ -12,6 +12,7 @@
 	else
 		vis_contents -= typing_indicator
 		typing = FALSE
+<<<<<<< HEAD
 
 /mob/verb/say_wrapper()
 	set name = ".Say"
@@ -32,3 +33,5 @@
 	if(message)
 		me_verb(message)
 	set_typing_indicator(FALSE)
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d

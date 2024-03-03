@@ -176,7 +176,11 @@
 		add_fingerprint(user)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
+<<<<<<< HEAD
 			if(H.job == "Clown")
+=======
+			if(H.job == "Clown" || stage_of_effect == 2)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 				to_chat(user, "<span class = 'notice'>You concentrate your power into a one big bad joke and make the [src] much stronger.</span>")
 				on = TRUE
 

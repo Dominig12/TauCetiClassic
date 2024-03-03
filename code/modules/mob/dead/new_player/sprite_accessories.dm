@@ -1328,6 +1328,16 @@
 /datum/sprite_accessory/hair/ipc_screen_yellow
 	name = "yellow IPC screen"
 	icon_state = "ipc_yellow"
+<<<<<<< HEAD
+=======
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
+/datum/sprite_accessory/hair/ipc_litso
+	name = "litso IPC screen"
+	icon_state = "ipc_litso"
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	species_allowed = list(IPC)
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"

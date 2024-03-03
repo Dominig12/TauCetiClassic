@@ -25,10 +25,19 @@
 	switch(rand(1,120))
 		if(1 to 20)
 			AppendObjective(/datum/objective/target/assassinate, TRUE)
+<<<<<<< HEAD
 		if(21 to 40)
 			AppendObjective(/datum/objective/target/harm, TRUE)
 		if(41 to 50)
 			AppendObjective(/datum/objective/research_sabotage, TRUE)
+=======
+		if(21 to 30)
+			AppendObjective(/datum/objective/target/harm, TRUE)
+		if(31 to 40)
+			AppendObjective(/datum/objective/download_telecommunications_data, FALSE)
+		if(41 to 50)
+			AppendObjective(/datum/objective/research_sabotage, FALSE)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 		if(51 to 115)
 			AppendObjective(/datum/objective/steal, TRUE)
 		else

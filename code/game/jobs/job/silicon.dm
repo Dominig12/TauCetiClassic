@@ -38,7 +38,11 @@
 	alt_titles = list("Android", "Robot")
 	minimal_player_ingame_minutes = 1800
 	give_loadout_items = FALSE
+<<<<<<< HEAD
 	flags = JOB_FLAG_NON_HUMAN|JOB_FLAG_IMPOSTER_PRIORITIZE
+=======
+	flags = JOB_FLAG_NON_HUMAN
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

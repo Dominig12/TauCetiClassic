@@ -10,6 +10,7 @@
 #define PREPOSITIONAL_CASE 6
 
 // Пример определения CASEs у объекта:
+<<<<<<< HEAD
 //	/atom
 //		cases = list("атом", "атома", "атому", "атом", "атомом", "атоме")
 //
@@ -18,12 +19,26 @@
 // Если у объекта не определены cases, будет взят дефолтный name, который скорее всего на английском.
 
 #define CASE(atom, case) (atom.cases && atom.cases[case] ? atom.cases[case] : atom.name)
+=======
+//	/datum
+//		cases = list("атом", "атома", "атому", "атом", "атомом", "атоме")
+//
+// Пример использования:
+// "... [CASE(datum, DATIVE_CASE)] ..."
+// Если у объекта не определены cases, будет взят дефолтный name, который скорее всего на английском.
+
+#define CASE(datum, case) (datum.cases && datum.cases[case] ? datum.cases[case] : datum.name)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 ////////////////////////////////////////////////
 //              Местоимения(ENG)              //
 ////////////////////////////////////////////////
 
+<<<<<<< HEAD
 // В английском большинство ситуаций покрывается дефолтными бьендовскими макросами: 
+=======
+// В английском большинство ситуаций покрывается дефолтными бьендовскими макросами:
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 // https://www.byond.com/docs/ref/info.html#/DM/text/macros
 // но дефолтные макросы контекстно зависимы от положения в строке и их не всегда достаточно
 
@@ -140,3 +155,15 @@
                || atom.gender == FEMALE && w_female \
                || atom.gender == NEUTER && w_neuter \
                || w_plural
+<<<<<<< HEAD
+=======
+
+// Capitalize Case: тоже самое, что и CASE, только превращает первую букву в заглавную
+#define C_CASE(atom, case) capitalize(CASE(atom, case))
+
+// Часто встречаемые pluralize_russian(). Не забывайте про существование нецелых чисел и округления - они тоже влияют.
+#define PLUR_UNITS(units) pluralize_russian(units, "юнит", "юнита", "юнитов")
+
+#define PLUR_SECONDS_LEFT(seconds) pluralize_russian(seconds, "секунда", "секунды", "секунд") // "Осталась 1 секунда". Не путайте с нижним.
+#define PLUR_SECONDS_IN(seconds)   pluralize_russian(seconds, "секунду", "секунды", "секунд") // "Через 1 секунду". Не путайте с верхним.
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d

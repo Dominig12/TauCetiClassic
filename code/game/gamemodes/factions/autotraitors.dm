@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 // Time for station to equip themselfs
 #define FIRST_ADDITION_IMPOSTER_CD 7 MINUTES
 
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /datum/faction/traitor/auto
 	name = "AutoTraitors"
 	var/next_try = 0
@@ -89,6 +92,7 @@
 /datum/faction/traitor/auto/OnPostSetup()
 	addtimer(CALLBACK(src, PROC_REF(traitorcheckloop)), global.autotraitors_spawn_cd)
 	return ..()
+<<<<<<< HEAD
 
 /datum/faction/traitor/auto/imposter
 	name = F_IMPOSTERS
@@ -188,3 +192,5 @@
 	return sorting_list
 
 #undef FIRST_ADDITION_IMPOSTER_CD
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d

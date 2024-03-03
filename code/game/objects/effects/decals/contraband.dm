@@ -179,6 +179,14 @@
 	icon_state = "sivtsev"
 	desc = "Таблица Сивцева для проверки остроты зрения."
 
+<<<<<<< HEAD
+=======
+/obj/structure/sign/poster/olympic_games
+	name = "2214 Winter Olympics"
+	icon_state = "olympic"
+	desc = "At the bottom of the poster it says: «The XLVII Olympic Winter Games. Venus 2214»."
+
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/structure/sign/poster/contraband
 	poster_item_name = "contraband poster"
 	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as contraband aboard Nanotrasen space facilities."

@@ -182,7 +182,6 @@
 	permeability_coefficient = 0.01
 	armor = list(melee = 30, bullet = 10, laser = 10,energy = 20, bomb = 20, bio = 20, rad = 20)
 	allowed = list(/obj/item/weapon/teleportation_scroll)
-	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.4
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
@@ -242,7 +241,10 @@
 	icon_state = "holidaypriest"
 	item_state = "holidaypriest"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+<<<<<<< HEAD
 	flags_inv = HIDEJUMPSUIT
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/suit/wizrobe/serifcoat
 	name = "serif coat"

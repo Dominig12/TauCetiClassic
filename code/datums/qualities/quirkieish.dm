@@ -406,13 +406,21 @@
 	create_and_setup_role(/datum/role/prisoner, H)
 	H.sec_hud_set_security_status()
 
+<<<<<<< HEAD
 /datum/quality/unrestricted
+=======
+/datum/quality/quirkieish/unrestricted
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	name = "Unrestricted"
 	desc = "В качестве особого эксперимента, НТ позволило вам занять любую должность на станции."
 	requirement = "Прибыть на станцию после начала смены."
 	max_amount = 1
 
+<<<<<<< HEAD
 /datum/quality/unrestricted/add_effect(mob/living/carbon/human/H, latespawn)
+=======
+/datum/quality/quirkieish/unrestricted/add_effect(mob/living/carbon/human/H, latespawn)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	//only for latespawners
 	if(!latespawn)
 		return

@@ -41,11 +41,14 @@
 	render_relay_plane = RENDER_PLANE_MASTER
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /atom/movable/screen/plane_master/rendering_plate/game_world/atom_init(mapload, ...)
 	. = ..()
 	add_filter("displacer", 1, displacement_map_filter(render_source = GRAVITY_PULSE_RENDER_TARGET, size = 10))
 	add_filter("displacer", 1, displacement_map_filter(render_source = BLUESPACE_DISTORION_RENDER_TARGET, size = 10))
 =======
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /atom/movable/screen/plane_master/rendering_plate/game_world/apply_effects(mob/mymob)
 	// singularity
 	remove_filter("singularity_0")
@@ -72,7 +75,10 @@
 	// anomalys: gravity pulse, maybe something else
 	remove_filter("anomaly")
 	add_filter("anomaly", 5, displacement_map_filter(render_source = ANOMALY_RENDER_TARGET, size = 10))
+<<<<<<< HEAD
 >>>>>>> f6f3ee39bdd93dfbeb1801d73024083de5508149
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 ///everything that should be above game world. (for example, singularity, nar-si)
 /atom/movable/screen/plane_master/rendering_plate/above_game_world

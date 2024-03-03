@@ -618,6 +618,13 @@ SUBSYSTEM_DEF(job)
 		pda.owner_account = MA.account_number //bind the account to the pda
 		pda.owner_fingerprints += C.fingerprint_hash //save fingerprints in pda from ID card
 		MA.owner_PDA = pda //add PDA in /datum/money_account
+<<<<<<< HEAD
+=======
+
+		var/chosen_ringtone = H.client?.prefs.chosen_ringtone
+		if(chosen_ringtone)
+			pda.set_ringtone(chosen_ringtone, H.client?.prefs.custom_melody)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 	return TRUE
 

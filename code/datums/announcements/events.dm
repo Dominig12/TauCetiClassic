@@ -141,6 +141,14 @@
 	always_random = TRUE
 /datum/announcement/centcomm/comms_blackout/New()
 	message = "Обнаружена ионносферная аномалия. Временный сбой связи неизбежен. Пожалуйста, свяжитесь с ваши*%фж00)`5вц-БЗЗТ"
+<<<<<<< HEAD
+=======
+
+/datum/announcement/centcomm/comms_blackout_traitor
+	name = "Event: Traitor Communication Blackout"
+	message = "Зафиксирован несанкционированный доступ к хранилищу данных центрального узла телеко%ци˝ ВРА^ж<.3-БЗЗЗЗЗЗТ"
+	sound = "commandreport"
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /datum/announcement/centcomm/dust
 	name = "Event: Sand Storm"

@@ -5,6 +5,7 @@
 	icon_state = "pod-off"
 
 	layer = ABOVE_WINDOW_LAYER
+	plane = GAME_PLANE
 	light_color = "#ffffff"
 	density = FALSE
 	anchored = TRUE
@@ -189,7 +190,11 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
+<<<<<<< HEAD
 		ui = new(user, src, "Cryo", "Cryo Cell")
+=======
+		ui = new(user, src, "Cryo", "Криокапсула")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/tgui_act(action, list/params, datum/tgui/ui)

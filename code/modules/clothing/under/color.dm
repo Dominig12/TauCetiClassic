@@ -2,7 +2,11 @@
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "black"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/color/blackf
 	name = "feminine black jumpsuit"
@@ -14,19 +18,31 @@
 	name = "blue jumpsuit"
 	icon_state = "blue"
 	item_state = "blue"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/color/green
 	name = "green jumpsuit"
 	icon_state = "green"
 	item_state = "green"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
 	icon_state = "grey"
 	item_state = "grey"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
@@ -35,31 +51,47 @@
 	item_state = "orange"
 	has_sensor = 2
 	sensor_mode = SUIT_SENSOR_TRACKING
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
 	icon_state = "pink"
 	item_state = "pink"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/color/red
 	name = "red jumpsuit"
 	icon_state = "red"
 	item_state = "red"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
 	icon_state = "white"
 	item_state = "white"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/color/yellow
 	name = "yellow jumpsuit"
 	icon_state = "yellow"
 	item_state = "yellow"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/psyche
 	name = "psychedelic"
@@ -70,13 +102,21 @@
 	name = "lightblue"
 	desc = "lightblue"
 	icon_state = "lightblue"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/aqua
 	name = "aqua"
 	desc = "aqua"
 	icon_state = "aqua"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/purple
 	name = "purple"
@@ -88,7 +128,11 @@
 	name = "lightpurple"
 	desc = "lightpurple"
 	icon_state = "lightpurple"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/lightgreen
 	name = "lightgreen"
@@ -119,7 +163,11 @@
 	name = "darkblue"
 	desc = "darkblue"
 	icon_state = "darkblue"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/lightred
 	name = "lightred"
@@ -130,4 +178,8 @@
 	name = "darkred"
 	desc = "darkred"
 	icon_state = "darkred"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d

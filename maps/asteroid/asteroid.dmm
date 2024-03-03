@@ -3112,10 +3112,17 @@
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
+<<<<<<< HEAD
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "gw" = (
@@ -3129,7 +3136,7 @@
 "gx" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	id = "research"
+	id = "researchshaft"
 	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
@@ -3216,6 +3223,11 @@
 /area/asteroid/research_outpost/power)
 "gO" = (
 /obj/machinery/portable_atmospherics/powered/pump,
+/obj/machinery/driver_button{
+	id = "researchshaft";
+	layer = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "gP" = (
@@ -7316,7 +7328,11 @@
 	},
 /area/asteroid/mine/abandoned)
 "pC" = (
+<<<<<<< HEAD
 /turf/simulated/mineral/random/caves,
+=======
+/turf/simulated/mineral/random/caves/high_chance,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/asteroid/mine/unexplored/dangerous)
 "pD" = (
 /obj/structure/window/fulltile/reinforced{
@@ -8116,9 +8132,12 @@
 	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/abandoned)
+<<<<<<< HEAD
 "rE" = (
 /turf/simulated/mineral,
 /area/asteroid/mine/unexplored/dangerous)
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 "rF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -13259,6 +13278,10 @@
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
+"WK" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/power)
 "Xb" = (
 /obj/structure/sign/departments/science{
 	icon_state = "science2";
@@ -33874,6 +33897,30 @@ ag
 ag
 ry
 ry
+<<<<<<< HEAD
+=======
+pC
+pC
+pC
+pC
+rx
+rx
+rx
+ry
+ry
+rx
+rx
+rx
+rx
+rx
+rx
+rx
+ry
+rx
+rx
+rx
+rx
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -33896,10 +33943,13 @@ rx
 rx
 rx
 pC
+<<<<<<< HEAD
 pC
 pC
 pC
 rE
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 ac
 ac
 ac
@@ -34141,6 +34191,21 @@ ry
 ry
 rx
 rx
+<<<<<<< HEAD
+=======
+pC
+pC
+pC
+rx
+rx
+rx
+ry
+ry
+ry
+rx
+rx
+rx
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -34155,9 +34220,12 @@ rx
 rx
 pC
 pC
+<<<<<<< HEAD
 pC
 rE
 rE
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 kO
 kO
@@ -34397,10 +34465,28 @@ ry
 ry
 rx
 rx
+<<<<<<< HEAD
+=======
 pC
 pC
 pC
 pC
+pC
+pC
+rx
+rx
+ry
+ry
+ry
+ry
+rx
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
+pC
+pC
+pC
+pC
+<<<<<<< HEAD
 pC
 pC
 rx
@@ -34415,6 +34501,8 @@ pC
 pC
 pC
 rE
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 st
@@ -34671,7 +34759,11 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 sv
@@ -34928,7 +35020,11 @@ ry
 ry
 pC
 pC
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 sw
@@ -35185,7 +35281,11 @@ pC
 ry
 pC
 pC
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 sx
@@ -35401,6 +35501,8 @@ ad
 px
 ad
 ad
+<<<<<<< HEAD
+=======
 pC
 pC
 pC
@@ -35433,6 +35535,40 @@ pC
 pC
 pC
 pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+<<<<<<< HEAD
+pC
+pC
+pC
+pC
+rx
+pC
+ry
+ry
+ry
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 pC
 pC
 pC
@@ -35443,6 +35579,8 @@ pC
 pC
 rE
 rE
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 sy
@@ -35698,8 +35836,13 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 sz
@@ -35913,11 +36056,54 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
+=======
 pC
 pC
 pC
 pC
 pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
+pC
+pC
+pC
+pC
+pC
+<<<<<<< HEAD
 pC
 pC
 pC
@@ -35957,6 +36143,8 @@ pC
 pC
 rE
 rE
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 st
@@ -36211,7 +36399,11 @@ pC
 pC
 pC
 rx
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 kO
 kO
@@ -36465,10 +36657,17 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 pC
 pC
 pC
 rE
+=======
+pC
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 sp
 sp
@@ -36682,6 +36881,8 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
+=======
 pC
 pC
 pC
@@ -36690,6 +36891,44 @@ pC
 pC
 pC
 pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+<<<<<<< HEAD
 pC
 pC
 pC
@@ -36726,6 +36965,8 @@ pC
 pC
 pC
 rE
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 sp
 sr
@@ -36939,6 +37180,8 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
+=======
 pC
 pC
 pC
@@ -36971,6 +37214,40 @@ pC
 pC
 rx
 pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+<<<<<<< HEAD
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
 pC
 pC
 pC
@@ -36983,6 +37260,8 @@ pC
 pC
 pC
 rE
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 sq
 ss
@@ -37194,6 +37473,8 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
+=======
 pC
 pC
 pC
@@ -37203,6 +37484,45 @@ pC
 pC
 pC
 pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+<<<<<<< HEAD
 pC
 pC
 pC
@@ -37240,6 +37560,8 @@ pC
 pC
 pC
 rE
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 sp
 sr
@@ -37451,11 +37773,56 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
+=======
 pC
 pC
 pC
 pC
 pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
+pC
+pC
+pC
+pC
+pC
+<<<<<<< HEAD
 pC
 pC
 pC
@@ -37497,6 +37864,8 @@ pC
 pC
 pC
 rE
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 sp
 sp
@@ -37708,6 +38077,7 @@ ad
 ad
 ad
 ad
+<<<<<<< HEAD
 pC
 pC
 pC
@@ -37754,6 +38124,54 @@ pC
 pC
 pC
 rE
+=======
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 kO
 kO
@@ -37770,7 +38188,11 @@ kO
 kO
 kO
 kO
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 ad
@@ -38011,8 +38433,13 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 st
@@ -38026,8 +38453,13 @@ kO
 kO
 kO
 kO
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 ad
@@ -38268,8 +38700,13 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 sD
@@ -38282,8 +38719,13 @@ st
 kO
 kO
 kO
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -38525,8 +38967,13 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 sE
@@ -38538,8 +38985,13 @@ tm
 st
 kO
 kO
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -38783,7 +39235,11 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 sF
@@ -38794,8 +39250,13 @@ tz
 tH
 st
 kO
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -39040,7 +39501,11 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 kO
 st
 sG
@@ -39051,7 +39516,11 @@ st
 tI
 st
 kO
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -39308,7 +39777,11 @@ sU
 tJ
 st
 kO
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -39565,7 +40038,11 @@ st
 st
 st
 kO
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -39822,12 +40299,20 @@ kO
 kO
 kO
 kO
+<<<<<<< HEAD
 rE
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 ad
@@ -40070,6 +40555,7 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 rE
 rE
@@ -40079,6 +40565,17 @@ rE
 rE
 rE
 rE
+=======
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -40329,12 +40826,21 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 rE
 rE
 rE
 rE
 rE
+=======
+pC
+pC
+pC
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -45703,8 +46209,13 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -46220,7 +46731,11 @@ ac
 ac
 ac
 ac
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -46723,7 +47238,11 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 ac
 ac
 ac
@@ -46736,7 +47255,11 @@ ac
 ac
 ac
 ac
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -46980,7 +47503,11 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 ac
 ac
 ac
@@ -46993,8 +47520,13 @@ ac
 ac
 ac
 ac
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -47013,8 +47545,13 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 pC
 pC
 pC
@@ -47236,8 +47773,13 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 ac
 ac
 aa
@@ -47269,6 +47811,7 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 as
 rE
@@ -47278,6 +47821,17 @@ rE
 rE
 rE
 rE
+=======
+pC
+as
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 ac
 ad
 ad
@@ -47525,6 +48079,7 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 ry
 ry
@@ -47535,6 +48090,18 @@ ry
 rE
 rE
 rE
+=======
+pC
+ry
+ry
+pC
+as
+ry
+ry
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 ac
 ad
 ad
@@ -47747,8 +48314,13 @@ ad
 ad
 ad
 ac
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 ac
 ac
 ac
@@ -47782,7 +48354,11 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 as
 ry
 ry
@@ -48004,8 +48580,13 @@ ac
 ac
 ac
 ac
+<<<<<<< HEAD
 rE
 rE
+=======
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 ac
 ac
 ac
@@ -48033,6 +48614,7 @@ pC
 pC
 pC
 pC
+<<<<<<< HEAD
 rE
 rE
 rE
@@ -48040,6 +48622,15 @@ rE
 pC
 pC
 rE
+=======
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 ry
 ry
 ry
@@ -48284,9 +48875,15 @@ ac
 ac
 ac
 ad
+<<<<<<< HEAD
 rE
 pC
 rE
+=======
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 ac
 ac
 ac
@@ -48296,9 +48893,15 @@ ac
 ac
 ac
 ad
+<<<<<<< HEAD
 rE
 rE
 rE
+=======
+pC
+pC
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 cn
 ry
 ry
@@ -48553,7 +49156,11 @@ ac
 ac
 ac
 ac
+<<<<<<< HEAD
 rE
+=======
+pC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 ac
 ag
 ag
@@ -59264,7 +59871,11 @@ eF
 eF
 fU
 gv
+<<<<<<< HEAD
 eF
+=======
+WK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 hO
 eF
 ja

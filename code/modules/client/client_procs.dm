@@ -770,7 +770,6 @@ var/global/list/blacklisted_builds = list(
 	if(!D?.key_bindings)
 		return
 	movement_keys = list()
-	var/list/communication_hotkeys = list()
 	for(var/key in D.key_bindings)
 		for(var/kb_name in D.key_bindings[key])
 			switch(kb_name)
@@ -782,6 +781,7 @@ var/global/list/blacklisted_builds = list(
 					movement_keys[key] = WEST
 				if("South")
 					movement_keys[key] = SOUTH
+<<<<<<< HEAD
 				if("Say")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.say") // ".say" is wrapper over say, see in code\modules\mob\typing_indicator.dm
 					communication_hotkeys += key
@@ -800,6 +800,8 @@ var/global/list/blacklisted_builds = list(
 		if(!(key in list("F1","F2")) && !winget(src, "default-\ref[key]", "command"))
 			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
 			break
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 #define MAXIMAZED  (1<<0)
 #define FULLSCREEN (1<<1)

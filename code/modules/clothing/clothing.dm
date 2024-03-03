@@ -499,6 +499,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FLAGS_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	w_class = SIZE_SMALL
+	flags = HEAR_TALK //for webbing vest contents
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = SUIT_SENSOR_OFF
 		/*
@@ -556,6 +557,14 @@ BLIND     // can't see anything
 		if(SUIT_SENSOR_TRACKING)
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
 
+<<<<<<< HEAD
+=======
+/obj/item/clothing/under/hear_talk(mob/M, text, verb, datum/language/speaking)
+	for(var/obj/item/clothing/accessory/A in accessories)
+		if(A.flags & (HEAR_TALK | HEAR_PASS_SAY | HEAR_TA_SAY))
+			A.hear_talk(M, text, verb, speaking)
+
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr
 	if (istype(M, /mob/dead)) return

@@ -49,6 +49,8 @@
 /datum/role/rev_leader/OnPostSetup(laterole)
 	. = ..()
 	antag.current.verbs += /mob/living/carbon/human/proc/RevConvert
+	var/datum/action/RevConvert/action = new(antag.current)
+	action.Grant(antag.current)
 
 	// Show each head revolutionary up to 3 candidates
 	var/list/already_considered = list()
@@ -60,6 +62,16 @@
 		if(M && !isrevhead(M) && !(M in already_considered))
 			to_chat(rev_mob, "Надежные источники сообщают, что [M.real_name], возможно, захочет помочь вам достигнуть целей. Если вам нужна помощь, то можете обратится к данному сотруднику.")
 			rev_mob.mind.store_memory("<b>Потенциальный соратник</b>: [M.real_name]")
+<<<<<<< HEAD
+=======
+
+/datum/role/rev_leader/RemoveFromRole(datum/mind/M, msg_admins)
+	if(M.current)
+		M.current.verbs -= /mob/living/carbon/human/proc/RevConvert
+		for(var/datum/action/RevConvert/A in M.current.actions)
+			A.Remove(M.current)
+	..()
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /mob/living/carbon/human/proc/RevConvert()
 	set name = "Rev-Convert"
@@ -67,6 +79,8 @@
 
 	if(!isrevhead(src))
 		verbs -= /mob/living/carbon/human/proc/RevConvert
+		for(var/datum/action/RevConvert/A in actions)
+			A.Remove(src)
 		return FALSE
 
 	var/list/Possible = list()
@@ -80,6 +94,8 @@
 	var/mob/living/carbon/human/M = input("Select a person to convert", "Viva la revolution!", null) as mob in Possible
 	if(!isrevhead(src))
 		verbs -= /mob/living/carbon/human/proc/RevConvert
+		for(var/datum/action/RevConvert/A in actions)
+			A.Remove(src)
 		return FALSE
 
 	if(isrevhead(M) || isrev(M))
@@ -98,3 +114,16 @@
 		message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
 		var/datum/faction/revolution/rev = lead.GetFaction()
 		rev.convert_revolutionare_by_invite(M, src)
+<<<<<<< HEAD
+=======
+
+//==========Action==========
+/datum/action/RevConvert
+	name = "Recruitment"
+	action_type = AB_GENERIC
+	button_icon_state = "revconvert"
+
+/datum/action/RevConvert/Trigger()
+	var/mob/living/carbon/human/H = owner
+	H.RevConvert()
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d

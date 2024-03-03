@@ -403,7 +403,11 @@
 /obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1
 	body_parts_covered = 0
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/swimsuit/black
 	name = "black swimsuit"

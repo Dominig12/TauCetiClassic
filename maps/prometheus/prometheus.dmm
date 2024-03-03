@@ -795,15 +795,25 @@
 	},
 /area/station/medical/hallway)
 "abh" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/machinery/door/airlock/medical/glass{
 	dir = 4;
 	id_tag = "Medbay";
 	name = "Medbay";
 	req_access = list(5)
 	},
+<<<<<<< HEAD
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+=======
+/obj/effect/unrestricted_side/west,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2198,7 +2208,11 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon,
+=======
+/obj/structure/stool/bed/chair/schair/wagon/blue,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/effect/landmark/start/blueshield_officer,
 /turf/simulated/floor{
 	dir = 1;
@@ -2325,7 +2339,10 @@
 /obj/machinery/computer/general_air_control{
 	dir = 8;
 	frequency = 1444;
+<<<<<<< HEAD
 	level = 3;
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
@@ -2352,7 +2369,10 @@
 /obj/machinery/computer/general_air_control{
 	dir = 4;
 	frequency = 1444;
+<<<<<<< HEAD
 	level = 3;
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
@@ -3944,7 +3964,11 @@
 	},
 /area/station/civilian/locker)
 "atj" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/black{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -5140,7 +5164,11 @@
 	dir = 8;
 	pixel_x = -22
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/beige,
+=======
+/obj/structure/stool/bed/chair/comfy/white,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn_corner"
@@ -5305,7 +5333,11 @@
 /turf/simulated/wall,
 /area/station/security/prison)
 "aHz" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/teal,
+=======
+/obj/structure/stool/bed/chair/comfy/green,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /mob/living/carbon/ian,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
@@ -5565,6 +5597,10 @@
 	name = "Private Channel";
 	pixel_y = -31
 	},
+<<<<<<< HEAD
+=======
+/obj/effect/spawner/newai,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aKN" = (
@@ -7837,12 +7873,15 @@
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "bqp" = (
+<<<<<<< HEAD
 /obj/machinery/door_control{
 	desc = "A remote control switch for the medbay foyer.";
 	id = "Medbay";
 	name = "Medbay Doors Control";
 	pixel_x = 28
 	},
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
@@ -9266,7 +9305,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "bIL" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/black,
+=======
+/obj/structure/stool/bed/chair/wood/normal,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/effect/landmark/start/assistant,
 /turf/simulated/floor/wood,
 /area/station/civilian/cafeteria)
@@ -9668,7 +9711,11 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon/bench{
+=======
+/obj/structure/stool/bed/bench{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	icon_state = "bench_2"
 	},
 /turf/simulated/floor{
@@ -9750,7 +9797,11 @@
 	dir = 1;
 	icon_state = "0,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod4/station)
 "bOu" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -10368,7 +10419,11 @@
 	},
 /area/station/security/main)
 "bXu" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/beige{
+=======
+/obj/structure/stool/bed/chair/comfy/white{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /obj/machinery/light/small,
@@ -15643,7 +15698,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod2/station)
 "drr" = (
 /obj/effect/decal/cleanable/dirt,
@@ -15969,7 +16028,11 @@
 	},
 /area/station/storage/primary)
 "dvK" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/brown{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
@@ -16324,7 +16387,11 @@
 	},
 /area/station/security/armoury)
 "dyZ" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/brown{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
@@ -17569,7 +17636,11 @@
 	},
 /area/station/rnd/xenobiology)
 "dMp" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/brown{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -18856,12 +18927,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "ecF" = (
+<<<<<<< HEAD
 /obj/machinery/door/airlock/medical/glass{
 	dir = 4;
 	id_tag = "Medbay";
 	name = "Medbay";
 	req_access = list(5)
 	},
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
@@ -18871,6 +18945,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "Medbay";
+	name = "Medbay";
+	req_access = list(5)
+	},
+/obj/effect/unrestricted_side/west,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -20089,7 +20173,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "erE" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/black{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 8
 	},
 /obj/machinery/firealarm{
@@ -20102,7 +20190,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod1/station)
 "erK" = (
 /obj/structure/lattice,
@@ -22886,7 +22978,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod2/station)
 "eYN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -24270,7 +24366,11 @@
 /area/station/engineering/engine)
 "foW" = (
 /obj/machinery/light/small,
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -25609,7 +25709,11 @@
 	},
 /area/station/hallway/primary/aft)
 "fEf" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/teal,
+=======
+/obj/structure/stool/bed/chair/comfy/green,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/effect/landmark/start/head_of_personnel,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
@@ -25762,7 +25866,11 @@
 /area/station/civilian/theatre)
 "fFg" = (
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/black{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
@@ -26171,6 +26279,7 @@
 	icon_state = "red"
 	},
 /area/station/security/lobby)
+<<<<<<< HEAD
 "fKI" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
@@ -26178,6 +26287,8 @@
 /obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 "fKL" = (
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
@@ -26532,7 +26643,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod1/station)
 "fOU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -27052,7 +27167,11 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/blue{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -28340,7 +28459,11 @@
 	},
 /area/station/engineering/engine)
 "gjL" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/brown,
+=======
+/obj/structure/stool/bed/chair/wood/normal,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "apc top";
@@ -28425,7 +28548,11 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "glo" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/brown,
+=======
+/obj/structure/stool/bed/chair/wood/normal,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "glB" = (
@@ -29192,7 +29319,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod1/station)
 "gud" = (
 /obj/effect/decal/cleanable/dirt,
@@ -31889,7 +32020,11 @@
 	},
 /area/station/rnd/mixing)
 "hag" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/black{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -35071,7 +35206,11 @@
 	},
 /area/station/civilian/bar)
 "hOH" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/teal{
+=======
+/obj/structure/stool/bed/chair/comfy/green{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 8
 	},
 /obj/effect/landmark/start/medical_doctor,
@@ -38490,7 +38629,11 @@
 	layer = 4;
 	pixel_x = -10
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -38634,7 +38777,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod2/station)
 "iJh" = (
 /obj/item/weapon/reagent_containers/dropper/precision,
@@ -39915,18 +40062,31 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/door/airlock/medical/glass{
 	dir = 4;
 	id_tag = "Medbay";
 	name = "Medbay";
 	req_access = list(5)
 	},
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/structure/sign/departments/medbay/alt{
 	pixel_y = -32
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "Medbay";
+	name = "Medbay";
+	req_access = list(5)
+	},
+/obj/effect/unrestricted_side/west,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -40700,7 +40860,11 @@
 	},
 /area/station/security/armoury)
 "jlF" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/brown{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /obj/effect/landmark/start/assistant,
@@ -44306,7 +44470,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "kiD" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/brown{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -44643,7 +44811,11 @@
 	dir = 1;
 	icon_state = "1,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod4/station)
 "koo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -49861,7 +50033,11 @@
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "lBL" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/teal{
+=======
+/obj/structure/stool/bed/chair/comfy/green{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /obj/structure/sign/warning/smoking{
@@ -52492,7 +52668,11 @@
 /area/station/civilian/chapel)
 "mio" = (
 /obj/machinery/light/small,
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -55025,7 +55205,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod2/station)
 "mLZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -56855,7 +57039,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon,
+=======
+/obj/structure/stool/bed/chair/schair/wagon/blue,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "2-3"
 	},
@@ -56870,7 +57058,11 @@
 	},
 /area/station/cargo/office)
 "nka" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/black{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -56895,7 +57087,11 @@
 	dir = 1;
 	icon_state = "2,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod4/station)
 "nkt" = (
 /obj/machinery/door/firedoor,
@@ -57045,7 +57241,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/blue{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -57910,7 +58110,11 @@
 	name = "shuttle window";
 	opacity = 0
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod2/station)
 "nyK" = (
 /obj/machinery/light/small{
@@ -59196,7 +59400,11 @@
 	},
 /area/station/rnd/scibreak)
 "nQI" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/teal{
+=======
+/obj/structure/stool/bed/chair/comfy/green{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
@@ -60782,7 +60990,11 @@
 	layer = 4;
 	pixel_x = 10
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -61789,7 +62001,11 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "owy" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/blue{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -62211,7 +62427,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod2/station)
 "oCm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -63390,7 +63610,11 @@
 	},
 /area/station/security/prison)
 "oSp" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/black{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -63516,7 +63740,11 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon/bench,
+=======
+/obj/structure/stool/bed/bench,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "grass1"
@@ -69069,7 +69297,11 @@
 	},
 /area/station/hallway/secondary/exit)
 "qqm" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/black{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 8
 	},
 /obj/effect/landmark/start/assistant,
@@ -69571,7 +69803,11 @@
 	layer = 4;
 	pixel_x = 10
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -70584,7 +70820,10 @@
 "qJU" = (
 /obj/machinery/computer/general_air_control{
 	frequency = 1444;
+<<<<<<< HEAD
 	level = 3;
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
@@ -72950,7 +73189,11 @@
 	layer = 4;
 	pixel_y = 24
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/beige{
+=======
+/obj/structure/stool/bed/chair/comfy/white{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 8
 	},
 /obj/effect/decal/turf_decal{
@@ -73896,7 +74139,11 @@
 	},
 /area/station/civilian/garden)
 "rBz" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/brown,
+=======
+/obj/structure/stool/bed/chair/wood/normal,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
@@ -74131,7 +74378,10 @@
 /obj/machinery/computer/general_air_control{
 	dir = 4;
 	frequency = 1443;
+<<<<<<< HEAD
 	level = 3;
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	name = "Distribution and Waste Monitor";
 	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
 	},
@@ -76972,7 +77222,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod2/station)
 "sqy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -77370,7 +77624,11 @@
 	},
 /area/station/cargo/recycleroffice)
 "svS" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/beige{
+=======
+/obj/structure/stool/bed/chair/comfy/white{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 8
 	},
 /obj/effect/decal/turf_decal{
@@ -77464,7 +77722,11 @@
 	name = "Tribunal"
 	})
 "swq" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/brown,
+=======
+/obj/structure/stool/bed/chair/wood/normal,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
@@ -77672,7 +77934,11 @@
 	dir = 1;
 	icon_state = "0,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod4/station)
 "syh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -78315,7 +78581,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "sFZ" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/beige{
+=======
+/obj/structure/stool/bed/chair/comfy/white{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 8
 	},
 /obj/machinery/light/small,
@@ -78780,7 +79050,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod1/station)
 "sMa" = (
 /turf/simulated/floor{
@@ -79079,7 +79353,11 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon,
+=======
+/obj/structure/stool/bed/chair/schair/wagon/blue,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "2-7"
 	},
@@ -80782,7 +81060,11 @@
 	},
 /area/station/medical/sleeper)
 "tnn" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/black,
+=======
+/obj/structure/stool/bed/chair/wood/normal,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
@@ -81423,11 +81705,18 @@
 	},
 /area/station/hallway/primary/fore)
 "txf" = (
+<<<<<<< HEAD
 /obj/mecha/working/ripley,
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/machinery/light/small,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+<<<<<<< HEAD
+=======
+/obj/mecha/working/ripley/recycle_ripley,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "txw" = (
@@ -83067,7 +83356,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod1/station)
 "tQt" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -86297,7 +86590,11 @@
 	},
 /area/station/security/interrogation)
 "uIj" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon,
+=======
+/obj/structure/stool/bed/chair/schair/wagon/blue,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "2-4,5,6"
 	},
@@ -86741,7 +87038,11 @@
 	},
 /area/station/medical/virology)
 "uNi" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/brown{
+=======
+/obj/structure/stool/bed/chair/wood/normal{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -87276,7 +87577,11 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod1/station)
 "uTK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -90520,7 +90825,11 @@
 	dir = 1;
 	icon_state = "1,2"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod4/station)
 "vID" = (
 /obj/machinery/light/smart,
@@ -90932,7 +91241,11 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -91715,7 +92028,11 @@
 	},
 /area/station/security/armoury)
 "vYz" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/teal{
+=======
+/obj/structure/stool/bed/chair/comfy/green{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -94795,7 +95112,11 @@
 	dir = 1;
 	icon_state = "2,0"
 	},
+<<<<<<< HEAD
 /turf/environment/space/shuttle,
+=======
+/turf/environment/space,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /area/shuttle/escape_pod4/station)
 "wLz" = (
 /obj/structure/closet/emcloset,
@@ -100071,6 +100392,10 @@
 	name = "Private Channel";
 	pixel_y = -31
 	},
+<<<<<<< HEAD
+=======
+/obj/effect/spawner/newai,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "ycC" = (
@@ -124330,7 +124655,11 @@ pyq
 bkN
 pFd
 qqm
+<<<<<<< HEAD
 fKI
+=======
+qqm
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 vSi
 qqm
 bEv

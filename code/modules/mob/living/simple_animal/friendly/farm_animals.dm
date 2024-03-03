@@ -197,7 +197,11 @@ var/global/chicken_count = 0
 	icon_living = "chicken"
 	icon_dead = "chicken_dead"
 	icon_move = "chicken_move"
+<<<<<<< HEAD
 	speak = list("Ко-ко!","ПОАК ПОАК ПОАК!","Коооо коооо.")
+=======
+	speak = list("Ко-ко!","КО! КО! КО!","Коооо коооо.")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	speak_emote = list("кудахчет")
 	emote_hear = list("кудахчет")
 	emote_see = list("клюёт пол","машет своими крыльями")
@@ -384,7 +388,11 @@ var/global/chicken_count = 0
 	icon_state = "walrus-syndi"
 	icon_living = "walrus-syndi"
 	icon_dead = "walrus-syndi_dead"
+<<<<<<< HEAD
 	speak = list("Урь?","Урь","УРЬ","Урыть НТ")
+=======
+	speak = list("Урь?","Урь","УРЬ","Урьыть НТ")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	health = 80
 
 #undef FEEDER_DISTANT

@@ -45,7 +45,11 @@ SUBSYSTEM_DEF(holomaps)
 		if(QDELETED(thing))
 			processing -= thing
 		else
+<<<<<<< HEAD
 			thing.process()
+=======
+			thing.process(wait * 0.1)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 		if (MC_TICK_CHECK)
 			return

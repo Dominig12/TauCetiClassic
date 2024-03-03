@@ -26,6 +26,12 @@
 /datum/round_aspect/proc/after_init() //after SSround_aspects init
 	return
 
+<<<<<<< HEAD
+=======
+/datum/round_aspect/proc/after_start() //after round start
+	return
+
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /datum/round_aspect/agent_of_high_affairs
 	name = ROUND_ASPECT_HF_AGENT
 	desc = "АВД была выдана цепь командования. Во всех глав был вставлен имплант подчинения."
@@ -34,9 +40,13 @@
 	name = ROUND_ASPECT_REARM_ENERGY
 	desc = "Всё огнестрельное оружие заменено на энергетическое, повышена цена и количество ресурсов для создания огнестрельного оружия."
 
+<<<<<<< HEAD
 /datum/round_aspect/rearm_energy/after_init()
 	new /datum/event/feature/area/replace/station_rearmament_energy
 
+=======
+/datum/round_aspect/rearm_energy/after_start()
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	for(var/datum/design/smg/smg in global.all_designs)
 		for(var/M in smg.materials)
 			smg.materials[M] *= 5
@@ -44,13 +54,22 @@
 	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
 		b.cost *= 50
 
+<<<<<<< HEAD
+=======
+	new /datum/event/feature/area/replace/station_rearmament_energy
+
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /datum/round_aspect/rearm_ballistic
 	name = ROUND_ASPECT_REARM_BULLETS
 	desc = "Всё энергооружие заменено на огнестрельное, повышена цена и количество ресурсов для создания энергооружия."
 
+<<<<<<< HEAD
 /datum/round_aspect/rearm_ballistic/after_init()
 	new /datum/event/feature/area/replace/station_rearmament_bullets
 
+=======
+/datum/round_aspect/rearm_ballistic/after_start()
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	for(var/datum/design/nuclear_gun/ng in global.all_designs)
 		for(var/M in ng.materials)
 			ng.materials[M] *= 5
@@ -73,11 +92,20 @@
 	for(var/datum/supply_pack/energy/e in global.all_supply_pack)
 		e.cost *= 50
 
+<<<<<<< HEAD
+=======
+	new /datum/event/feature/area/replace/station_rearmament_bullets
+
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /datum/round_aspect/no_common_rchannel
 	name = ROUND_ASPECT_NO_COMMON_RADIO_CHANNEL
 	desc = "Убран общий канал радиосвязи."
 
+<<<<<<< HEAD
 /datum/round_aspect/no_common_rchannel/after_init()
+=======
+/datum/round_aspect/no_common_rchannel/after_start()
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	new /datum/event/feature/area/replace/del_tcomms
 
 /datum/round_aspect/high_space_rad
@@ -90,15 +118,22 @@
 	OOC_lobby_announcement = "<span class='warning'>В качестве эксперимента, НаноТрейзен решило разместить на спутнике станции целых три ядра ИИ.</span>"
 	desc = "Увеличено количество слотов ИИ до трёх."
 
+<<<<<<< HEAD
 /datum/round_aspect/ai_trio/after_init()
 	SSticker.triai = TRUE
 
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /datum/round_aspect/elite_sec
 	name = ROUND_ASPECT_ELITE_SECURITY
 	desc = "Изменено снаряжение офицеров охраны. Увеличены цены на оружие в карго и РнД."
 
+<<<<<<< HEAD
 /datum/round_aspect/elite_sec/after_init()
 	new /datum/event/feature/area/replace/sec_rearmament_elite
+=======
+/datum/round_aspect/elite_sec/after_start()
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	for(var/datum/design/nuclear_gun/ng in global.all_designs)
 		for(var/M in ng.materials)
 			ng.materials[M] *= 5
@@ -127,6 +162,11 @@
 	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
 		b.cost *= 50
 
+<<<<<<< HEAD
+=======
+	new /datum/event/feature/area/replace/sec_rearmament_elite
+
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /datum/round_aspect/more_random_events
 	name = ROUND_ASPECT_MORE_RANDOM_EVENTS
 	desc = "Увеличена частота случайных событий."

@@ -17,3 +17,9 @@
 #define DEFAULT_SCIENCE_CONSOLE_ID 1
 #define DEFAULT_ROBOTICS_CONSOLE_ID 2
 #define DEFAULT_MINING_CONSOLE_ID 3
+<<<<<<< HEAD
+=======
+
+#define DIAGNOSTIC_EXTRA_CHECK "diagnostic"
+#define VIEW_EXTRA_CHECK "view"
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d

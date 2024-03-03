@@ -2,7 +2,7 @@
 /obj/structure/object_wall
 	layer = 2
 	name = "shuttle wall"
-	desc = "A huge chunk of metal and electronics used to construct shuttle."
+	desc = "Огромный кусок металла и электроники, использованный для постройки шаттла."
 	density = TRUE
 	anchored = TRUE
 	can_block_air = TRUE
@@ -50,11 +50,19 @@
 
 /obj/structure/object_wall/vox
 	name = "skipjack wall"
+<<<<<<< HEAD
 	desc = "Shuttle wall covered with graffitis."
+=======
+	desc = "Стены шаттла, покрытые граффити."
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	icon = 'icons/locations/shuttles/vox_shuttle.dmi'
 	icon_state = "14,11"
 
 /obj/structure/object_wall/vox/internal
+<<<<<<< HEAD
 	desc = "Internal shuttle wall. Cleaner than outside walls, but not by far."
+=======
+	desc = "Внутренняя стена шаттла. Чище, чем внешние стены, но не намного."
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	icon = 'icons/locations/shuttles/vox_shuttle_inner.dmi'
 	icon_state = "3,0"

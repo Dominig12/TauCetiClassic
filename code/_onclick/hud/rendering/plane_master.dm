@@ -27,6 +27,17 @@
 //For filters and other effects
 /atom/movable/screen/plane_master/proc/apply_effects(mob/mymob)
 	return
+<<<<<<< HEAD
+=======
+
+///Level below the floor, for undertile component
+/atom/movable/screen/plane_master/underfloor
+	name = "underfloor plane master"
+	plane = UNDERFLOOR_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	render_relay_plane = RENDER_PLANE_GAME
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
@@ -253,6 +264,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = ANOMALY_PLANE
 	render_target = ANOMALY_RENDER_TARGET
+<<<<<<< HEAD
 	render_relay_plane = null
 
 /atom/movable/screen/plane_master/bluespace_distortion
@@ -260,6 +272,8 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	plane = BLUESPACE_DISTORION_PLANE
 	render_target = BLUESPACE_DISTORION_RENDER_TARGET
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	render_relay_plane = null
 
 /atom/movable/screen/plane_master/area

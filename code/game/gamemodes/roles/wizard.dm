@@ -14,6 +14,11 @@
 	stat_type = /datum/stat/role/wizard
 
 	var/list/list_of_purchases = list()
+<<<<<<< HEAD
+=======
+	///Used by midround wizard mainly for proper setup
+	var/rename = TRUE
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /datum/role/wizard/Greet(greeting, custom)
 	. = ..()
@@ -74,7 +79,12 @@
 /datum/role/wizard/OnPostSetup(laterole)
 	. = ..()
 	equip_wizard(antag.current)
+<<<<<<< HEAD
 	INVOKE_ASYNC(src, PROC_REF(name_wizard), antag.current)
+=======
+	if(rename)
+		INVOKE_ASYNC(src, PROC_REF(name_wizard), antag.current)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /datum/role/wizard/forgeObjectives()
 	if(!..())
@@ -136,7 +146,7 @@
 
 /datum/role/wizard/RoleTopic(href, href_list, datum/mind/M, admin_auth)
 	if(href_list["wiz_tp"])
-		M.current.forceMove(pick(wizardstart))
+		M.current.forceMove(pick_landmarked_location("Wizard"))
 
 	else if(href_list["wiz_name"])
 		INVOKE_ASYNC(src, PROC_REF(name_wizard), M.current)

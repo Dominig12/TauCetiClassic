@@ -15,8 +15,11 @@
 	var/obj/special_assembly = null
 
 /obj/item/device/assembly_holder/Destroy()
+<<<<<<< HEAD
 	a_left.holder = null
 	a_right.holder = null
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	QDEL_NULL(a_left)
 	QDEL_NULL(a_right)
 	return ..()
@@ -168,11 +171,13 @@
 		var/turf/T = get_turf(src)
 		if(!T)	return 0
 		if(a_left)
-			a_left:holder = null
 			a_left.loc = T
+			a_left.holder = null
+			a_left = null
 		if(a_right)
-			a_right:holder = null
 			a_right.loc = T
+			a_right.holder = null
+			a_right = null
 		qdel(src)
 	return
 

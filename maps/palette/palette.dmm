@@ -54,6 +54,19 @@
 	icon_state = "vaultfull"
 	},
 /area/space)
+<<<<<<< HEAD
+=======
+"ai" = (
+/obj/machinery/door/airlock,
+/obj/effect/unrestricted_side/south,
+/obj/effect/unrestricted_side/west,
+/obj/effect/unrestricted_side/north,
+/obj/effect/unrestricted_side/east,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/space)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 "am" = (
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -181,6 +194,7 @@
 "ba" = (
 /obj/structure/sign/departments/security,
 /obj/machinery/power/apc/mediumcell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "Brig mediumcell apc top";
 	pixel_y = 28;
@@ -202,6 +216,29 @@
 	name = "Brig mediumcell apc down";
 	pixel_y = -28;
 	custom_smartlight_preset = "Brig"
+=======
+	custom_smartlight_preset = "Brig";
+	dir = 1;
+	name = "Brig mediumcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Brig";
+	dir = 4;
+	name = "Brig mediumcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Brig";
+	dir = 8;
+	name = "Brig mediumcell apc left";
+	pixel_x = -28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Brig";
+	name = "Brig mediumcell apc down";
+	pixel_y = -28
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -327,6 +364,7 @@
 "co" = (
 /obj/structure/sign/departments/cargo,
 /obj/machinery/power/apc/largecell{
+<<<<<<< HEAD
 	name = "Cargo largecell apc down";
 	pixel_y = -27;
 	custom_smartlight_preset = "Cargo"
@@ -348,6 +386,29 @@
 	pixel_y = 27;
 	custom_smartlight_preset = "Cargo";
 	dir = 1
+=======
+	custom_smartlight_preset = "Cargo";
+	name = "Cargo largecell apc down";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Cargo";
+	dir = 4;
+	name = "Cargo largecell apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	name = "Cargo largecell apc left";
+	pixel_x = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Cargo";
+	dir = 1;
+	name = "Cargo largecell apc top";
+	pixel_y = 27
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	icon_state = "brownfull"
@@ -775,6 +836,7 @@
 "gU" = (
 /obj/structure/sign/departments/security,
 /obj/machinery/power/apc/largecell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "Brig largecell apc top";
 	pixel_y = 27;
@@ -795,6 +857,28 @@
 	dir = 8;
 	name = "Brig largecell apc left";
 	custom_smartlight_preset = "Brig";
+=======
+	custom_smartlight_preset = "Brig";
+	dir = 1;
+	name = "Brig largecell apc top";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Brig";
+	name = "Brig largecell apc down";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Brig";
+	dir = 4;
+	name = "Brig largecell apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Brig";
+	dir = 8;
+	name = "Brig largecell apc left";
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -1055,6 +1139,7 @@
 "jm" = (
 /obj/structure/sign/departments/science,
 /obj/machinery/power/apc/mediumcell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "RnD mediumcell apc top";
 	pixel_y = 28;
@@ -1076,6 +1161,29 @@
 	name = "RnD mediumcell apc down";
 	pixel_y = -28;
 	custom_smartlight_preset = "RnD"
+=======
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD mediumcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD mediumcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "RnD";
+	dir = 8;
+	name = "RnD mediumcell apc left";
+	pixel_x = -28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "RnD";
+	name = "RnD mediumcell apc down";
+	pixel_y = -28
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -1460,6 +1568,7 @@
 "lC" = (
 /obj/structure/sign/departments/cargo,
 /obj/machinery/power/apc/mediumcell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "Cargo mediumcell apc top";
 	pixel_y = 28;
@@ -1481,6 +1590,29 @@
 	name = "Cargo mediumcell apc down";
 	pixel_y = -28;
 	custom_smartlight_preset = "Cargo"
+=======
+	custom_smartlight_preset = "Cargo";
+	dir = 1;
+	name = "Cargo mediumcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Cargo";
+	dir = 4;
+	name = "Cargo mediumcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	name = "Cargo mediumcell apc left";
+	pixel_x = -28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Cargo";
+	name = "Cargo mediumcell apc down";
+	pixel_y = -28
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	icon_state = "brownfull"
@@ -1613,6 +1745,7 @@
 "nb" = (
 /obj/structure/sign/departments/medbay/alt,
 /obj/machinery/power/apc/largecell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "MedBay largecell apc top";
 	pixel_y = 27;
@@ -1633,6 +1766,28 @@
 	dir = 8;
 	name = "MedBay largecell apc left";
 	custom_smartlight_preset = "MedBay";
+=======
+	custom_smartlight_preset = "MedBay";
+	dir = 1;
+	name = "MedBay largecell apc top";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "MedBay";
+	name = "MedBay largecell apc down";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "MedBay";
+	dir = 4;
+	name = "MedBay largecell apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "MedBay";
+	dir = 8;
+	name = "MedBay largecell apc left";
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -2360,8 +2515,13 @@
 /area/space)
 "us" = (
 /obj/effect/decal/turf_decal/orange{
+<<<<<<< HEAD
 	icon_state = "siding_line";
 	dir = 9
+=======
+	dir = 9;
+	icon_state = "siding_line"
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /obj/effect/decal/turf_decal/orange{
 	icon_state = "siding_corner"
@@ -2578,6 +2738,7 @@
 "wn" = (
 /obj/structure/sign/departments/science,
 /obj/machinery/power/apc/largecell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "RnD largecell apc top";
 	pixel_y = 27;
@@ -2598,6 +2759,28 @@
 	dir = 8;
 	name = "RnD largecell apc left";
 	custom_smartlight_preset = "RnD";
+=======
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD largecell apc top";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
+	name = "RnD largecell apc down";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD largecell apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "RnD";
+	dir = 8;
+	name = "RnD largecell apc left";
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -2863,8 +3046,13 @@
 	icon_state = "siding_line"
 	},
 /obj/effect/decal/turf_decal/purple{
+<<<<<<< HEAD
 	icon_state = "siding_corner";
 	dir = 8
+=======
+	dir = 8;
+	icon_state = "siding_corner"
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor,
 /area/space)
@@ -3030,6 +3218,7 @@
 "Ai" = (
 /obj/structure/sign/departments/science,
 /obj/machinery/power/apc{
+<<<<<<< HEAD
 	pixel_y = 27;
 	dir = 1;
 	name = "RnD top APC";
@@ -3051,6 +3240,29 @@
 	dir = 8;
 	custom_smartlight_preset = "RnD";
 	name = "RnD left APC"
+=======
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD top APC";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	name = "RnD down APC";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "RnD";
+	dir = 8;
+	name = "RnD left APC";
+	pixel_x = -27
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -3159,6 +3371,7 @@
 "Bs" = (
 /obj/structure/sign/departments/engineering,
 /obj/machinery/power/apc{
+<<<<<<< HEAD
 	pixel_y = 27;
 	name = "Engineering top APC";
 	custom_smartlight_preset = "Engineering";
@@ -3180,6 +3393,29 @@
 	custom_smartlight_preset = "Engineering";
 	pixel_x = -27;
 	dir = 8
+=======
+	custom_smartlight_preset = "Engineering";
+	dir = 1;
+	name = "Engineering top APC";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
+	name = "Engineering down APC";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering right APC";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Engineering";
+	dir = 8;
+	name = "Engineering left APC";
+	pixel_x = -27
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	icon_state = "yellowfull"
@@ -3435,6 +3671,7 @@
 "DB" = (
 /obj/structure/sign/departments/science,
 /obj/machinery/power/apc/smallcell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "RnD smallcell apc top";
 	pixel_y = 28;
@@ -3456,6 +3693,29 @@
 	name = "RnD smallcell apc left";
 	pixel_x = -28;
 	custom_smartlight_preset = "RnD"
+=======
+	custom_smartlight_preset = "RnD";
+	dir = 1;
+	name = "RnD smallcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "RnD";
+	name = "RnD smallcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "RnD";
+	dir = 4;
+	name = "RnD smallcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "RnD";
+	dir = 8;
+	name = "RnD smallcell apc left";
+	pixel_x = -28
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -3503,8 +3763,13 @@
 /area/space)
 "DT" = (
 /obj/effect/decal/turf_decal/orange{
+<<<<<<< HEAD
 	icon_state = "siding_line";
 	dir = 8
+=======
+	dir = 8;
+	icon_state = "siding_line"
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor,
 /area/space)
@@ -3627,6 +3892,7 @@
 "EO" = (
 /obj/structure/sign/departments/engineering,
 /obj/machinery/power/apc/smallcell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "Engineering smallcell apc top";
 	pixel_y = 28;
@@ -3648,6 +3914,29 @@
 	name = "Engineering smallcell apc left";
 	pixel_x = -28;
 	custom_smartlight_preset = "Engineering"
+=======
+	custom_smartlight_preset = "Engineering";
+	dir = 1;
+	name = "Engineering smallcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Engineering";
+	name = "Engineering smallcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering smallcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Engineering";
+	dir = 8;
+	name = "Engineering smallcell apc left";
+	pixel_x = -28
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	icon_state = "yellowfull"
@@ -3826,6 +4115,7 @@
 "Gs" = (
 /obj/structure/sign/departments/engineering,
 /obj/machinery/power/apc/largecell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "Engineering largecell apc top";
 	pixel_y = 27;
@@ -3846,6 +4136,28 @@
 	dir = 8;
 	name = "Engineering largecell apc left";
 	custom_smartlight_preset = "Engineering";
+=======
+	custom_smartlight_preset = "Engineering";
+	dir = 1;
+	name = "Engineering largecell apc top";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	name = "Engineering largecell apc down";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering largecell apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc/largecell{
+	custom_smartlight_preset = "Engineering";
+	dir = 8;
+	name = "Engineering largecell apc left";
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -3855,6 +4167,7 @@
 "Gu" = (
 /obj/structure/sign/departments/security,
 /obj/machinery/power/apc{
+<<<<<<< HEAD
 	pixel_y = -27;
 	name = "Brig down APC";
 	custom_smartlight_preset = "Brig"
@@ -3876,6 +4189,29 @@
 	dir = 1;
 	name = "Brig top APC";
 	custom_smartlight_preset = "Brig"
+=======
+	custom_smartlight_preset = "Brig";
+	name = "Brig down APC";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
+	dir = 4;
+	name = "Brig right APC";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
+	dir = 8;
+	name = "Brig left APC";
+	pixel_x = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Brig";
+	dir = 1;
+	name = "Brig top APC";
+	pixel_y = 27
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -4339,6 +4675,7 @@
 "JJ" = (
 /obj/structure/sign/departments/cargo,
 /obj/machinery/power/apc/smallcell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "Cargo smallcell apc top";
 	pixel_y = 28;
@@ -4360,6 +4697,29 @@
 	name = "Cargo smallcell apc left";
 	pixel_x = -28;
 	custom_smartlight_preset = "Cargo"
+=======
+	custom_smartlight_preset = "Cargo";
+	dir = 1;
+	name = "Cargo smallcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Cargo";
+	name = "Cargo smallcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Cargo";
+	dir = 4;
+	name = "Cargo smallcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	name = "Cargo smallcell apc left";
+	pixel_x = -28
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	icon_state = "brownfull"
@@ -4783,6 +5143,7 @@
 "MT" = (
 /obj/structure/sign/departments/engineering,
 /obj/machinery/power/apc/mediumcell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "Engineering mediumcell apc top";
 	pixel_y = 28;
@@ -4804,6 +5165,29 @@
 	name = "Engineering mediumcell apc down";
 	pixel_y = -28;
 	custom_smartlight_preset = "Engineering"
+=======
+	custom_smartlight_preset = "Engineering";
+	dir = 1;
+	name = "Engineering mediumcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Engineering";
+	dir = 4;
+	name = "Engineering mediumcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Engineering";
+	dir = 8;
+	name = "Engineering mediumcell apc left";
+	pixel_x = -28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "Engineering";
+	name = "Engineering mediumcell apc down";
+	pixel_y = -28
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	icon_state = "yellowfull"
@@ -4915,6 +5299,7 @@
 "Oa" = (
 /obj/structure/sign/departments/medbay/alt,
 /obj/machinery/power/apc/smallcell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "MedBay smallcell apc top";
 	pixel_y = 28;
@@ -4936,6 +5321,29 @@
 	name = "MedBay smallcell apc left";
 	pixel_x = -28;
 	custom_smartlight_preset = "MedBay"
+=======
+	custom_smartlight_preset = "MedBay";
+	dir = 1;
+	name = "MedBay smallcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "MedBay";
+	name = "MedBay smallcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "MedBay";
+	dir = 4;
+	name = "MedBay smallcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "MedBay";
+	dir = 8;
+	name = "MedBay smallcell apc left";
+	pixel_x = -28
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -5191,6 +5599,7 @@
 "Qf" = (
 /obj/structure/sign/departments/medbay/alt,
 /obj/machinery/power/apc/mediumcell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "MedBay mediumcell apc top";
 	pixel_y = 28;
@@ -5212,6 +5621,29 @@
 	name = "MedBay mediumcell apc down";
 	pixel_y = -28;
 	custom_smartlight_preset = "MedBay"
+=======
+	custom_smartlight_preset = "MedBay";
+	dir = 1;
+	name = "MedBay mediumcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "MedBay";
+	dir = 4;
+	name = "MedBay mediumcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "MedBay";
+	dir = 8;
+	name = "MedBay mediumcell apc left";
+	pixel_x = -28
+	},
+/obj/machinery/power/apc/mediumcell{
+	custom_smartlight_preset = "MedBay";
+	name = "MedBay mediumcell apc down";
+	pixel_y = -28
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -5716,8 +6148,13 @@
 	icon_state = "siding_line"
 	},
 /obj/effect/decal/turf_decal/purple{
+<<<<<<< HEAD
 	icon_state = "siding_corner";
 	dir = 1
+=======
+	dir = 1;
+	icon_state = "siding_corner"
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor,
 /area/space)
@@ -5790,6 +6227,7 @@
 "UM" = (
 /obj/structure/sign/departments/security,
 /obj/machinery/power/apc/smallcell{
+<<<<<<< HEAD
 	dir = 1;
 	name = "Brig smallcell apc top";
 	pixel_y = 28;
@@ -5811,6 +6249,29 @@
 	name = "Brig smallcell apc left";
 	pixel_x = -28;
 	custom_smartlight_preset = "Brig"
+=======
+	custom_smartlight_preset = "Brig";
+	dir = 1;
+	name = "Brig smallcell apc top";
+	pixel_y = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Brig";
+	name = "Brig smallcell apc down";
+	pixel_y = -28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Brig";
+	dir = 4;
+	name = "Brig smallcell apc right";
+	pixel_x = 28
+	},
+/obj/machinery/power/apc/smallcell{
+	custom_smartlight_preset = "Brig";
+	dir = 8;
+	name = "Brig smallcell apc left";
+	pixel_x = -28
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -5984,6 +6445,7 @@
 "WB" = (
 /obj/structure/sign/departments/medbay/alt,
 /obj/machinery/power/apc{
+<<<<<<< HEAD
 	pixel_y = 27;
 	name = "Medbay top APC";
 	custom_smartlight_preset = "MedBay";
@@ -6005,6 +6467,29 @@
 	dir = 4;
 	custom_smartlight_preset = "MedBay";
 	name = "Medbay right APC"
+=======
+	custom_smartlight_preset = "MedBay";
+	dir = 1;
+	name = "Medbay top APC";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
+	name = "Medbay down APC";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
+	dir = 8;
+	name = "Medbay left APC";
+	pixel_x = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
+	dir = 4;
+	name = "Medbay right APC";
+	pixel_x = 27
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -6033,6 +6518,7 @@
 "WN" = (
 /obj/structure/sign/departments/cargo,
 /obj/machinery/power/apc{
+<<<<<<< HEAD
 	pixel_y = 27;
 	name = "Cargo top APC";
 	custom_smartlight_preset = "Cargo";
@@ -6053,6 +6539,28 @@
 	name = "Cargo left APC";
 	custom_smartlight_preset = "Cargo";
 	dir = 8;
+=======
+	custom_smartlight_preset = "Cargo";
+	dir = 1;
+	name = "Cargo top APC";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	dir = 4;
+	name = "Cargo right APC";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	name = "Cargo down APC";
+	pixel_y = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Cargo";
+	dir = 8;
+	name = "Cargo left APC";
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -6297,6 +6805,7 @@
 /area/space)
 "Zy" = (
 /obj/machinery/power/apc{
+<<<<<<< HEAD
 	dir = 1;
 	name = "Bar apc top";
 	custom_smartlight_preset = "bar";
@@ -6317,6 +6826,28 @@
 /obj/machinery/power/apc{
 	name = "Bar apc down";
 	custom_smartlight_preset = "bar";
+=======
+	custom_smartlight_preset = "bar";
+	dir = 1;
+	name = "Bar apc top";
+	pixel_y = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "bar";
+	dir = 8;
+	name = "Bar apc left";
+	pixel_x = -27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "bar";
+	dir = 4;
+	name = "Bar apc right";
+	pixel_x = 27
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "bar";
+	name = "Bar apc down";
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	pixel_y = -27
 	},
 /obj/machinery/vending/boozeomat,
@@ -8359,11 +8890,19 @@ uA
 uA
 uA
 uA
+<<<<<<< HEAD
 uA
 uA
 uA
 uA
 uA
+=======
+Hy
+Hy
+yc
+Hy
+Hy
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 uA
 uA
 uA
@@ -8410,11 +8949,19 @@ uA
 uA
 uA
 uA
+<<<<<<< HEAD
 uA
 uA
 uA
 uA
 uA
+=======
+Hy
+yc
+ai
+yc
+Hy
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 uA
 uA
 uA
@@ -8461,11 +9008,19 @@ uA
 uA
 uA
 uA
+<<<<<<< HEAD
 uA
 uA
 uA
 uA
 uA
+=======
+Hy
+Hy
+yc
+Hy
+Hy
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 uA
 uA
 uA
@@ -8512,11 +9067,19 @@ uA
 uA
 uA
 uA
+<<<<<<< HEAD
 uA
 uA
 uA
 uA
 uA
+=======
+Hy
+Hy
+Hy
+Hy
+Hy
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 uA
 uA
 uA

@@ -3,14 +3,22 @@
 	desc = "Sleepwear."
 	icon_state = "red_pyjamas"
 	item_state = "red_pyjamas"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/pj/blue
 	name = "blue pj's"
 	desc = "Sleepwear."
 	icon_state = "blue_pyjamas"
 	item_state = "blue_pyjamas"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/captain_fly
 	name = "rogue captains uniform"
@@ -34,14 +42,22 @@
 	desc = "It's a very smart uniform with a special pocket for tip."
 	icon_state = "waiter"
 	item_state = "waiter"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/tourist
 	name = "hawaiian shirt"
 	desc = "How gauche."
 	icon_state = "tourist"
 	item_state = "tourist"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -61,7 +77,11 @@
 	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."
 	icon_state = "vice"
 	item_state = "vice"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/rank/centcom_officer
 	desc = "It's a jumpsuit worn by CentCom Officers."
@@ -110,20 +130,32 @@
 	name = "owl uniform"
 	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
 	icon_state = "owl"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/johnny
 	name = "johnny~~ jumpsuit"
 	desc = "Johnny~~"
 	icon_state = "johnny"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/rainbow
 	name = "rainbow"
 	desc = "rainbow"
 	icon_state = "rainbow"
 	item_state = "rainbow"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/psysuit
 	name = "dark undersuit"
@@ -143,14 +175,22 @@
 	desc = "A green suit and yellow necktie. Exemplifies authority."
 	icon_state = "green_suit"
 	item_state = "green_suit"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/gimmick/rank/head_of_personnel/suit
 	name = "head of personnel's suit"
 	desc = "A teal suit and yellow necktie. An authoritative yet tacky ensemble."
 	icon_state = "teal_suit"
 	item_state = "teal_suit"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/suit_jacket
 	name = "black suit"
@@ -183,7 +223,11 @@
 	desc = "A red suit and blue tie. Somewhat formal."
 	icon_state = "red_suit"
 	item_state = "red_suit"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/suit_jacket/charcoal
 	name = "charcoal suit"
@@ -226,7 +270,11 @@
 	desc = "A  suit and jacket with a jeans. For the bad guy!"
 	icon_state = "rogue_jacket"
 	item_state = "rogue_jacket"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
@@ -351,21 +399,33 @@
 	name = "captain dress uniform"
 	desc = "Feminine fashion for the style concious captain."
 	icon_state = "dress_cap"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/under/dress/dress_hop
 	name = "head of personal dress uniform"
 	desc = "Feminine fashion for the style concious HoP."
 	icon_state = "dress_hop"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/under/dress/dress_hr
 	name = "human resources director uniform"
 	desc = "Superior class for the nosy H.R. Director."
 	icon_state = "huresource"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/under/dress/cheongsam // Mai Yang's pretty pretty dress.
@@ -389,19 +449,31 @@
 	name = "blue plaid skirt"
 	desc = "A preppy blue skirt with a white blouse."
 	icon_state = "plaid_blue"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/dress/plaid_red
 	name = "red plaid skirt"
 	desc = "A preppy red skirt with a white blouse."
 	icon_state = "plaid_red"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/dress/plaid_purple
 	name = "blue purple skirt"
 	desc = "A preppy purple skirt with a white blouse."
 	icon_state = "plaid_purple"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 //wedding stuff
 /obj/item/clothing/under/wedding
@@ -450,7 +522,11 @@
 	name = "security cadet's uniform"
 	icon_state = "cadet"
 	item_state = "cadet"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/rank/cadet/skirt
 	name = "security cadet's jumpskirt"
@@ -727,13 +803,21 @@
 	item_state = "test_subject"
 	has_sensor = 2
 	sensor_mode = SUIT_SENSOR_TRACKING
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/indiana
 	name = "leather suit"
 	icon_state = "indiana"
 	item_state = "indiana"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/item/clothing/under/cowboy
 	name = "western suit"
@@ -760,6 +844,10 @@
 	desc = "Made from duratread. It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
 	icon_state = "Durauniform"
 	item_state = "Durauniform"
+<<<<<<< HEAD
 	flags = ONESIZEFITSALL
+=======
+	flags = ONESIZEFITSALL|HEAR_TALK
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	siemens_coefficient = 0.8
 	armor = list(melee = 5, bullet = 0, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)

@@ -71,7 +71,11 @@
 	name = "security gas mask"
 	desc = "Стандартный противогаз охраны с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока офицер забивает преступника насмерть."
 	icon_state = "secmask"
+<<<<<<< HEAD
 	item_state = "gas_alt"
+=======
+	item_state = "secmask"
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	var/cooldown = 0
 	var/last_phrase_text = ""
 	var/shitcurity_mode = FALSE

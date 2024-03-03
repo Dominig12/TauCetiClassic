@@ -240,7 +240,11 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "iG" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/teal{
+=======
+/obj/structure/stool/bed/chair/comfy/green{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -278,7 +282,11 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "lC" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/teal,
+=======
+/obj/structure/stool/bed/chair/comfy/green,
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	dir = 5;
@@ -612,7 +620,11 @@
 	},
 /area/space_structures/robostation2)
 "CN" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/comfy/beige{
+=======
+/obj/structure/stool/bed/chair/comfy/white{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 1
 	},
 /turf/simulated/floor{

@@ -38,6 +38,10 @@
 	return INITIALIZE_HINT_NORMAL
 
 /turf/environment/space/Destroy()
+<<<<<<< HEAD
+=======
+	SHOULD_CALL_PARENT(FALSE)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	return QDEL_HINT_LETMELIVE
 
 /turf/environment/space/proc/update_starlight()

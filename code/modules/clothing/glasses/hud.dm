@@ -95,6 +95,14 @@
 	hud_types = list(DATA_HUD_DIAGNOSTIC)
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
 
+<<<<<<< HEAD
+=======
+/obj/item/clothing/glasses/hud/diagnostic/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_GLASSES)
+		to_chat(user, "<span class='info'>Вы можете получать очки исследований, проводя диагностику изобретений, связанных с роботами. Осматривайте объекты в этих очках.</span>")
+
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /datum/action/item_action/hands_free/toggle_goggles
 	name = "Toggle Goggles"
 

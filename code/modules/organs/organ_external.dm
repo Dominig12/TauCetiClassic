@@ -700,6 +700,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/chest
 	name = "chest"
+	cases = list("грудь", "груди", "груди", "грудь", "грудью", "груди")
 	artery_name = "aorta"
 
 	temp_coeff = 1.08
@@ -719,6 +720,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/groin
 	name = "groin"
+	cases = list("пах", "паха", "паху", "пах", "пахом", "пахе")
 	artery_name = "iliac artery"
 
 	temp_coeff = 1.06
@@ -739,6 +741,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/head
 	name = "head"
+<<<<<<< HEAD
+=======
+	cases = list("голова", "головы", "голове", "голову", "головой", "голове")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	desc = "This one will be silent forever. Isn't it beautiful?"
 	force = 5
 	throwforce = 10
@@ -929,6 +935,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm
 	name = "left arm"
+<<<<<<< HEAD
+=======
+	cases = list("левая рука", "левой руки", "левой руке", "левую руку", "левой рукой", "левой руке")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	desc = "Need a hand?"
 	force = 7
 
@@ -965,6 +975,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm/diona
 	name = "left upper tendril"
+<<<<<<< HEAD
+=======
+	cases = list("левый верхний отросток", "левого верхнего отростка", "левому верхнему отростку", "левый верхний отросток", "левым верхним отростком", "левом верхнем отростком")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 
@@ -973,6 +987,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_arm
 	name = "right arm"
+<<<<<<< HEAD
+=======
+	cases = list("правая рука", "правой руки", "правой руке", "правую руку", "правой рукой", "правой руке")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	desc = "A right hand for the job."
 	force = 7
 	artery_name = "basilic vein"
@@ -1008,6 +1026,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_arm/diona
 	name = "right upper tendril"
+<<<<<<< HEAD
+=======
+	cases = list("правый верхний отросток", "правого верхнего отростка", "правому верхнему отростку", "правый верхний отросток", "правым верхним отростком", "правым верхнем отростком")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 
@@ -1016,6 +1038,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_leg
 	name = "left leg"
+<<<<<<< HEAD
+=======
+	cases = list("левая нога", "левой ноги", "левой ноге", "левую ногу", "левой ногой", "левой ноге")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	desc = "Break a leg! Somebody else's leg. With this leg."
 	force = 9
 	artery_name = "femoral artery"
@@ -1039,6 +1065,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_leg/diona
 	name = "left lower tendril"
+<<<<<<< HEAD
+=======
+	cases = list("левый нижний отросток", "левого нижнего отростка", "левому нижнему отростку", "левый нижний отросток", "левым нижним отростком", "левом нижнем отростком")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 
@@ -1047,6 +1077,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
+<<<<<<< HEAD
+=======
+	cases = list("правая нога", "правой ноги", "правой ноге", "правую ногу", "правой ногой", "правой ноге")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	desc = "The infamous third leg."
 	force = 9
 
@@ -1071,6 +1105,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_leg/diona
 	name = "right lower tendril"
+<<<<<<< HEAD
+=======
+	cases = list("правый нижний отросток", "правого нижнего отростка", "правому нижнему отростку", "правый нижний отросток", "правым нижним отростком", "правым нижнем отростком")
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 

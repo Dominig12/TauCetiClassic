@@ -44,6 +44,10 @@
 			basedatum = new basedatum
 
 /turf/environment/snow/Destroy()
+<<<<<<< HEAD
+=======
+	SHOULD_CALL_PARENT(FALSE)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	return QDEL_HINT_LETMELIVE
 
 /turf/environment/snow/attack_paw(mob/user)
@@ -78,14 +82,22 @@
 
 /turf/environment/snow/ice/ChangeTurf(path)
 	if(path != type)
+<<<<<<< HEAD
 		var/obj/effect/overlay/ice_hole/IH = locate() in contents
+=======
+		var/obj/structure/ice_hole/IH = locate() in contents
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 		if(IH)
 			qdel(IH)
 	return ..()
 
 /turf/environment/snow/ice/attackby(obj/item/O, mob/user)
 	. = ..()
+<<<<<<< HEAD
 	if(locate(/obj/effect/overlay/ice_hole) in range(4))
+=======
+	if(locate(/obj/structure/ice_hole) in range(4))
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 		to_chat(user, "<span class='notice'>Too close to the other ice hole.</span>")
 		return
 	if(!O.has_edge())
@@ -97,7 +109,11 @@
 	var/type = src.type
 	if(!do_after(user, 20 SECONDS, target = src) || type != src.type)
 		return
+<<<<<<< HEAD
 	new /obj/effect/overlay/ice_hole(src)
+=======
+	new /obj/structure/ice_hole(src)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	playsound(src, 'sound/effects/shovel_digging.ogg', VOL_EFFECTS_MASTER)
 
 /atom/movable
@@ -198,11 +214,16 @@
 		qdel(src)
 
 
+<<<<<<< HEAD
 /obj/effect/overlay/ice_hole
+=======
+/obj/structure/ice_hole
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	name = "ice hole"
 	icon = 'icons/turf/snow2.dmi'
 	icon_state = "ice_hole"
 	anchored = 1
+<<<<<<< HEAD
 	var/fish_amount = 0
 
 /obj/effect/overlay/ice_hole/atom_init()
@@ -231,6 +252,13 @@
 			visible_message("<span class='notice'>[user] fails to catch anything.</span>")
 		else
 			visible_message("<span class='notice'>[user] stops fishing.</span>")
+=======
+	density = 1
+
+/obj/structure/ice_hole/atom_init()
+	. = ..()
+	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 15, /obj/item/fish_carp/mega = 8, /obj/item/fish_carp/full_size = 5, /obj/item/fish_carp/over_size = 3, PATH_OR_RANDOM_PATH(/obj/random/mecha/wreckage) = 1, PATH_OR_RANDOM_PATH(/obj/random/cloth/shittysuit) = 1), 10 SECONDS, rand(1, 30) , 20)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /obj/random/misc/all/high
 	spawn_nothing_chance = 40
@@ -309,3 +337,13 @@
 
 /obj/item/fish_carp/full_size
 	scale_icon = 1
+<<<<<<< HEAD
+=======
+	meat_amount_max = 8
+	loot_amount = 6
+
+/obj/item/fish_carp/over_size
+	scale_icon = 2
+	meat_amount_max = 16
+	loot_amount = 12
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d

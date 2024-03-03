@@ -19,7 +19,10 @@
 #define ROLE_ABDUCTOR          "Abductor"
 #define ROLE_FAMILIES          "Families"
 #define ROLE_GHOSTLY           "Ghostly Roles"
+<<<<<<< HEAD
 #define ROLE_IMPOSTER          "Imposter"
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 #define ROLE_REPLICATOR        "Replicator"
 
 #define ROLE_ERT               "Emergency Response Team"
@@ -50,7 +53,10 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_SHADOWLING = null,
 	ROLE_FAMILIES   = null,
 	ROLE_REPLICATOR = null,
+<<<<<<< HEAD
 	ROLE_IMPOSTER   = null,
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	ROLE_GHOSTLY    = list(IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE),
 )
 

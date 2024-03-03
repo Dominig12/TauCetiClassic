@@ -119,6 +119,11 @@
 		: FALSE)
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
+<<<<<<< HEAD
+=======
+/// Trait applied by element
+#define ELEMENT_TRAIT(source) "element_trait_[source]"
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 //mob traits
 /// Forces user to be unmovable
@@ -206,6 +211,12 @@
 // item trait
 #define TRAIT_NO_SACRIFICE "religion_no_sacrifice"
 
+<<<<<<< HEAD
+=======
+/// Visible on t-ray scanners if the atom is under tile
+#define TRAIT_T_RAY_VISIBLE "t-ray-visible"
+
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
 // common trait sources
@@ -226,6 +237,11 @@
 
 // atom traits
 #define TRAIT_XENO_FUR "xeno_fur"
+<<<<<<< HEAD
+=======
+// Trait from being under the floor in some manner
+#define TRAIT_UNDERFLOOR "underfloor"
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 // trait sources
 #define EYE_DAMAGE_TRAIT "eye_damage"

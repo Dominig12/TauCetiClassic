@@ -19,7 +19,11 @@ SUBSYSTEM_DEF(vote)
 	if(!active_poll)
 		return
 
+<<<<<<< HEAD
 	active_poll.process()
+=======
+	active_poll.process(wait * 0.1)
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	if(!active_poll)//Need to check again because the active vote can be nulled during its process. For example if an admin forces start
 		return
 

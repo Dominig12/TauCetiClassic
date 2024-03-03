@@ -28,7 +28,11 @@
 		~Luduk
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+<<<<<<< HEAD
 	flags = JOB_FLAG_SECURITY|JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC|JOB_FLAG_IMPOSTER_PRIORITIZE
+=======
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /datum/job/warden
 	title = "Warden"
@@ -53,7 +57,11 @@
 		~Luduk
 	*/
 	restricted_species = list(TAJARAN, DIONA, VOX, IPC)
+<<<<<<< HEAD
 	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
+=======
+	flags = JOB_FLAG_SECURITY
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /datum/job/warden/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
@@ -82,7 +90,11 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA, IPC)
+<<<<<<< HEAD
 	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
+=======
+	flags = JOB_FLAG_SECURITY
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /datum/job/officer
 	title = "Security Officer"
@@ -107,7 +119,11 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
+<<<<<<< HEAD
 	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
+=======
+	flags = JOB_FLAG_SECURITY
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /datum/job/officer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
@@ -137,7 +153,11 @@
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, DIONA)
+<<<<<<< HEAD
 	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
+=======
+	flags = JOB_FLAG_SECURITY
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 
 /datum/job/cadet
 	title = "Security Cadet"
@@ -162,4 +182,8 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
+<<<<<<< HEAD
 	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
+=======
+	flags = JOB_FLAG_SECURITY
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d

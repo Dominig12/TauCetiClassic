@@ -189,14 +189,23 @@
 /turf/environment/space,
 /area/space_structures/cult_ship)
 "rK" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 4
 	},
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
 	pixel_y = -5
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/stool/bed/chair/schair/wagon/red{
+	dir = 4
+	},
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "sd" = (
@@ -246,10 +255,17 @@
 /area/space_structures/cult_ship)
 "vb" = (
 /obj/effect/decal/cleanable/blood/drip,
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+=======
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool/bed/chair/schair/wagon/red{
+	dir = 4
+	},
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/space_structures/cult_ship)
 "vh" = (
@@ -295,7 +311,11 @@
 /area/space_structures/cult_ship)
 "wR" = (
 /obj/effect/decal/cleanable/blood/drip,
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/red{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/evac/eng2,
@@ -343,7 +363,11 @@
 /turf/simulated/floor/engine/cult/lava,
 /area/space_structures/cult_ship)
 "zS" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/red{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/drip,
@@ -391,10 +415,17 @@
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "EN" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/drip,
+=======
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/stool/bed/chair/schair/wagon/red{
+	dir = 4
+	},
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "Fe" = (
@@ -445,7 +476,11 @@
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/space_structures/cult_ship)
 "Hg" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/red{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/gibs,
@@ -465,7 +500,11 @@
 /turf/environment/space,
 /area/space)
 "Ia" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
+=======
+/obj/structure/stool/bed/chair/schair/wagon/red{
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 	dir = 4
 	},
 /turf/simulated/floor/engine/cult/lava,
@@ -509,14 +548,23 @@
 /area/space_structures/cult_ship)
 "LA" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 4
 	},
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
 	pixel_y = -5
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/stool/bed/chair/schair/wagon/red{
+	dir = 4
+	},
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/space_structures/cult_ship)
 "LG" = (
@@ -566,9 +614,12 @@
 /turf/environment/space,
 /area/space_structures/cult_ship)
 "Ph" = (
+<<<<<<< HEAD
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 4
 	},
+=======
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /obj/machinery/power/apc/largecell{
 	dir = 8;
 	name = "largecell apc left";
@@ -579,6 +630,12 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/stool/bed/chair/schair/wagon/red{
+	dir = 4
+	},
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "PH" = (

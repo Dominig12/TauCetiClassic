@@ -3,6 +3,10 @@
     "map_path": "stroechka",
     "map_file": "stroechka.dmm",
     "station_name": "Hephaestus",
+<<<<<<< HEAD
+=======
+    "station_name_ru": "Гефест",
+>>>>>>> ee76559633a855f85b6ae3666a190bbdca4d9c8d
     "system_name" : "Tau Ceti",
     "station_image": "stroechka",
     "space_ruin_levels": 2,
