@@ -37,7 +37,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 	var/hulk_powers = list()
-	var/mob/living/original_body
+	var/mob/living/origin
 	var/health_regen = 1.5
 
 	animalistic = FALSE
@@ -50,6 +50,9 @@
 /mob/living/simple_animal/hulk/atom_init()
 	attack_sound = SOUNDIN_PUNCH_HEAVY
 	. = ..()
+
+/mob/living/simple_animal/hulk/blob_act()
+	adjustBruteLoss(120) //+- 40 damage for hulks
 
 /mob/living/simple_animal/hulk/human
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,
@@ -183,8 +186,8 @@
 
 	if(mind && original_body)
 		mind.transfer_to(original_body)
-		original_body.attack_log = attack_log
-		original_body.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HUMAN LIFE======</font>"
+		origin.attack_log = attack_log
+		origin.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HUMAN LIFE======</font>"
 	qdel(src)
 
 /mob/living/simple_animal/hulk/MobBump(mob/M)

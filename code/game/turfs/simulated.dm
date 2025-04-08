@@ -54,12 +54,10 @@
 	if(wet < severity)
 		wet = severity
 		UpdateSlip()
-		if(!wet_overlay)
-			var/current_type = "wet_floor"
-			if(severity == LUBE_FLOOR)
-				current_type = "wet_floor_static"
-			wet_overlay = image('icons/effects/water.dmi', current_type, src)
-			add_overlay(wet_overlay)
+		if(wet_overlay || severity >= LUBE_FLOOR)
+			return
+		wet_overlay = image('icons/effects/water.dmi', "wet_floor", src)
+		add_overlay(wet_overlay)
 
 /turf/simulated/proc/make_dry_floor()
 	if(wet)
@@ -77,3 +75,16 @@
 			AddComponent(/datum/component/slippery, 5, SLIDE | GALOSHES_DONT_HELP)
 		else
 			qdel(GetComponent(/datum/component/slippery))
+
+/turf/simulated/ex_act(severity) // todo: we need contents_explosion from tg
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing

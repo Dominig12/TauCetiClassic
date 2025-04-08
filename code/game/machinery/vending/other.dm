@@ -199,7 +199,8 @@
 		/obj/item/weapon/kitchen/utensil/fork = 6,
 		/obj/item/weapon/kitchenknife = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,
-		/obj/item/clothing/suit/chef/classic = 2,
+		/obj/item/clothing/suit/chef_classic = 2,
+		/obj/item/clothing/suit/chef = 1,
 		/obj/item/weapon/kitchen/mould/bear = 1,
 		/obj/item/weapon/kitchen/mould/worm = 1,
 		/obj/item/weapon/kitchen/mould/bean = 1,
@@ -210,6 +211,8 @@
 		/obj/item/weapon/kitchen/mould/loli = 1,
 	)
 	contraband = list(
+		/obj/item/clothing/under/rank/chef/sushi = 1,
+		/obj/item/clothing/head/sushi_band = 1,
 		/obj/item/weapon/kitchen/utensil/spoon = 2,
 		/obj/item/weapon/kitchen/rollingpin = 2,
 		/obj/item/weapon/kitchenknife/butch = 2,
@@ -396,8 +399,8 @@
 		/obj/item/weapon/storage/fancy/candle_box/red = 25,
 		/obj/item/clothing/accessory/metal_cross = 10,
 		/obj/item/clothing/accessory/bronze_cross = 10,
-		/obj/item/clothing/mask/tie/silver_cross = 5,
-		/obj/item/clothing/mask/tie/golden_cross = 5,
+		/obj/item/clothing/neck/silver_cross = 5,
+		/obj/item/clothing/neck/golden_cross = 5,
 		/obj/item/clothing/shoes/jolly_gravedigger = 4,
 	)
 	contraband = list(
@@ -410,8 +413,8 @@
 		/obj/item/weapon/nullrod = 400,
 		/obj/item/clothing/accessory/metal_cross = 40,
 		/obj/item/clothing/accessory/bronze_cross = 80,
-		/obj/item/clothing/mask/tie/silver_cross = 400,
-		/obj/item/clothing/mask/tie/golden_cross = 1000,
+		/obj/item/clothing/neck/silver_cross = 400,
+		/obj/item/clothing/neck/golden_cross = 1000,
 		/obj/item/clothing/shoes/jolly_gravedigger = 200,
 	)
 	private = TRUE

@@ -98,6 +98,7 @@ log transactions
 		if(!held_card)
 			usr.drop_from_inventory(idcard, src)
 			held_card = idcard
+			playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
 				authenticated_account = null
 		return
@@ -119,11 +120,22 @@ log transactions
 
 	if(istype(I, /obj/item/weapon/ewallet))
 		var/obj/item/weapon/ewallet/EW = I
+		var/stocks_amount = EW.get_stocks()
+		var/money_amount = EW.get_money()
 
-		authenticated_account.adjust_stocks(EW.get_stocks())
-		authenticated_account.adjust_money(EW.get_money())
+		authenticated_account.adjust_stocks(stocks_amount)
+		authenticated_account.adjust_money(money_amount)
 
-		deposit(EW, user, EW.get_money(), get_stocks_string(EW.get_stocks()))
+		var/datum/money_account/wallet_account = get_account(EW.account_number)
+
+		if(wallet_account)
+			for(var/stock_type in stocks_amount)
+				var/stock_amount = stocks_amount[stock_type]
+				wallet_account.adjust_stock(stock_type, -stock_amount)
+
+			wallet_account.adjust_money(-money_amount)
+
+		deposit(EW, user, money_amount, get_stocks_string(stocks_amount))
 		return
 
 /obj/machinery/atm/emag_act(mob/user)
@@ -156,7 +168,7 @@ log transactions
 	if(emagged > 0)
 		dat += "Card: <span style='color: red;'>LOCKED</span><br><br><span style='color: red;'>Unauthorized terminal access detected! This ATM has been locked. Please contact NanoTrasen IT Support.</span>"
 	else
-		dat += "Card: <a href='?src=\ref[src];choice=insert_card'>[held_card ? held_card.name : "------"]</a><br><br>"
+		dat += "Card: <a href='byond://?src=\ref[src];choice=insert_card'>[held_card ? held_card.name : "------"]</a><br><br>"
 
 		if(ticks_left_locked_down > 0)
 			dat += "<span class='alert'>Maximum number of pin attempts exceeded! Access to this ATM has been temporarily disabled.</span>"
@@ -169,20 +181,20 @@ log transactions
 						dat += "Select a new security level for this account:<br><hr>"
 						var/text = "Zero - Either the account number or card is required to access this account. EFTPOS transactions will require a card and ask for a pin, but not verify the pin is correct."
 						if(authenticated_account.security_level != 0)
-							text = "<A href='?src=\ref[src];choice=change_security_level;new_security_level=0'>[text]</a>"
+							text = "<A href='byond://?src=\ref[src];choice=change_security_level;new_security_level=0'>[text]</a>"
 						dat += "[text]<hr>"
 						text = "One - An account number and pin must be manually entered to access this account and process transactions."
 						if(authenticated_account.security_level != 1)
-							text = "<A href='?src=\ref[src];choice=change_security_level;new_security_level=1'>[text]</a>"
+							text = "<A href='byond://?src=\ref[src];choice=change_security_level;new_security_level=1'>[text]</a>"
 						dat += "[text]<hr>"
 						text = "Two - In addition to account number and pin, a card is required to access this account and process transactions."
 						if(authenticated_account.security_level != 2)
-							text = "<A href='?src=\ref[src];choice=change_security_level;new_security_level=2'>[text]</a>"
+							text = "<A href='byond://?src=\ref[src];choice=change_security_level;new_security_level=2'>[text]</a>"
 						dat += "[text]<hr><br>"
-						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a>"
+						dat += "<A href='byond://?src=\ref[src];choice=view_screen;view_screen=0'>Back</a>"
 					if(VIEW_TRANSACTION_LOGS)
 						dat += "<b>Transaction logs</b><br>"
-						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a>"
+						dat += "<A href='byond://?src=\ref[src];choice=view_screen;view_screen=0'>Back</a>"
 						dat += "<table border=1 style='width:100%'>"
 						dat += "<tr>"
 						dat += "<td><b>Date</b></td>"
@@ -202,10 +214,10 @@ log transactions
 							dat += "<td>[T.source_terminal]</td>"
 							dat += "</tr>"
 						dat += "</table>"
-						dat += "<A href='?src=\ref[src];choice=print_transaction'>Print</a><br>"
+						dat += "<A href='byond://?src=\ref[src];choice=print_transaction'>Print</a><br>"
 					if(TRANSFER_FUNDS)
 						dat += "<b>Account balance:</b> $[authenticated_account.money]<br>"
-						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br><br>"
+						dat += "<A href='byond://?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br><br>"
 						dat += "<form name='transfer' action='?src=\ref[src]' method='get'>"
 						dat += "<input type='hidden' name='src' value='\ref[src]'>"
 						dat += "<input type='hidden' name='choice' value='transfer'>"
@@ -219,8 +231,8 @@ log transactions
 					if(INSURANCE_MANAGEMENT)
 						var/datum/data/record/R = find_record("insurance_account_number", authenticated_account.account_number, data_core.general)
 						if(R)
-							dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br>"
-							dat += "<A href='?src=\ref[src]'>Refresh</a><br><br>"
+							dat += "<A href='byond://?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br>"
+							dat += "<A href='byond://?src=\ref[src]'>Refresh</a><br><br>"
 							dat += "<b>Account balance:</b> $[authenticated_account.money]<br>"
 							dat += "<b>Medical record id:</b> [R.fields["id"]]<br>"
 							dat += "<b>Medical record owner name:</b> [R.fields["name"]]<br>"
@@ -240,15 +252,15 @@ log transactions
 							for(var/insurance_type in SSeconomy.insurance_quality_decreasing)
 								dat += "<b>Insurance type|price:</b> [insurance_type]|$[SSeconomy.insurance_prices[insurance_type]]<br>"
 								var/insurance_price = SSeconomy.insurance_prices[insurance_type]
-								var/insurance_price_with_time_addition
+								var/insurance_price_with_time_addition // An additional $10 for every remaining minute before payday
 								if(insurance_price != 0)
 									insurance_price_with_time_addition = insurance_price + time_addition
 								else
 									insurance_price_with_time_addition = 0
-								dat += "<A href='?src=\ref[src];choice=change_insurance_immediately;insurance_type=[insurance_type];insurance_price=[insurance_price];presented_price=[insurance_price_with_time_addition]'>Change immediately ($[insurance_price_with_time_addition])</a> "
-								dat += "<A href='?src=\ref[src];choice=change_preferred_insurance;insurance_type=[insurance_type];insurance_price=[insurance_price]]'>Make a preferrence</a><br><br>"
+								dat += "<A href='byond://?src=\ref[src];choice=change_insurance_immediately;insurance_type=[insurance_type];price_shown_to_client=[insurance_price]'>Change immediately ($[insurance_price_with_time_addition])</a> "
+								dat += "<A href='byond://?src=\ref[src];choice=change_preferred_insurance;insurance_type=[insurance_type];price_shown_to_client=[insurance_price]]'>Make a preferrence</a><br><br>"
 						else
-							dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br><br>"
+							dat += "<A href='byond://?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br><br>"
 							dat += "Error, this money account is not connected to your medical record, please check this info and try again.<br>"
 
 					else
@@ -274,12 +286,12 @@ log transactions
 							dat += "<input type='hidden' name='choice' value='withdrawal_stocks'>"
 							dat += "Type: <input type='text' name='stock_type' value='' style='width:100px; background-color:white;'> Amount: <input type='text' name='stock_amount' value='' style='width:100px; background-color:white;'>&nbsp;<input type='submit' value='Withdraw stock'>"
 							dat += "</form>"
-						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=1'>Change account security level</a><br>"
-						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=2'>Make transfer</a><br>"
-						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=3'>View transaction log</a><br>"
-						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=4'>Insurance management</a><br>"
-						dat += "<A href='?src=\ref[src];choice=balance_statement'>Print balance statement</a><br>"
-						dat += "<A href='?src=\ref[src];choice=logout'>Logout</a><br>"
+						dat += "<A href='byond://?src=\ref[src];choice=view_screen;view_screen=1'>Change account security level</a><br>"
+						dat += "<A href='byond://?src=\ref[src];choice=view_screen;view_screen=2'>Make transfer</a><br>"
+						dat += "<A href='byond://?src=\ref[src];choice=view_screen;view_screen=3'>View transaction log</a><br>"
+						dat += "<A href='byond://?src=\ref[src];choice=view_screen;view_screen=4'>Insurance management</a><br>"
+						dat += "<A href='byond://?src=\ref[src];choice=balance_statement'>Print balance statement</a><br>"
+						dat += "<A href='byond://?src=\ref[src];choice=logout'>Logout</a><br>"
 		else
 			dat += "<form name='atm_auth' action='?src=\ref[src]' method='get'>"
 			dat += "<input type='hidden' name='src' value='\ref[src]'>"
@@ -319,20 +331,23 @@ log transactions
 	authenticated_account.transaction_log.Add(T)
 	return TRUE
 
-/obj/machinery/atm/proc/transfer_stocks(target_account, department, transfer_amount, transfer_purpose)
+/obj/machinery/atm/proc/transfer_stocks(target_account, stock_type, transfer_amount, transfer_purpose)
 	if(!authenticated_account.stocks)
-		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough stock to do that!</span>")
+		to_chat(usr, "[bicon(src)]<span class='warning'>No stocks on this account!</span>")
 		return FALSE
-	if(transfer_amount > authenticated_account.stocks[department])
-		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough stock to do that!</span>")
+	if(!authenticated_account.stocks[stock_type])
+		to_chat(usr, "[bicon(src)]<span class='warning'>No stock of type [stock_type] on this account!</span>")
+		return FALSE
+	if(transfer_amount > authenticated_account.stocks[stock_type])
+		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough [stock_type] stock to do that!</span>")
 		return FALSE
 
-	if(!transfer_stock_to_account(target_account, authenticated_account.owner_name, transfer_purpose, machine_id, department, transfer_amount))
+	if(!transfer_stock_to_account(target_account, authenticated_account.owner_name, transfer_purpose, machine_id, stock_type, transfer_amount))
 		to_chat(usr, "[bicon(src)]<span class='warning'>Funds transfer failed.</span>")
 		return FALSE
 
 	to_chat(usr, "[bicon(src)]<span class='info'>Funds transfer successful.</span>")
-	authenticated_account.adjust_stock(department, -transfer_amount)
+	authenticated_account.adjust_stock(stock_type, -transfer_amount)
 
 	//create an entry in the account transaction log
 	var/datum/transaction/T = new()
@@ -357,18 +372,19 @@ log transactions
 					return
 				var/target_account = text2num(href_list["target_acc_number"])
 				var/money_amount = text2num(href_list["funds_amount"])
-				var/stock_type = text2num(href_list["stock_type"])
+				var/stock_type = href_list["stock_type"]
 				var/stock_amount = text2num(href_list["stock_amount"])
+				var/purpose = href_list["purpose"]
 
 				var/show_invalid_amount_message = FALSE
 
 				if(money_amount > 0.0)
-					transfer_money(target_account, money_amount, href_list["purpose"])
+					transfer_money(target_account, money_amount, purpose)
 				else if(stock_amount <= 0)
 					show_invalid_amount_message = TRUE
 
 				if(stock_amount > 0)
-					transfer_stocks(target_account, stock_type, stock_amount, href_list["purpose"])
+					transfer_stocks(target_account, stock_type, stock_amount, purpose)
 				else if(money_amount <= 0.0)
 					show_invalid_amount_message = TRUE
 
@@ -397,7 +413,7 @@ log transactions
 					if(!MA)
 						to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
 						return
-						
+
 					var/security_level_passed = held_card && held_card.associated_account_number == tried_account_num ? ACCOUNT_SECURITY_LEVEL_MAXIMUM : ACCOUNT_SECURITY_LEVEL_STANDARD
 					if(href_list["account_pin"])
 						authenticated_account = attempt_account_access(tried_account_num, text2num(href_list["account_pin"]), security_level_passed)
@@ -482,13 +498,24 @@ log transactions
 					return
 
 				var/insurance_type = href_list["insurance_type"]
-				var/insurance_price = text2num(href_list["insurance_price"])
-				var/presented_price = text2num(href_list["presented_price"])
+				if(!(insurance_type in SSeconomy.insurance_quality_decreasing))
+					return
 
-				if(insurance_price != SSeconomy.insurance_prices[insurance_type])
+				var/insurance_price = SSeconomy.insurance_prices[insurance_type]
+
+				var/time_addition = round((SSeconomy.endtime - world.timeofday) / 600) * 10 // An additional $10 for every remaining minute before payday
+				var/insurance_price_with_addition = insurance_price + time_addition
+				if(insurance_price == 0)
+					insurance_price_with_addition = 0
+
+				var/price_shown_to_client = text2num(href_list["price_shown_to_client"])
+				if(isnull(price_shown_to_client))
+					return
+
+				if(price_shown_to_client != insurance_price)
 					tgui_alert(usr, "Price of this insurance was changed. Press \"Refresh\" and try again.")
 					return
-				if(authenticated_account.money < presented_price)
+				if(authenticated_account.money < insurance_price_with_addition)
 					tgui_alert(usr, "You don't have enough money.")
 					return
 
@@ -499,19 +526,27 @@ log transactions
 				R.fields["insurance_type"] = insurance_type
 
 				authenticated_account.owner_preferred_insurance_type = insurance_type
-				authenticated_account.owner_max_insurance_payment = max(presented_price, authenticated_account.owner_max_insurance_payment)
-				if(insurance_price > 0)
-					charge_to_account(authenticated_account.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -presented_price)
+				authenticated_account.owner_max_insurance_payment = max(insurance_price_with_addition, authenticated_account.owner_max_insurance_payment)
+				if(insurance_price_with_addition > 0)
+					charge_to_account(authenticated_account.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price_with_addition)
 					var/med_account_number = global.department_accounts["Medical"].account_number
-					charge_to_account(med_account_number, med_account_number,"[insurance_type] Insurance payment", "NT Insurance", presented_price)
+					charge_to_account(med_account_number, med_account_number,"[insurance_type] Insurance payment", "NT Insurance", insurance_price_with_addition)
 
 			if("change_preferred_insurance")
 				if(!authenticated_account)
 					return
 
 				var/insurance_type = href_list["insurance_type"]
-				var/insurance_price = text2num(href_list["insurance_price"])
-				if(insurance_price != SSeconomy.insurance_prices[insurance_type])
+				if(!(insurance_type in SSeconomy.insurance_quality_decreasing))
+					return
+
+				var/insurance_price = SSeconomy.insurance_prices[insurance_type]
+
+				var/price_shown_to_client = text2num(href_list["price_shown_to_client"])
+				if(isnull(price_shown_to_client))
+					return
+
+				if(price_shown_to_client != insurance_price)
 					tgui_alert(usr, "Price of this insurance was changed. Press \"Refresh\" and try again.")
 					return
 
@@ -638,6 +673,7 @@ log transactions
 								H.sec_hud_set_ID()
 				else
 					release_held_id(usr)
+				playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if("logout")
 				authenticated_account = null
 				//usr << browse(null,"window=atm")

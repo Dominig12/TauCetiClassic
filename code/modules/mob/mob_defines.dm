@@ -16,7 +16,6 @@
 
 	var/atom/movable/screen/module_icon = null
 	var/atom/movable/screen/pullin = null
-	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/healths = null
 	var/atom/movable/screen/throw_icon = null
 	var/atom/movable/screen/complex/gun/gun_setting_icon = null
@@ -35,7 +34,7 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/atom/movable/screen/zone_sel/zone_sel = null
-	var/atom/movable/screen/leap/leap_icon = null
+	var/atom/movable/screen/leap_icon = null
 	var/atom/movable/screen/neurotoxin_icon = null
 	var/atom/movable/screen/healthdoll = null
 	var/atom/movable/screen/nutrition_icon = null
@@ -51,6 +50,7 @@
 	var/lastattacker_name = ""
 	var/lastattacker_key = ""
 	var/last_examined = ""
+	var/last_z
 	var/attack_log = list( )
 	var/obj/machinery/machine = null
 	var/other_mobs = null
@@ -236,3 +236,5 @@
 
 	var/can_point = TRUE
 	var/show_examine_log = TRUE
+
+	var/neuter_gender_voice = MALE // for male/female emote sounds but with neuter gender

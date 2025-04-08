@@ -3,6 +3,10 @@
 // Example: isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
 // Bad example: isabductor(A) istype(A, /mob/living/carbon/human/abductor)
 
+// META
+
+#define isweakref(D) (istype(D, /datum/weakref))
+
 // TURFS
 
 #define isenvironmentturf(A) (istype(A, /turf/environment))
@@ -17,11 +21,15 @@
 
 #define iswallturf(A) (istype(A, /turf/simulated/wall))
 
+#define iswaterturf(A) (istype(A, /turf/simulated/floor/beach/water) || istype(A, /turf/unsimulated/beach/water) || istype(A, /turf/unsimulated/jungle/water))
+
 // HUMAN
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
 #define isskeleton(A) (A.get_species() in list(SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX))
+
+#define ispluvian(A) (A.get_species() == PLUVIAN)
 
 // CARBON
 #define isxenoqueen(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/queen))
@@ -115,6 +123,8 @@
 #define ismachinery(A) (istype(A, /obj/machinery))
 
 #define istagger(A) (istype(A, /obj/item/device/tagger))
+
+#define isdiagnostichud(A) (istype(A, /obj/item/clothing/glasses/hud/diagnostic))
 
 // GOONCHAT PORT
 

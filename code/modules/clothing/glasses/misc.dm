@@ -4,13 +4,16 @@
 
 	icon_state = "faith_glasses"
 	item_state = "faith_glasses"
-
-	action_button_name = "Assess Holyness"
+	item_state_world = "faith_glasses_w"
 
 	var/next_assessment = 0
 	var/assessment_cooldown = 6 SECONDS
 
 	hud_types = list(DATA_HUD_HOLY)
+	item_action_types = list(/datum/action/item_action/hands_free/assess_holyness)
+
+/datum/action/item_action/hands_free/assess_holyness
+	name = "Assess Holyness"
 
 /obj/item/clothing/glasses/sunglasses/hud/chaplain/proc/gen_holy_overlay(turf/simulated/floor/F)
 	var/image/I = image('icons/effects/effects.dmi', "holy_land")

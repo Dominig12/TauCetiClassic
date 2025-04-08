@@ -1,4 +1,5 @@
 //Updates the mob's health from bodyparts and mob damage variables
+// todo: for some reason mobs call it several times per life tick
 /mob/living/carbon/human/updatehealth()
 	if(status_flags & GODMODE)
 		health = maxHealth
@@ -46,7 +47,7 @@
 	return res
 
 /mob/living/carbon/human/adjustBrainLoss(amount)
-	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
+	if(species.brain_mod == 0 || species.flags[IS_SYNTHETIC] || !should_have_organ(O_BRAIN))
 		brainloss = 0
 	else
 		amount = amount * species.brain_mod
@@ -214,18 +215,6 @@
 	else
 		..()
 
-
-//========== Shock Stage =========
-/mob/living/carbon/human/SetShockStage(amount)
-	if(species.flags[NO_PAIN])
-		return
-	shock_stage = max(amount, 0)
-
-/mob/living/carbon/human/AdjustShockStage(amount)
-	if(species.flags[NO_PAIN])
-		return
-	shock_stage = max(shock_stage + amount, 0)
-
 ////////////////////////////////////////////
 
 //Returns a list of damaged bodyparts
@@ -351,6 +340,14 @@ This function restores all bodyparts.
 			var/path = species.has_bodypart[BP_ZONE]
 			var/obj/item/organ/external/E = new path(null)
 			E.insert_organ(src)
+
+/mob/living/carbon/human/restore_all_organs()
+	for(var/organ_tag in species.has_organ)
+		var/obj/item/organ/O = organs_by_name[organ_tag]
+		if(!O)
+			O = species.has_organ[organ_tag]
+			O = new O(null)
+			O.insert_organ(src)
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/obj/item/organ/external/BP = get_bodypart(zone)

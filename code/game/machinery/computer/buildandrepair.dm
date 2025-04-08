@@ -21,6 +21,7 @@
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
+	item_state_world = "id_mod_w"
 	item_state = "electronic"
 	origin_tech = "programming=2"
 	var/id = null
@@ -218,6 +219,9 @@
 	origin_tech = "programming=3"
 	var/contraband_enabled = FALSE
 	var/hacked = FALSE
+/obj/item/weapon/circuitboard/computer/cargo/qm
+	name = "Circuit board (QM Supply shuttle console)"
+	build_path = /obj/machinery/computer/cargo/qm
 /*/obj/item/weapon/circuitboard/research_shuttle
 	name = "Circuit board (Research Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle

@@ -1,4 +1,5 @@
 var/global/list/all_emotes
+var/global/list/emotes_for_emote_panel // for custom emote panel
 
 /*
  * Singleton emote datum.
@@ -32,6 +33,8 @@ var/global/list/all_emotes
 
 	// Sound produced. (HAHAHAHA)
 	var/sound
+	// Mutes shouldn't clap silently (but mimes should!)
+	var/soundless_for_mute = TRUE
 	// Whether sound pitch varies with age.
 	var/age_variations = FALSE
 
@@ -44,6 +47,8 @@ var/global/list/all_emotes
 
 	// Visual cue with a cloud above head for some emotes.
 	var/cloud
+	// How long emote cloud will float above character.
+	var/cloud_duration = 3 SECONDS
 
 	var/list/state_checks
 
@@ -55,13 +60,7 @@ var/global/list/all_emotes
 
 /datum/emote/proc/get_emote_message_3p(mob/user)
 	var/msg = message_3p
-	var/miming = FALSE
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.miming)
-			miming = TRUE
-
-	if(message_miming && miming)
+	if(message_miming && HAS_TRAIT(src, TRAIT_MIMING))
 		msg = message_miming
 	else if(message_muzzled && istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		msg = message_muzzled
@@ -89,18 +88,16 @@ var/global/list/all_emotes
 	LAZYSET(cooldowns, get_cooldown_group(), world.time + value)
 
 /datum/emote/proc/can_play_sound(mob/user, intentional)
-	if(HAS_TRAIT(user, TRAIT_MUTE))
+	if(HAS_TRAIT(user, TRAIT_MUTE) && soundless_for_mute)
 		return FALSE
-	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
+	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle) && soundless_for_mute)
 		return FALSE
 	if(isliving(user))
 		var/mob/living/L = user
-		if(L.silent)
+		if(L.silent && soundless_for_mute)
 			return FALSE
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.miming)
-			return FALSE
+	if(HAS_TRAIT(user, TRAIT_MIMING))
+		return FALSE
 	if(!check_cooldown(user.next_audio_emote_produce, intentional))
 		return FALSE
 	return TRUE
@@ -185,5 +182,5 @@ var/global/list/all_emotes
 /datum/emote/proc/add_cloud(mob/user)
 	var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)
 	emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	flick_overlay(emote_bubble, clients, 30)
-	QDEL_IN(emote_bubble, 3 SECONDS)
+	flick_overlay(emote_bubble, clients, cloud_duration)
+	QDEL_IN(emote_bubble, cloud_duration)

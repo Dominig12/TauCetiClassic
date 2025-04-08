@@ -38,8 +38,11 @@
 		to_chat(user, "<span class='warning'>Разум этого существа сопротивляется силе камня.</span>")
 		return ..()
 
-	if(HAS_TRAIT(H, TRAIT_NO_SOUL) || HAS_TRAIT(H, TRAIT_SOULSTONE_IMMUNE))
+	if(HAS_TRAIT(H, TRAIT_NO_SOUL) || HAS_TRAIT(H, TRAIT_SOULSTONE_IMMUNE) || H.species.flags[IS_SYNTHETIC])
 		to_chat(user, "<span class='warning'>У этого существа нет души.</span>")
+		return ..()
+	if(istype(H.my_religion, /datum/religion/pluvia) || H.mind.pluvian_blessed)
+		to_chat(user, "<span class='warning'>Душа этого существа под защитой.</span>")
 		return ..()
 
 	H.log_combat(user, "soul-captured via [name]")

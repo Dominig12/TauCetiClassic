@@ -28,6 +28,18 @@
 	// string, anything
 	var/desc
 
+/datum/stat/medal
+	// string, anything
+	var/key
+	// string, anything
+	var/target_name
+	// string, anything
+	var/medal_name
+	// string, anything
+	var/parent_name // person who awarded medal
+	//string, anything
+	var/reason
+
 /datum/stat/score
 	// int, [0...]
 	var/crewscore      = 0 // this is the overall var/score for the whole round
@@ -164,8 +176,10 @@
 	var/heavy_impact_range = 0
 	// int, [-infinity...]
 	var/light_impact_range = 0
-	// int, [-infinity...MAX_EXPLOSION_RANGE], now MAX_EXPLOSION_RANGE is 14
+	// int, [-infinity...]
 	var/flash_range = 0
+	// int, [-infinity...]
+	var/flame_range = 0
 	// string, [hh:mm]
 	var/occurred_time
 

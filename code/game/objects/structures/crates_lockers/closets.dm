@@ -87,7 +87,7 @@
 	for(var/obj/item/I in src.loc)
 		if(itemcount >= storage_capacity)
 			break
-		if(!I.anchored)
+		if(!I.anchored && !istype(I, /obj/item/weapon/paper/sticker))
 			I.forceMove(src)
 			itemcount++
 
@@ -153,8 +153,14 @@
 		if(EXPLODE_LIGHT)
 			if(prob(95))
 				return
-	for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
-		A.ex_act(severity++)
+	for(var/atom/A in src)//pulls everything out of the locker and hits it with an explosion
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += A
 	dump_contents()
 	qdel(src)
 
@@ -172,6 +178,9 @@
 	else if(istagger(W))
 		return
 
+	else if(istype(W, /obj/item/weapon/paper/sticker))
+		return
+
 	else
 		attack_hand(user)
 
@@ -183,7 +192,6 @@
 			return FALSE
 		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100))
 			if(opened)
-				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message("[user] cut apart [src] with [WT].",
 				                     "<span class='notice'>You cut apart [src] with [WT].</span>")
 				deconstruct(TRUE)

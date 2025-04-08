@@ -141,7 +141,7 @@
 		var/mob/living/M = target
 		M.fire_act()
 		M.adjust_fire_stacks(5)
-	explosion(get_turf(target), 1)
+	explosion(get_turf(target), 0, 0, 1, adminlog = FALSE)
 	return ..()
 
 ///////////////////////////////////////////
@@ -189,12 +189,21 @@
 /obj/item/projectile/neurotoxin/magic
 	name = "toxin"
 	damage = 40
-	weaken = 1
+	weaken = 4
+	stun = 1
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "neurotoxin"
 	flag = "magic"
 	neurotoxin
 	damage_type = TOX
+
+/obj/item/projectile/x_turret_acid
+	name = "turret toxin"
+	damage = 5
+	agony = 30
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	damage_type = BURN
 
 ///////////////////////////////////////////
 
@@ -376,6 +385,37 @@
 	touch_spell = TRUE
 	can_powerup = TRUE
 	max_power = 7
+
+///mob/proc/ClickOn()
+// Ranged
+/obj/item/weapon/magic/heal_touch/afterattack(atom/target, mob/user, proximity, params)
+	if(user.incapacitated())
+		return FALSE
+	if(touch_spell)
+		return
+	var/turf/U = get_turf(user)
+	var/turf/T = get_turf(target)
+	if(U == T)
+		return
+	if(!cast_throw(target, user))
+		return FALSE
+	if(s_fire)
+		playsound(user, s_fire, VOL_EFFECTS_MASTER)
+	if(invoke)
+		user.say(invoke)
+	return TRUE
+
+// Adjacent
+/obj/item/weapon/magic/heal_touch/attack(mob/living/M, mob/living/user, def_zone)
+	if(user.incapacitated())
+		return FALSE
+	if(!cast_touch(M, user))
+		return FALSE
+	if(s_fire)
+		playsound(user, s_fire, VOL_EFFECTS_MASTER)
+	if(invoke)
+		user.say(invoke)
+	return TRUE
 
 /obj/item/weapon/magic/heal_touch/attack_self(mob/user)
 	if(!..())

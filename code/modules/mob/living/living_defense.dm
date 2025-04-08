@@ -45,6 +45,9 @@
 /mob/living/proc/get_projectile_impact_force(obj/item/projectile/P, def_zone)
 	return P.impact_force
 
+/mob/living/proc/prob_miss(obj/item/projectile/P)
+	return prob(20 + P.get_miss_modifier()) // no bopyparts -> no reason to check def_zone
+
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/impact_force = get_projectile_impact_force(P, def_zone)
 	if(impact_force && is_impact_force_affected(P.impact_force, get_dir(P, src)))
@@ -66,6 +69,7 @@
 			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		if(P.firer)
 			log_combat(P.firer, "shot with <b>[P.type]</b>", alert_admins = !P.fake, redirected = P.redirected)
+			SEND_SIGNAL(P.firer, COMSIG_HUMAN_HARMED_OTHER, src)
 		else
 			attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[src]/[ckey]</b> with a <b>[src]</b>"
 			if(!P.fake)
@@ -143,6 +147,8 @@
 			var/client/assailant = L.client
 			if(assailant)
 				log_combat(L, "hit with thrown [O]")
+				if(throw_damage > 0)
+					SEND_SIGNAL(L, COMSIG_HUMAN_HARMED_OTHER, src)
 
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && AM.fly_speed >= 15)
@@ -222,7 +228,7 @@
 /mob/living/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 
-	if(hit_atom.density)
+	if(. && hit_atom.density)
 		visible_message("<span class='warning'>[src] crashed into \the [hit_atom]!</span>","<span class='danger'>You are crashed into \the [hit_atom]!</span>")
 		take_bodypart_damage(fly_speed * 5)
 
@@ -315,7 +321,7 @@
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(fire_burn_temperature(), 50)
 
-/mob/living/fire_act()
+/mob/living/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	adjust_fire_stacks(0.5)
 	IgniteMob()
 

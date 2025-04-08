@@ -177,30 +177,30 @@
 			break
 
 ///Called on SSmood process
-/datum/component/mood/process(delta_time)
+/datum/component/mood/process(seconds_per_tick)
 	var/mob/living/moody_fellow = parent
 	if(moody_fellow.stat == DEAD)
 		return //updating spirit during death leads to people getting revived and being completely insane for simply being dead for a long time
 
 	switch(mood_level)
 		if(1)
-			setSpirit(spirit - 0.3 * delta_time, SPIRIT_BAD)
+			setSpirit(spirit - 0.3 * seconds_per_tick, SPIRIT_BAD)
 		if(2)
-			setSpirit(spirit - 0.15 * delta_time, SPIRIT_BAD)
+			setSpirit(spirit - 0.15 * seconds_per_tick, SPIRIT_BAD)
 		if(3)
-			setSpirit(spirit - 0.1 * delta_time, SPIRIT_LOW)
+			setSpirit(spirit - 0.1 * seconds_per_tick, SPIRIT_LOW)
 		if(4)
-			setSpirit(spirit - 0.05 * delta_time, SPIRIT_POOR)
+			setSpirit(spirit - 0.05 * seconds_per_tick, SPIRIT_POOR)
 		if(5)
 			setSpirit(spirit, SPIRIT_POOR) //This makes sure that mood gets increased should you be below the minimum.
 		if(6)
-			setSpirit(spirit + 0.2 * delta_time, SPIRIT_POOR)
+			setSpirit(spirit + 0.2 * seconds_per_tick, SPIRIT_POOR)
 		if(7)
-			setSpirit(spirit  +0.3 * delta_time, SPIRIT_POOR)
+			setSpirit(spirit  +0.3 * seconds_per_tick, SPIRIT_POOR)
 		if(8)
-			setSpirit(spirit + 0.4 * delta_time, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
+			setSpirit(spirit + 0.4 * seconds_per_tick, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
 		if(9)
-			setSpirit(spirit + 0.6*  delta_time, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
+			setSpirit(spirit + 0.6*  seconds_per_tick, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
 
 	HandleNutrition()
 	HandleShock()
@@ -329,11 +329,13 @@
 /datum/component/mood/proc/HandleNutrition()
 	var/mob/living/L = parent
 
-	switch(L.nutrition)
-		if(NUTRITION_LEVEL_FULL to INFINITY)
+	var/fullness = L.get_satiation()
+
+	switch(fullness)
+		if(NUTRITION_LEVEL_FAT to INFINITY)
 			add_event(null, "nutrition", /datum/mood_event/fat)
 
-		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FAT)
 			add_event(null, "nutrition", /datum/mood_event/wellfed)
 
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
@@ -353,22 +355,20 @@
 		return
 	var/mob/living/carbon/C = parent
 
-	if(C.shock_stage <= 0)
-		if(C.traumatic_shock < 10)
-			clear_event(null, "pain")
-		else
-			add_event(null, "pain", /datum/mood_event/mild_pain)
-
+	if(!C.traumatic_shock)
+		clear_event(null, "pain")
 		return
 
-	switch(C.shock_stage)
-		if(0 to 30)
+	switch(C.traumatic_shock)
+		if(0 to TRAUMATIC_SHOCK_MINOR)
+			add_event(null, "pain", /datum/mood_event/mild_pain)
+		if(TRAUMATIC_SHOCK_MINOR  to TRAUMATIC_SHOCK_SERIOUS)
 			add_event(null, "pain", /datum/mood_event/moderate_pain)
-		if(30 to 60)
+		if(TRAUMATIC_SHOCK_SERIOUS to TRAUMATIC_SHOCK_INTENSE)
 			add_event(null, "pain", /datum/mood_event/intense_pain)
-		if(60 to 120)
+		if(TRAUMATIC_SHOCK_INTENSE to TRAUMATIC_SHOCK_MIND_SHATTERING)
 			add_event(null, "pain", /datum/mood_event/unspeakable_pain)
-		if(120 to INFINITY)
+		if(TRAUMATIC_SHOCK_MIND_SHATTERING to INFINITY)
 			add_event(null, "pain", /datum/mood_event/agony)
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A, atom/OldLoc)

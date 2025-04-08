@@ -9,6 +9,8 @@
 #define F_CUSTOMSQUAD        "Custom Squad"
 #define F_DEATHSQUAD         "Nanotrasen Deathsquad"
 #define F_EMERSQUAD          "Emergency Response Team"
+#define F_EMERNUKE           "Gorlex Marauders Recon Squad"
+#define F_EMERPIRATES        "Pirate Gang"
 #define F_FAMILIES           "Families"
 #define F_HEIST              "Vox Shoal"
 #define F_HIVEMIND           "Changeling Hivemind"
@@ -23,6 +25,7 @@
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
 #define F_ZOMBIES            "Zobmies"
 #define F_REPLICATORS        "Replicators"
+#define F_SPACE_TRADERS      "Space Traders"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
@@ -63,6 +66,10 @@
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
 #define REPLICATOR "Replicator"
+#define PIRATE "Pirate"
+#define PRISONER "Prisoner"
+#define SPACE_TRADER "Space Trader"
+#define THIEF "Thief"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"

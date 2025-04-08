@@ -200,6 +200,14 @@
 		else
 			msg += "[t_He] [t_has] [bicon(wear_mask)] \a [wear_mask] on [t_his] face.\n"
 
+	if(neck)
+		if(neck.dirt_overlay)
+			msg += "<span class='warning'>[t_He] [t_has] [bicon(neck)] [neck.gender==PLURAL?"some":"a"] [neck.dirt_description()] on [t_his] neck!</span>\n"
+		else if(neck.wet)
+			msg += "<span class='wet'>[t_He] [t_has] [bicon(neck)] [neck.gender==PLURAL?"some":"a"] wet [neck.name] on [t_his] neck!</span>\n"
+		else
+			msg += "[t_He] [t_has] [bicon(neck)] \a [neck] on [t_his] neck.\n"
+
 	//eyes
 	if(!skipeyes)
 		if(glasses)
@@ -280,7 +288,7 @@
 		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
 		if(C)
 			if(nutrition < (C.maxcharge*0.1))
-				msg += "His indicator of charge blinks red.\n"
+				msg += "[t_His] indicator of charge blinks red.\n"
 		else
 			msg += "[t_He] has no battery!\n"
 
@@ -462,7 +470,7 @@
 
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(C.isabsorbing)
+		if(HAS_TRAIT_FROM(src, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT))
 			msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
 		if(species.name == ABOMINATION)
 			if(C.absorbed_dna.len)
@@ -504,8 +512,8 @@
 						if(R.fields["id"] == E.fields["id"])
 							criminal = R.fields["criminal"]
 
-			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
-			msg += "<span class = 'deptradio'>Security records:</span> <a href='?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"
+			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='byond://?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
+			msg += "<span class = 'deptradio'>Security records:</span> <a href='byond://?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='byond://?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"
 
 	if(hasHUD(user,"medical"))
 		if(hasHUD(user,"security"))
@@ -530,8 +538,8 @@
 						medical = R.fields["p_stat"]
 						insurance_type = R.fields["insurance_type"]
 
-		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
-		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
+		msg += "<span class = 'deptradio'>Physical status:</span> <a href='byond://?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
+		msg += "<span class = 'deptradio'>Medical records:</span> <a href='byond://?src=\ref[src];medrecord=`'>\[View\]</a> <a href='byond://?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
 		if(insurance_type)
 			msg += "<span class = 'deptradio'>Страховка: [insurance_type]</span>\n"
 		var/obj/item/clothing/under/C = w_uniform

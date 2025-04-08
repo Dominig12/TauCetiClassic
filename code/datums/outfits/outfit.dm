@@ -97,7 +97,7 @@
 			head = item_type
 		if(SLOT_WEAR_MASK)
 			mask = item_type
-		if(SLOT_TIE)
+		if(SLOT_NECK)
 			neck = item_type
 		if(SLOT_L_EAR)
 			l_ear = item_type
@@ -114,6 +114,9 @@
 	return
 
 /datum/outfit/proc/skrell_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
+
+/datum/outfit/proc/ipc_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 
 /datum/outfit/proc/vox_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -175,7 +178,7 @@
 		"[SLOT_SHOES]"       = shoes,
 		"[SLOT_WEAR_SUIT]"   = suit,
 		"[SLOT_W_UNIFORM]"   = uniform,
-		"[SLOT_TIE]"         = neck,
+		"[SLOT_NECK]"        = neck,
 		"[SLOT_BELT]"        = belt,
 		"[SLOT_WEAR_ID]"     = id
 	)
@@ -273,7 +276,6 @@
 		apply_fingerprints(H)
 		if(internals_slot)
 			H.internal = H.get_equipped_item(internals_slot)
-			H.internals?.update_icon(H)
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/weapon/implant/I = new implant_type(H)

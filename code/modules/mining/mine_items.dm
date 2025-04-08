@@ -10,13 +10,10 @@
 /**********************Miner Lockers**************************/
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
-	icon_state = "miningsec1"
-	icon_closed = "miningsec"
-	icon_locked = "miningsec1"
-	icon_opened = "miningsecopen"
-	icon_broken = "miningsecbroken"
-	icon_off = "miningsecoff"
 	req_access = list(access_mining)
+	icon_state = "miningsec"
+	icon_closed = "miningsec"
+	icon_opened = "miningsec_open"
 
 /obj/structure/closet/secure_closet/miner/PopulateContents()
 	if(prob(50))
@@ -124,7 +121,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	else
 		dat += "Location: [mining_shuttle_location ? "Outpost" : "Station"] <br>"
 
-	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
+	dat += "<b><A href='byond://?src=\ref[src];move=[1]'>Send</A></b></center>"
 
 	var/datum/browser/popup = new(user, "miningshuttle", "Mining Shuttle Control", 200, 150)
 	popup.set_content(dat)
@@ -275,6 +272,19 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		QUALITY_PRYING = 0.75
 	)
 
+/obj/item/weapon/shovel/experimental
+	name = "experimental shovel"
+	desc = "It's a damn cool shovel."
+	icon_state = "expshovel"
+	item_state = "expshovel"
+	item_state_world = "expshovel_world"
+	force = 10.0
+	toolspeed = 0.1
+	origin_tech = "materials=2;engineering=3"
+	qualities = list(
+		QUALITY_PRYING = 0.1
+	)
+
 /obj/item/weapon/shovel/spade
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."
@@ -284,6 +294,13 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	throwforce = 7.0
 	w_class = SIZE_TINY
 
+/obj/item/weapon/shovel/spade/soviet
+	name = "malaya pehotnaya lopata"
+	desc = "A small tool for digging trenches, burying dead and bashing heads in. URA!"
+	force = 15
+	throwforce = 20
+	icon_state = "spade_soviet"
+	item_state = "spade_soviet"
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 /obj/structure/closet/crate/miningcar
@@ -486,7 +503,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				if(!M)	return
 
 			if(target)
-				explosion(location, 3, 2, 2)
+				explosion(location, 0, 2, 4)
 				target.ex_act(EXPLODE_DEVASTATE)
 				if(src)
 					qdel(src)
@@ -663,7 +680,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	damtype = BURN
 	hitsound = list('sound/weapons/sear.ogg')
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter)
-	fire_delay = 3
+	fire_delay = 4
 	w_class = SIZE_SMALL //it is smaller than the pickaxe
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "The latest self-rechargeable low-power cutter using bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
@@ -693,16 +710,15 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if((iswallturf(target)) && (prob(destruction_chance)))
 		target.ex_act(EXPLODE_HEAVY)
 
-
 /obj/item/weapon/gun/energy/laser/cutter/atom_init()
 	. = ..()
 	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/energy/laser/cutter/emag_act(mob/user)
 	if(emagged)
 		return FALSE
 	ammo_type += new /obj/item/ammo_casing/energy/laser/cutter/emagged(src)
-	fire_delay = 5
 	origin_tech += ";syndicate=1"
 	emagged = TRUE
 	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
@@ -783,7 +799,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_expander
 	name = "accelerator upgrade"
 	icon = 'icons/obj/module.dmi'
-	icon_state = "card_mod"
+	icon_state = "accelerator_space"
+	item_state_world = "accelerator_space_w"
 	desc = "Расширение для кинетического ускорителя. Даёт место для дополнительного улучшения."
 
 ///////////////////////////////////////////
@@ -791,6 +808,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/resources
 	name = "accelerator upgrade(resources)"
 	icon_state = "accelerator_upg_resources"
+	item_state_world = "accelerator_upg_resources_w"
 	var/additional_coefficient = 0.25 // 25%
 
 /obj/item/kinetic_upgrade/resources/atom_init()
@@ -808,6 +826,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/range
 	name = "accelerator upgrade(range)"
 	icon_state = "accelerator_upg_range"
+	item_state_world = "accelerator_upg_range_w"
 	var/range_increase = 1
 
 /obj/item/kinetic_upgrade/range/atom_init()
@@ -825,6 +844,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/damage
 	name = "accelerator upgrade(damage)"
 	icon_state = "accelerator_upg_damage"
+	item_state_world = "accelerator_upg_damage_w"
 	var/damage_increase = 1.5
 
 /obj/item/kinetic_upgrade/damage/atom_init()
@@ -842,6 +862,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/speed
 	name = "accelerator upgrade(speed)"
 	icon_state = "accelerator_upg_speed"
+	item_state_world = "accelerator_upg_speed_w"
 	var/cooldown_reduction = 0.4 SECOND
 
 /obj/item/kinetic_upgrade/speed/atom_init()
@@ -861,7 +882,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "Emergency Shelter"
 	icon_state = "away"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	has_gravity = 1
 	looped_ambience = 'sound/ambience/loop_mineoutpost.ogg'
 
