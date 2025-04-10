@@ -31,3 +31,18 @@
 #define ALLOW_CALIBER "allow_caliber"
 
 #define RECOIL "recoil"
+
+#define CREATE_ADD_COMPONENT(type, parent_component, params...) _gun_modular_create_component(type, parent_component, list(##params))
+
+/proc/_gun_modular_create_component(type, datum/pipe_system/component/parent, list/arguments)
+
+	if(!ispath(type, /datum/pipe_system/component))
+		CRASH("Attempted to create a component with wrong type: [type]")
+
+	var/datum/pipe_system/component/new_component = new type(arglist(arguments))
+	var/datum/pipe_system/component/parent_component = parent
+
+	if(parent_component)
+		parent_component.AddLastComponent(new_component)
+
+	return new_component

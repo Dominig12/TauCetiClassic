@@ -1,5 +1,7 @@
 /obj/item/gun_modular/module
 	name = "gun module"
+	icon = '/code/modules/projectiles/gun_modular/modular.dmi'
+	icon_state = "grip_normal"
 	var/module_id = "default"
 	var/list/allowed_module_id = list()
 	var/datum/component/point_and_point/point_module
@@ -109,6 +111,8 @@
 	point_module.AddPoint(M.point_module)
 	M.attach_to_module(src)
 	M.loc = src
+
+	appearance = point_module.GetImage("icon", "[SOUTH]")
 
 	return TRUE
 

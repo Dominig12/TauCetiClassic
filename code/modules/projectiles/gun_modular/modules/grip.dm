@@ -1,11 +1,14 @@
 /obj/item/gun_modular/module/grip
 	name = "рукоять"
+	icon_state = "grip_normal"
 	module_id = GRIP_MODULE
 	var/recoil_change = -1;
 
 /obj/item/gun_modular/module/grip/atom_init(mapload, ...)
 	. = ..()
 
+	point_module.AddImageHolder("icon", image('/code/modules/projectiles/gun_modular/modular.dmi', 'grip_normal'))
+	point_module.ChangeExitPoint("icon", "[SOUTH]", list(6, 7))
 	var/obj/item/gun_modular/module/chamber/chamber = new(loc)
 	attach(chamber)
 
@@ -37,6 +40,7 @@
 /obj/item/gun_modular/module/grip/init_default_components_module()
 	..()
 
+	//CREATE_ADD_COMPONENT(/datum/pipe_system/component/data/gun_recoil, )
 	var/datum/pipe_system/component/data/gun_recoil/recoil_component = new (src, recoil_change)
 	add_default_component(recoil_component)
 

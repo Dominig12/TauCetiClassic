@@ -35,7 +35,6 @@
 	return
 
 /obj/item/ammo_casing/proc/throw_proj(turf/curloc, atom/target, turf/targloc, mob/living/user, params, boolet_number)
-	var/turf/curloc = weapon.loc
 	if(istype(curloc, /obj/item/weapon/gun/projectile))
 		curloc = curloc.loc
 	if(ismob(curloc))
@@ -50,7 +49,6 @@
 		qdel(BB)
 		BB = null
 		return 1
-	BB.dispersion += weapon.spread
 	BB.loc = get_turf(src)
 	BB.starting = get_turf(src)
 	BB.current = curloc

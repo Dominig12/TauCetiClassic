@@ -32,6 +32,7 @@
 /obj/item/gun_modular/module/chamber/init_default_components_module()
 	..()
 
+	//var/recoil_component = CREATE_ADD_COMPONENT(/datum/pipe_system/component/data/gun_recoil, null, src, recoil_change)
 	var/datum/pipe_system/component/data/gun_recoil/recoil_component = new (src, recoil_change)
 	add_default_component(recoil_component)
 
