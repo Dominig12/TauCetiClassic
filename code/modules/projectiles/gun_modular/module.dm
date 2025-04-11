@@ -112,7 +112,7 @@
 	M.attach_to_module(src)
 	M.loc = src
 
-	appearance = point_module.GetImage("icon", "[SOUTH]")
+	overlays.Add(point_module.GetImage("icon", "[SOUTH]"))
 
 	return TRUE
 
