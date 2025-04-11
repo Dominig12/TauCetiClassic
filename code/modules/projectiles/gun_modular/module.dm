@@ -1,6 +1,6 @@
 /obj/item/gun_modular/module
 	name = "gun module"
-	icon = '/code/modules/projectiles/gun_modular/modular.dmi'
+	icon = 'code/modules/projectiles/gun_modular/modular.dmi'
 	icon_state = "grip_normal"
 	var/module_id = "default"
 	var/list/allowed_module_id = list()

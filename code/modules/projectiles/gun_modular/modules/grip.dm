@@ -7,8 +7,9 @@
 /obj/item/gun_modular/module/grip/atom_init(mapload, ...)
 	. = ..()
 
-	point_module.AddImageHolder("icon", image('/code/modules/projectiles/gun_modular/modular.dmi', 'grip_normal'))
-	point_module.ChangeExitPoint("icon", "[SOUTH]", list(6, 7))
+	point_module.AddImageHolder("icon", image('code/modules/projectiles/gun_modular/modular.dmi', icon_state = "grip_normal"))
+	point_module.ChangeExitPoint("icon", "[SOUTH]", list(3, 4))
+	point_module.ChangeEntryPoint("chamber", "icon", "[SOUTH]", list(6, 7))
 	var/obj/item/gun_modular/module/chamber/chamber = new(loc)
 	attach(chamber)
 

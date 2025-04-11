@@ -9,6 +9,9 @@
 /obj/item/gun_modular/module/chamber/atom_init(mapload, ...)
 	. = ..()
 
+	point_module.AddImageHolder("icon", image('code/modules/projectiles/gun_modular/modular.dmi', icon_state = "chamber_bullet_PTR"))
+	point_module.ChangeExitPoint("icon", "[SOUTH]", list(6, 2))
+
 	var/obj/item/gun_modular/module/magazine_holder/magazine_holder = new(loc)
 	attach(magazine_holder)
 
